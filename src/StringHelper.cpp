@@ -31,3 +31,26 @@ std::vector<char*> StringHelper::str_split(char* word, char* delimiter)
 
 	return tmp;
 }
+
+bool StringHelper::str_contains(char* haystack, char* needle)
+{
+	unsigned int hLen = strlen(haystack);
+	unsigned int nLen = strlen(needle);
+
+	for (unsigned int i = 0; i < hLen; i++)
+	{
+		int matchCount = 0;
+
+		for (unsigned int j = 0; j < nLen; j++)
+		{
+			if (haystack[i + j] == needle[j])
+				matchCount++;
+			else j = nLen;
+
+			if (matchCount == nLen)
+				return true;
+		}
+	}
+
+	return false;
+}

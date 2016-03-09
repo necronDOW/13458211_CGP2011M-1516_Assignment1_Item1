@@ -15,8 +15,8 @@ class Sprite
 		Sprite(Game* game, glm::vec2 &origin, float scale, char* frameID);
 		~Sprite();
 
-		void Update();
-		void Render();
+		virtual void Update();
+		virtual void Render();
 		virtual void ChangeAnimation(char* id);
 		virtual void LoadAllAnimations(char* id);
 
@@ -25,7 +25,7 @@ class Sprite
 		const glm::vec2 &GetScale();
 		const glm::vec2 &GetOrigin();
 
-	private:
+	protected:
 		SDL_Instance* instance;
 		SDL_Texture* texture;
 		SDL_Rect &src = SDL_Rect();

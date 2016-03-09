@@ -97,7 +97,7 @@ bool TextureManager::GetSlice(int textureIndex, char* id, SDL_Texture* &outTextu
 
 	for (unsigned int i = 0; i < ids.size(); i++)
 	{
-		if (ids[i] == id)
+		if (StringHelper::str_contains(ids[i], id))
 		{
 			outTexture = textures[textureIndex].texture;
 			outData = textures[textureIndex].data[i];
@@ -105,6 +105,29 @@ bool TextureManager::GetSlice(int textureIndex, char* id, SDL_Texture* &outTextu
 			return true;
 		}
 	}
+
+	return false;
+}
+
+bool TextureManager::GetSlice(int textureIndex, char* id, SDL_Texture* &outTexture, std::vector<SDL_Rect*> &outData, std::vector<char*> &outIDs)
+{
+	bool found = false;
+	std::vector<char*> &ids = textures[textureIndex].ids;
+
+	for (unsigned int i = 0; i < ids.size(); i++)
+	{
+		if (StringHelper::str_contains(ids[i], id))
+		{
+			if (!found) outTexture = textures[textureIndex].texture;
+			outData.push_back(&textures[textureIndex].data[i]);
+			outIDs.push_back(ids[i]);
+
+			found = true;
+		}
+	}
+	
+	if (found)
+		return true;
 
 	return false;
 }

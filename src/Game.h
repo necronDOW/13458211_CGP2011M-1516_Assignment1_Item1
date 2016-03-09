@@ -48,7 +48,7 @@ class Game
 		SDL_Instance* instance;				// The SDL instance through which this application runs on.
 		TextureManager* texManager;
 		glm::vec2 testPos;
-		std::vector<Sprite> sprites;
+		std::vector<Sprite*> sprites;
 };
 
 #endif

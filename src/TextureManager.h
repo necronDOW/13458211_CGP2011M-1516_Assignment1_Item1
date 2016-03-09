@@ -35,6 +35,7 @@ class TextureManager
 		// Get/Set functions
 		SDL_Texture* &GetTexture(int index);
 		bool GetSlice(int textureIndex, char* id, SDL_Texture* &outTexture, SDL_Rect &outData);
+		bool GetSlice(int textureIndex, char* id, SDL_Texture* &outTexture, std::vector<SDL_Rect*> &outData, std::vector<char*> &outIDs);
 
 	private:
 		// General functions

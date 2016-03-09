@@ -1,0 +1,35 @@
+harry_walk.01 = 0 94 24 32
+harry_walk.02 = 27 94 24 32
+harry_walk.03 = 0 94 24 32
+harry_walk.04 = 54 94 24 32
+harry_climb.01 = 81 94 24 32
+harry_climb.02 = 108 94 24 32
+harry_climb.03 = 135 94 24 32
+harry_climb.04 = 162 94 24 32
+harry_climb.05 = 189 94 24 32
+
+barry_walk.01 = 0 128 24 32
+barry_walk.02 = 27 128 24 32
+barry_walk.03 = 0 128 24 32
+barry_walk.04 = 54 128 24 32
+barry_climb.01 = 81 128 24 32
+barry_climb.02 = 108 128 24 32
+barry_climb.03 = 135 128 24 32
+barry_climb.04 = 162 128 24 32
+barry_climb.05 = 189 128 24 32
+
+chuckie_fly.01 = 0 42 57 50
+chuckie_fly.02 = 60 42 57 50
+
+chick_walk.01 = 0 0 24 40
+chick_walk.02 = 27 0 24 40
+chick_climb.01 = 54 0 24 40
+chick_climb.02 = 91 0 24 40
+chick_eat.01 = 108 0 42 40
+chick_eat.02 = 153 0 42 40
+
+cage = 0 162 69 96
+floor = 72 162 24 16
+ladder = 72 180 24 16
+egg = 72 198 24 16
+food = 72 216 24 16

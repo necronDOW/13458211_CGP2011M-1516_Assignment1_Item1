@@ -2,6 +2,7 @@
 #define ANIMATEDSPRITE_H
 
 #include "Sprite.h"
+#include "Timer.h"
 
 class AnimatedSprite : public Sprite
 {
@@ -16,18 +17,21 @@ class AnimatedSprite : public Sprite
 
 	public:
 		AnimatedSprite();
-		AnimatedSprite(Game* game, glm::vec2 &origin, float scale, char* animID);
+		AnimatedSprite(Game* game, glm::vec2 position, float scale, char* animID, char* staticID);
 		~AnimatedSprite();
 
 		void Update();
+		void ChangeAnimation(char* newID);
 
 	private:
-		void GenerateAnimations(std::vector<char*> &ids);
+		void GenerateAnimations(char* staticID, std::vector<char*> ids);
 
 		unsigned int currentFrame = 0;
+		int staticFrame = -1;
 		std::vector<SDL_Rect*> frames;
 		std::vector<Animation> anims;
-		Animation* currentAnimation;
+		Animation* currentAnim = nullptr;
+		Timer animTimer;
 };
 
 #endif

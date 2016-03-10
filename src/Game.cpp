@@ -1,6 +1,6 @@
 #include "Game.h"
 #include "SDL_Instance.h"
-#include "AnimatedSprite.h"
+#include "GameObject.h"
 
 Game::Game()
 {
@@ -35,15 +35,14 @@ void Game::Initialize()
 	texManager = new TextureManager(*instance, "./assets/");
 	texManager->LoadTexture("spritesheet");
 
-	testPos = glm::vec2(10, 10);
-	for (int i = 0; i < 1; i++)
-		sprites.push_back(new AnimatedSprite(this, testPos, 1.0f, "harry"));
+	objects.push_back(new GameObject(this, 200, 200));
+	objects[0]->SetSprite(1.0f, "harry", "walk");
 }
 
 void Game::Update()
 {
-	for (unsigned int i = 0; i < sprites.size(); i++)
-		sprites[i]->Update();
+	for (unsigned int i = 0; i < objects.size(); i++)
+		objects[i]->Update();
 }
 
 void Game::HandleInput()
@@ -80,8 +79,8 @@ void Game::Render()
 {
 	SDL_RenderClear(instance->GetRenderer());
 
-	for (unsigned int i = 0; i < sprites.size(); i++)
-		sprites[i]->Render();
+	for (unsigned int i = 0; i < objects.size(); i++)
+		objects[i]->Render();
 
 	SDL_RenderPresent(instance->GetRenderer());
 }

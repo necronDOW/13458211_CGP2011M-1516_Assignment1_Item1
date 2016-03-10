@@ -5,25 +5,22 @@ Sprite::Sprite()
 
 }
 
-Sprite::Sprite(Game* game, glm::vec2 &origin, float scale)
+Sprite::Sprite(Game* game, glm::vec2 position, float scale)
 {
 	instance = game->GetSDLInstance();
 
 	game->GetTextureManager()->GetSlice(0, "*", texture, src);
-	SetOrigin(origin);
+	origin = new glm::vec2(position.x, position.y);
 	SetScale(scale, scale);
 }
 
-Sprite::Sprite(Game* game, glm::vec2 &origin, float scale, char* frameID)
+Sprite::Sprite(Game* game, glm::vec2 position, float scale, char* frameID)
 {
 	instance = game->GetSDLInstance();
 
 	game->GetTextureManager()->GetSlice(0, frameID, texture, src);
-	SetOrigin(origin);
+	origin = new glm::vec2(position.x, position.y);
 	SetScale(scale, scale);
-
-	dest.w = src.w;
-	dest.h = src.h;
 }
 
 Sprite::~Sprite()
@@ -33,17 +30,21 @@ Sprite::~Sprite()
 
 void Sprite::Update()
 {
-	dest.x = origin.x - (dest.w / 2);
-	dest.y = origin.y - (dest.h / 2);
+	dest.x = origin->x - (dest.w / 2);
+	dest.y = origin->y - (dest.h / 2);
 }
 
 void Sprite::Render()
 {
-	SDL_RenderCopy(instance->GetRenderer(), texture, &src, &dest);
+	SDL_RenderCopyEx(instance->GetRenderer(), texture, &src, &dest, 0, NULL, flipFlags);
 }
 
 void Sprite::ChangeAnimation(char* id) { }
-void Sprite::LoadAllAnimations(char* id) { }
+
+void Sprite::FlipHorizontal()
+{
+	flipFlags = flipFlags == SDL_FLIP_NONE ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+}
 
 void Sprite::SetScale(float x, float y)
 {
@@ -53,10 +54,10 @@ void Sprite::SetScale(float x, float y)
 	dest.h = (float)src.h * scale.y;
 }
 
-void Sprite::SetOrigin(glm::vec2 &origin)
+void Sprite::SetOrigin(glm::vec2* origin)
 {
 	this->origin = origin;
 }
 
 const glm::vec2 &Sprite::GetScale() { return scale; }
-const glm::vec2 &Sprite::GetOrigin() { return origin; }
+const glm::vec2 &Sprite::GetOrigin() { return *origin; }

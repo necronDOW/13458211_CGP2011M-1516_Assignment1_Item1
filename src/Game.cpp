@@ -1,6 +1,6 @@
 #include "Game.h"
 #include "SDL_Instance.h"
-#include "GameObject.h"
+#include "Scene.h"
 
 Game::Game()
 {
@@ -35,14 +35,24 @@ void Game::Initialize()
 	texManager = new TextureManager(*instance, "./assets/");
 	texManager->LoadTexture("spritesheet");
 
-	objects.push_back(new GameObject(this, 200, 200));
-	objects[0]->SetSprite(1.0f, "harry", "walk");
+	std::vector<char*> lines;
+
+	std::ifstream file("./assets/levels.data");
+	std::string buffer;
+
+	while (std::getline(file, buffer))
+	{
+		char* tmp;
+		StringHelper::str_copy((char*)buffer.c_str(), tmp);
+		lines.push_back(tmp);
+	}
+
+	s = new Scene(this, lines, 1);
 }
 
 void Game::Update()
 {
-	for (unsigned int i = 0; i < objects.size(); i++)
-		objects[i]->Update();
+	s->Update();
 }
 
 void Game::HandleInput()
@@ -79,8 +89,7 @@ void Game::Render()
 {
 	SDL_RenderClear(instance->GetRenderer());
 
-	for (unsigned int i = 0; i < objects.size(); i++)
-		objects[i]->Render();
+	s->Render();
 
 	SDL_RenderPresent(instance->GetRenderer());
 }

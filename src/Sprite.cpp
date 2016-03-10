@@ -36,7 +36,7 @@ void Sprite::Update()
 
 void Sprite::Render()
 {
-	SDL_RenderCopyEx(instance->GetRenderer(), texture, &src, &dest, 0, NULL, flipFlags);
+	SDL_RenderCopyEx(instance->GetRenderer(), texture, src, &dest, 0, NULL, flipFlags);
 }
 
 void Sprite::ChangeAnimation(char* id) { }
@@ -50,8 +50,8 @@ void Sprite::SetScale(float x, float y)
 {
 	scale = glm::vec2(x, y);
 
-	dest.w = (float)src.w * scale.x;
-	dest.h = (float)src.h * scale.y;
+	dest.w = (float)src->w * scale.x;
+	dest.h = (float)src->h * scale.y;
 }
 
 void Sprite::SetOrigin(glm::vec2* origin)

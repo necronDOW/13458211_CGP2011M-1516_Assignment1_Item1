@@ -12,7 +12,7 @@
 
 // Forward declarations
 class SDL_Instance;
-class GameObject;
+class Scene;
 
 class Game
 {
@@ -48,7 +48,7 @@ class Game
 		SDL_Instance* instance;				// The SDL instance through which this application runs on.
 		TextureManager* texManager;
 		glm::vec2 testPos;
-		std::vector<GameObject*> objects;
+		Scene* s;
 };
 
 #endif

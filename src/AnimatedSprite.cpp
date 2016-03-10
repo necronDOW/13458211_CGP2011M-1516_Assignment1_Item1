@@ -16,7 +16,7 @@ AnimatedSprite::AnimatedSprite(Game* game, glm::vec2 position, float scale, char
 	GenerateAnimations(staticID, ids);
 
 	origin = new glm::vec2(position);
-	src = *frames[staticFrame];
+	src = frames[staticFrame];
 	SetScale(scale, scale);
 
 	animTimer = Timer(0.1f);
@@ -40,9 +40,9 @@ void AnimatedSprite::Update()
 			else currentFrame = currentAnim->first;
 		}
 
-		src = *frames[currentFrame];
+		src = frames[currentFrame];
 	}
-	else src = *frames[staticFrame];
+	else src = frames[staticFrame];
 }
 
 void AnimatedSprite::ChangeAnimation(char* newID)

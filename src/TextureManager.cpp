@@ -91,7 +91,7 @@ void TextureManager::ParseData(std::vector<char*> &arr, char* &idTarget, SDL_Rec
 
 SDL_Texture* &TextureManager::GetTexture(int index) { return textures[index].texture; }
 
-bool TextureManager::GetSlice(int textureIndex, char* id, SDL_Texture* &outTexture, SDL_Rect &outData)
+bool TextureManager::GetSlice(int textureIndex, char* id, SDL_Texture* &outTexture, SDL_Rect* &outData)
 {
 	std::vector<char*> &ids = textures[textureIndex].ids;
 
@@ -100,7 +100,7 @@ bool TextureManager::GetSlice(int textureIndex, char* id, SDL_Texture* &outTextu
 		if (StringHelper::str_contains(ids[i], id))
 		{
 			outTexture = textures[textureIndex].texture;
-			outData = textures[textureIndex].data[i];
+			outData = &textures[textureIndex].data[i];
 
 			return true;
 		}

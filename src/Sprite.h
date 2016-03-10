@@ -28,7 +28,7 @@ class Sprite
 	protected:
 		SDL_Instance* instance;
 		SDL_Texture* texture;
-		SDL_Rect &src = SDL_Rect();
+		SDL_Rect* src;
 		SDL_Rect dest;
 		glm::vec2* origin;
 		glm::vec2 scale;

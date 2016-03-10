@@ -6,42 +6,31 @@ Scene::Scene()
 
 }
 
-Scene::Scene(Game* game, std::vector<char*> &levelsData, int index)
+Scene::Scene(Game* game, std::vector<char*> &levelsData, int dataStart)
 {
-	for (unsigned int i = 0; i < levelsData.size(); i++)
+	for (unsigned int i = dataStart; i < levelsData.size(); i++)
 	{
-		if (StringHelper::str_contains(levelsData[i], "{"))
+		if (StringHelper::str_contains(levelsData[i], "};"))
 		{
-			char* tmp;
-			StringHelper::str_copy(levelsData[i], tmp);
-			if (atoi(StringHelper::str_split(tmp, " ")[1]) == index)
+			std::cout << "Scene loaded successfully: TILES:" << objects.size() << "." << std::endl;
+			return;
+		}
+
+		for (unsigned int j = 0; j < strlen(levelsData[i]); j++)
+		{
+			int val = levelsData[i][j] - '0' - 1;
+
+			if (val >= 0 && val < tileIDs.size())
 			{
-				for (unsigned int j = i + 1; j < levelsData.size(); j++)
-				{
-					if (StringHelper::str_contains(levelsData[j], "};"))
-					{
-						std::cout << "Scene loaded successfully: INDEX:" << index << ", TILES:" << objects.size() << "." << std::endl;
-						return;
-					}
-
-					for (unsigned int k = 0; k < strlen(levelsData[j]); k++)
-					{
-						int val = levelsData[j][k] - '0' - 1;
-
-						if (val >= 0 && val < tileIDs.size())
-						{
-							objects.push_back(new GameObject(game, (k - 1) * 24, (j - i - 1) * 16));
-							objects[objects.size() - 1]->SetSprite(1.0f, tileIDs[val]);
-						}
-					}
-				}
+				objects.push_back(new GameObject(game, (j) * 24, (i - dataStart) * 16));
+				objects[objects.size() - 1]->SetSprite(1.0f, tileIDs[val]);
 			}
 		}
 	}
 
 	if (objects.size() == 0)
 	{
-		std::cout << std::endl << "Scene loaded incorrectly, please check your index (" << index << ")." << std::endl;
+		std::cout << std::endl << "Scene loaded incorrectly." << std::endl;
 	}
 }
 

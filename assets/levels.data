@@ -1,3 +1,15 @@
+valid {
+	chick
+	player
+};
+
+tiles {
+	floor
+	ladder
+	egg
+	food
+};
+
 level 1 {
 	00000000000000000000
 	00000000000000000000
@@ -26,19 +38,11 @@ level 1 {
 	00000002000200002000
 	00403002000204002000
 	11111111111111111111
+	#
+	chick=9,4
+	chick=6,9
+	player=70,200
 };
-
-Elevator=0
-Swan1=06,17
-Swan2=09,22
-Swan3=0
-Swan4=0
-Swan5=05,12
-Swan6=07,07
-Swan7=13,02
-Swan8=0
-StartX=70
-StartY=200
 
 level 2 {
 	00000000000000000000
@@ -68,19 +72,12 @@ level 2 {
 	00200000020000000200
 	40240300020030040200
 	11110111111111111111
+	#
+	chick=7,4
+	chick=2,24
+	chick=19,14
+	player=70,200
 };
-
-Elevator=0
-Swan1=02,02
-Swan2=19,12
-Swan3=07,22
-Swan4=0
-Swan5=12,12
-Swan6=14,22
-Swan7=0
-Swan8=0
-StartX=70
-StartY=200
 
 level 3 {
 	00000000000000000000
@@ -110,19 +107,15 @@ level 3 {
 	02003000000000000020
 	02411000000004030020
 	11100001110111111111
+	#
+	elevator=6,0
+	chick=18,6
+	chick=3,16
+	chick=10,20
+	chick=2,2
+	chick=9,7
+	player=60,200
 };
-
-Elevator=6
-Swan1=18,06
-Swan2=03,16
-Swan3=10,20
-Swan4=0
-Swan5=02,02
-Swan6=09,07
-Swan7=0
-Swan8=0
-StartX=60
-StartY=200
 
 level 4 {
 	00000000000000000000
@@ -152,19 +145,15 @@ level 4 {
 	00020000200000020000
 	30020000204003020040
 	11111011111001111111
+	#
+	elevator=12,0
+	chick=5,2
+	chick=11,22
+	chick=19,22
+	chick=18,2
+	chick=11,7
+	player=70,200
 };
-
-Elevator=12
-Swan1=05,02
-Swan2=11,22
-Swan3=19,22
-Swan4=18,02
-Swan5=11,07
-Swan6=0
-Swan7=0
-Swan8=0
-StartX=70
-StartY=200
 
 level 5 {
 	00000000000000000000
@@ -194,19 +183,15 @@ level 5 {
 	00020002002000200000
 	30024442002004240040
 	11011111111101110011
+	#
+	elevator=17,0
+	chick=2,7
+	chick=4,12
+	chick=2,17
+	chick=15,12
+	chick=16,7
+	player=60,200
 };
-
-Elevator=17
-Swan1=02,07
-Swan2=04,12
-Swan3=02,17
-Swan4=15,12
-Swan5=16,07
-Swan6=0
-Swan7=0
-Swan8=0
-StartX=60
-StartY=200
 
 level 6 {
 	00000000000000000000
@@ -236,19 +221,15 @@ level 6 {
 	20000000000000000200
 	20300000000444403200
 	11100011100111100000
+	#
+	elevator=10,0
+	chick=2,2
+	chick=2,17
+	chick=14,7
+	chick=19,17
+	chick=19,11
+	player=60,200
 };
-
-Elevator=10
-Swan1=02,02
-Swan2=02,17
-Swan3=14,07
-Swan4=19,17
-Swan5=19,11
-Swan6=0
-Swan7=0
-Swan8=0
-StartX=59
-StartY=200
 
 level 7 {
 	00000000000000000000
@@ -278,19 +259,15 @@ level 7 {
 	02320000010010000000
 	02020110010000011300
 	00011001100000000000
+	#
+	elevator=19,0
+	chick=2,17
+	chick=16,1
+	chick=14,22
+	chick=3,7
+	chick=3,12
+	player=60,200
 };
-
-Elevator=19
-Swan1=02,17
-Swan2=16,10
-Swan3=14,22
-Swan4=0
-Swan5=03,07
-Swan6=03,12
-Swan7=0
-Swan8=0
-StartX=59
-StartY=200
 
 level 8 {
 	00000000000000000000
@@ -320,16 +297,11 @@ level 8 {
 	00020000000000000200
 	04424440444444444244
 	11111111111111111111
+	#
+	chick=11,12
+	chick=11,22
+	chick=18,2
+	chick=5,17
+	chick=18,17
+	player=60,200
 };
-
-Elevator=0
-Swan1=11,12
-Swan2=11,22
-Swan3=18,02
-Swan4=0
-Swan5=05,17
-Swan6=18,17
-Swan7=0
-Swan8=0
-StartX=59
-StartY=200

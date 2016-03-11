@@ -42,19 +42,13 @@ SceneManager::~SceneManager()
 void SceneManager::Update()
 {
 	if (currentScene >= 0)
-		scenes[currentScene]->Update();
+		scenes[currentScene].Update();
 }
 
 void SceneManager::Render()
 {
 	if (currentScene >= 0)
-		scenes[currentScene]->Render();
-}
-
-void SceneManager::LoadScenes(Game* game, std::vector<char*> &lines, std::vector<int> &indices)
-{
-	for (int i = 0; i < indices.size(); i++)
-		scenes.push_back(new Scene(game, lines, indices[i]));
+		scenes[currentScene].Render();
 }
 
 void SceneManager::NextScene()
@@ -68,3 +62,15 @@ void SceneManager::PreviousScene()
 	if (currentScene > 0)
 		currentScene--;
 }
+
+void SceneManager::LoadScenes(Game* game, std::vector<char*> &lines, std::vector<int> &indices)
+{
+	constructor = new ObjectConstructor(lines);
+
+	for (unsigned int i = 0; i < indices.size(); i++)
+		scenes.push_back(Scene(game, lines, indices[i], constructor));
+}
+
+const Scene &SceneManager::GetScene(int index) { return scenes[index]; }
+int SceneManager::GetCurrentIndex() { return currentScene; }
+glm::vec2 SceneManager::GetScalar() { return scenes[currentScene].GetSize(); }

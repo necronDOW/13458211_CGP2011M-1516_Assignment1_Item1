@@ -36,6 +36,7 @@ void Game::Initialize()
 	texManager->LoadTexture("spritesheet");
 
 	s = new SceneManager(this, "./assets/levels.data");
+	instance->SetRenderScale(s->GetScalar().x, s->GetScalar().y);
 }
 
 void Game::Update()
@@ -65,9 +66,11 @@ void Game::HandleInput()
 							break;
 						case SDLK_LEFT:
 							s->PreviousScene();
+							instance->SetRenderScale(s->GetScalar().x, s->GetScalar().y);
 							break;
 						case SDLK_RIGHT:
 							s->NextScene();
+							instance->SetRenderScale(s->GetScalar().x, s->GetScalar().y);
 							break;
 					}
 				}

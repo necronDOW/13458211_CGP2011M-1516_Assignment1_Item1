@@ -59,5 +59,6 @@ void Sprite::SetOrigin(glm::vec2* origin)
 	this->origin = origin;
 }
 
-const glm::vec2 &Sprite::GetScale() { return scale; }
-const glm::vec2 &Sprite::GetOrigin() { return *origin; }
+glm::vec2 Sprite::GetScale() { return scale; }
+glm::vec2 Sprite::GetOrigin() { return *origin; }
+SDL_Rect Sprite::GetRect() { return dest; }

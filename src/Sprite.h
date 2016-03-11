@@ -22,8 +22,9 @@ class Sprite
 
 		void SetScale(float x, float y);
 		void SetOrigin(glm::vec2* origin);
-		const glm::vec2 &GetScale();
-		const glm::vec2 &GetOrigin();
+		glm::vec2 GetScale();
+		glm::vec2 GetOrigin();
+		SDL_Rect GetRect();
 
 	protected:
 		SDL_Instance* instance;

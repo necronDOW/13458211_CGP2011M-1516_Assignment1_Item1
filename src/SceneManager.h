@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "StringHelper.h"
 #include "Scene.h"
+#include "ObjectConstructor.h"
 
 class SceneManager
 {
@@ -17,13 +18,19 @@ class SceneManager
 
 		void Update();
 		void Render();
-		void LoadScenes(Game* game, std::vector<char*> &lines, std::vector<int> &indices);
 		void NextScene();
 		void PreviousScene();
 
+		const Scene &GetScene(int index);
+		int GetCurrentIndex();
+		glm::vec2 GetScalar();
+
 	private:
-		std::vector<Scene*> scenes;
+		void LoadScenes(Game* game, std::vector<char*> &lines, std::vector<int> &indices);
+
+		std::vector<Scene> scenes;
 		unsigned int currentScene = -1;
+		ObjectConstructor* constructor;
 };
 
 #endif

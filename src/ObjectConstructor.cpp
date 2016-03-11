@@ -42,7 +42,12 @@ GameObject* ObjectConstructor::CreateObject(Game* game, glm::vec2 position, char
 {
 	for (unsigned int i = 0; i < validObjects.size(); i++)
 	{
-
+		if (StringHelper::str_contains(validObjects[i], type))
+		{
+			objects.push_back(new GameObject(game, position.x, position.y));
+			objects[objects.size() - 1]->SetSprite(1.0f, type);
+			return objects[objects.size() - 1];
+		}
 	}
 
 	return nullptr;

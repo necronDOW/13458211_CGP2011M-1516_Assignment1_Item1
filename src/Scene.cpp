@@ -15,12 +15,14 @@ Scene::Scene(Game* game, std::vector<char*> &levelsData, int dataStart, ObjectCo
 	for (unsigned int i = dataStart; i < levelsData.size(); i++)
 	{
 		if (StringHelper::str_contains(levelsData[i], "#"))
-			i = InstantiateDynObjects(game, levelsData, i + 1);
+		{
+			tileCount.y = i - dataStart;
+			i = InstantiateDynObjects(game, levelsData, i + 1, constructor);
+		}
 
 		if (StringHelper::str_contains(levelsData[i], "};"))
 		{
 			std::cout << "Scene loaded successfully: TILES:" << objects.size() << "." << std::endl;
-			tileCount.y = i - dataStart;
 			tileCount.x++;
 			return;
 		}
@@ -61,7 +63,7 @@ void Scene::Render()
 		objects[i]->Render();
 }
 
-int Scene::InstantiateDynObjects(Game* game, std::vector<char*> &levelsData, int dataStart)
+int Scene::InstantiateDynObjects(Game* game, std::vector<char*> &levelsData, int dataStart, ObjectConstructor* &constructor)
 {
 	for (unsigned int i = dataStart; i < levelsData.size(); i++)
 	{
@@ -70,9 +72,9 @@ int Scene::InstantiateDynObjects(Game* game, std::vector<char*> &levelsData, int
 
 		std::vector<char*> dynData = StringHelper::str_split(levelsData[i], "=,");
 
-		glm::vec2 pos = glm::vec2(atoi(dynData[1]) * tileSize.x, atoi(dynData[2]) * tileSize.y);
-		objects.push_back(new GameObject(game, pos.x, pos.y));
-		objects[objects.size() - 1]->SetSprite(1.0f, "chick", "chick");
+		GameObject* newObject = constructor->CreateObject(game, glm::vec2(atoi(dynData[1]) * tileSize.x, atoi(dynData[2]) * tileSize.y), dynData[0] + 1);
+		if (newObject != nullptr)
+			objects.push_back(newObject);
 	}
 }
 

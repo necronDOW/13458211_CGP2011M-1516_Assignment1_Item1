@@ -23,7 +23,7 @@ class Scene
 		glm::vec2 GetSize();
 
 	private:
-		int InstantiateDynObjects(Game* game, std::vector<char*> &levelsData, int dataStart);
+		int InstantiateDynObjects(Game* game, std::vector<char*> &levelsData, int dataStart, ObjectConstructor* &constructor);
 		
 		std::vector<GameObject*> objects;
 		glm::vec2 tileSize;

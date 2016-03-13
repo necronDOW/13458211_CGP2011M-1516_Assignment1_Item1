@@ -46,8 +46,6 @@ void Game::Update()
 
 void Game::HandleInput()
 {
-	SDL_Event event;
-
 	while (SDL_PollEvent(&event))
 	{
 		switch (event.type)
@@ -103,3 +101,4 @@ void Game::CleanExit(char* message)
 char* &Game::GetName() { return exeName; }
 SDL_Instance* &Game::GetSDLInstance() { return instance; }
 TextureManager* &Game::GetTextureManager() { return texManager; }
+SDL_Event &Game::GetEvent() { return event; }

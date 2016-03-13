@@ -5,9 +5,10 @@
 #include <vector>
 #include "StringHelper.h"
 #include "Game.h"
-#include "ObjectConstructor.h"
 
 class GameObject;
+class FunctionalObject;
+class ObjectConstructor;
 
 class Scene
 {
@@ -18,16 +19,23 @@ class Scene
 
 		void Update();
 		void Render();
+		int GetTileID(int x, int y);
+		bool TileExists(GameObject* o, int relativeCoordX, int relativeCoordY);
 
+		void SetGravity(float value);
 		glm::vec2 GetTileSize();
 		glm::vec2 GetSize();
+		float GetGravity();
 
 	private:
 		int InstantiateDynObjects(Game* game, std::vector<char*> &levelsData, int dataStart, ObjectConstructor* &constructor);
 		
-		std::vector<GameObject*> objects;
+		std::vector<int> tileMap;
+		std::vector<GameObject*> tiles;
+		std::vector<FunctionalObject*> objects;
 		glm::vec2 tileSize;
 		glm::vec2 tileCount;
+		float gravity;
 };
 
 #endif

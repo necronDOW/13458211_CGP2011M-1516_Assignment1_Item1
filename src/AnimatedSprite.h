@@ -21,16 +21,19 @@ class AnimatedSprite : public Sprite
 		~AnimatedSprite();
 
 		void Update();
+		void SetToStaticAnimation();
 		void ChangeAnimation(char* newID);
+
+		Timer &GetTimer();
 
 	private:
 		void GenerateAnimations(char* staticID, std::vector<char*> ids);
 
-		unsigned int currentFrame = 0;
 		int staticFrame = -1;
+		unsigned int currentFrame = 0;
 		std::vector<SDL_Rect*> frames;
-		std::vector<Animation> anims;
 		Animation* currentAnim = nullptr;
+		std::vector<Animation> anims;
 		Timer animTimer;
 };
 

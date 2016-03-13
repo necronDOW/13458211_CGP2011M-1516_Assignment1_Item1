@@ -25,11 +25,8 @@ bool Timer::IsDone()
 {
 	float now = (float)SDL_GetTicks();
 
-	if (now > last)
-	{
-		timeElapsed += ((now - last) / 1000.0f);
-		last = now;
-	}
+	timeElapsed += ((now - last) / 1000.0f);
+	last = now;
 
 	if (timeElapsed > delay)
 	{
@@ -37,4 +34,9 @@ bool Timer::IsDone()
 		return true;
 	}
 	else return false;
+}
+
+void Timer::SetDelay(float delay)
+{
+	this->delay = delay;
 }

@@ -18,15 +18,15 @@ player2_climb.03 = 135 128 24 32
 player2_climb.04 = 162 128 24 32
 player2_climb.05 = 189 128 24 32
 
-chuckie_fly.01 = 0 42 57 50
-chuckie_fly.02 = 60 42 57 50
+chuckie_fly.01 = 0 42 58 50
+chuckie_fly.02 = 60 42 58 50
 
-chick_walk.01 = 27 0 24 40
-chick_walk.02 = 0 0 24 40
-chick_climb.01 = 54 0 24 40
-chick_climb.02 = 91 0 24 40
-chick_eat.01 = 108 0 42 40
-chick_eat.02 = 153 0 42 40
+chick_walk.02 = 0 0 22 40
+chick_walk.01 = 24 0 22 40
+chick_climb.01 = 48 0 18 40
+chick_climb.02 = 69 0 18 40
+chick_eat.01 = 90 0 42 40
+chick_eat.02 = 135 0 42 40
 
 cage = 0 162 69 96
 floor = 72 162 24 16

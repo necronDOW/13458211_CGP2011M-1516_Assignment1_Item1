@@ -21,14 +21,14 @@ class SceneManager
 		void NextScene();
 		void PreviousScene();
 
-		const Scene &GetScene(int index);
+		Scene* &GetScene(int index);
 		int GetCurrentIndex();
 		glm::vec2 GetScalar();
 
 	private:
 		void LoadScenes(Game* game, std::vector<char*> &lines, std::vector<int> &indices);
 
-		std::vector<Scene> scenes;
+		std::vector<Scene*> scenes;
 		unsigned int currentScene = -1;
 		ObjectConstructor* constructor;
 };

@@ -1,4 +1,6 @@
 #include "ObjectConstructor.h"
+#include "FunctionalObject.h"
+#include "Player.h"
 
 ObjectConstructor::ObjectConstructor(std::vector<char*> levelData)
 {
@@ -38,34 +40,36 @@ ObjectConstructor::~ObjectConstructor()
 
 }
 
-GameObject* ObjectConstructor::CreateObject(Game* game, glm::vec2 position, char* type)
+void ObjectConstructor::CreateObject(std::vector<FunctionalObject*> &objects, Game* game, Scene* scene, glm::vec2 position, char* type)
 {
 	for (unsigned int i = 0; i < validObjects.size(); i++)
 	{
 		if (StringHelper::str_contains(validObjects[i], type))
 		{
-			objects.push_back(new GameObject(game, position.x, position.y));
-			objects[objects.size() - 1]->SetSprite(1.0f, type);
-			return objects[objects.size() - 1];
+			if (StringHelper::str_contains(type, "player"))
+				objects.push_back(new Player(game, scene, position.x, position.y, 1));
+			else objects.push_back(new FunctionalObject(game, scene, position.x, position.y));
+
+			objects[objects.size() - 1]->SetSprite(1.0f, type, type);
+
+			Sprite* tmp = objects[objects.size() - 1]->GetSprite();
+			tmp->SetOffset(0, -tmp->GetRect().h / 2);
+			return;
 		}
 	}
-
-	return nullptr;
 }
 
-GameObject* ObjectConstructor::CreateObject(Game* game, glm::vec2 position, int type)
+void ObjectConstructor::CreateObject(std::vector<GameObject*> &objects, Game* game, glm::vec2 position, int type)
 {
 	for (unsigned int i = 0; i < validTiles.size(); i++)
 	{
 		if (type >= 0 && type < validTiles.size())
 		{
-			objects.push_back(new GameObject(game, position.x, position.y));
+			objects.push_back(new Tile(game, position.x, position.y));
 			objects[objects.size() - 1]->SetSprite(1.0f, validTiles[type]);
-			return objects[objects.size() - 1];
+			return;
 		}
 	}
-
-	return nullptr;
 }
 
 std::vector<char*> ObjectConstructor::GetValidObjects() { return validObjects; }

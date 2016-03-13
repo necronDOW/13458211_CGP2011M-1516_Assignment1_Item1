@@ -45,8 +45,16 @@ void AnimatedSprite::Update()
 	else src = frames[staticFrame];
 }
 
+void AnimatedSprite::SetToStaticAnimation()
+{
+	currentAnim = nullptr;
+}
+
 void AnimatedSprite::ChangeAnimation(char* newID)
 {
+	if (currentAnim != nullptr && !StringHelper::str_contains(newID, currentAnim->id))
+		return;
+	
 	for (unsigned int i = 0; i < anims.size(); i++)
 	{
 		if (StringHelper::str_contains(anims[i].id, newID))
@@ -81,3 +89,5 @@ void AnimatedSprite::GenerateAnimations(char* staticID, std::vector<char*> ids)
 
 	anims[anims.size() - 1].last = ids.size() - 1;
 }
+
+Timer &AnimatedSprite::GetTimer() { return animTimer; }

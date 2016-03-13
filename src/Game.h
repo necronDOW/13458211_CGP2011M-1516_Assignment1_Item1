@@ -29,6 +29,7 @@ class Game
 		char* &GetName();
 		SDL_Instance* &GetSDLInstance();
 		TextureManager* &GetTextureManager();
+		SDL_Event &GetEvent();
 
 	private:
 		/* Initialization logic for the Game. */
@@ -49,6 +50,7 @@ class Game
 		TextureManager* texManager;
 		glm::vec2 testPos;
 		SceneManager* s;
+		SDL_Event event;
 };
 
 #endif

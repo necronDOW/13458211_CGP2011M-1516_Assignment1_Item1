@@ -1,6 +1,6 @@
 valid {
 	chick
-	player
+	player1
 };
 
 tiles {
@@ -8,6 +8,29 @@ tiles {
 	ladder
 	egg
 	food
+};
+
+level 0 {
+	00000000000
+	01111111110
+	01000000010
+	01000000010
+	01000000010
+	01000000010
+	01000000010
+	01000000010
+	01000000010
+	01000000010
+	01000000010
+	01000000010
+	01111101110
+	01000000010
+	01000000010
+	01000000010
+	01111111110
+	00000000000
+	#
+	player1=6,6
 };
 
 level 1 {
@@ -39,9 +62,9 @@ level 1 {
 	00403002000204002000
 	11111111111111111111
 	#
-	chick=9,4
-	chick=6,9
-	player=10,24
+	chick=9,5
+	chick=6,10
+	player=10,25
 };
 
 level 2 {
@@ -73,10 +96,10 @@ level 2 {
 	40240300020030040200
 	11110111111111111111
 	#
-	chick=7,4
-	chick=2,24
-	chick=19,14
-	player=8,24
+	chick=7,5
+	chick=2,25
+	chick=19,15
+	player=8,25
 };
 
 level 3 {
@@ -109,10 +132,10 @@ level 3 {
 	11100001110111111111
 	#
 	elevator=6,0
-	chick=3,10
-	chick=10,6
-	chick=18,20
-	player=9,24
+	chick=3,11
+	chick=10,7
+	chick=18,21
+	player=9,25
 };
 
 level 4 {
@@ -145,11 +168,11 @@ level 4 {
 	11111011111001111111
 	#
 	elevator=12,0
-	chick=11,4
-	chick=18,4
-	chick=5,24
-	chick=18,24
-	player=8,24
+	chick=11,5
+	chick=18,5
+	chick=5,25
+	chick=18,25
+	player=8,25
 };
 
 level 5 {
@@ -182,11 +205,11 @@ level 5 {
 	11011111111101110011
 	#
 	elevator=17,0
-	chick=2,9
-	chick=4,14
-	chick=2,19
-	chick=15,14
-	player=9,24
+	chick=2,10
+	chick=4,15
+	chick=2,20
+	chick=15,15
+	player=9,25
 };
 
 level 6 {
@@ -219,11 +242,11 @@ level 6 {
 	11100011100111100000
 	#
 	elevator=10,0
-	chick=2,9
-	chick=19,9
-	chick=2,24
-	chick=14,19
-	player=8,24
+	chick=2,10
+	chick=19,10
+	chick=2,25
+	chick=14,20
+	player=8,25
 };
 
 level 7 {
@@ -256,10 +279,10 @@ level 7 {
 	00011001100000000000
 	#
 	elevator=19,0
-	chick=2,9
-	chick=14,4
-	chick=15,16
-	player=8,24
+	chick=2,10
+	chick=14,5
+	chick=15,17
+	player=8,25
 };
 
 level 8 {
@@ -291,8 +314,8 @@ level 8 {
 	04424440444444444244
 	11111111111111111111
 	#
-	chick=11,4
-	chick=11,14
-	chick=18,24
-	player=8,24
+	chick=11,5
+	chick=11,15
+	chick=18,25
+	player=8,25
 };

@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <vector>
-#include "GameObject.h"
+#include "Tile.h"
+
+class FunctionalObject;
 
 class ObjectConstructor
 {
@@ -11,8 +13,8 @@ class ObjectConstructor
 		ObjectConstructor(std::vector<char*> levelData);
 		~ObjectConstructor();
 
-		GameObject* CreateObject(Game* game, glm::vec2 position, char* type);
-		GameObject* CreateObject(Game* game, glm::vec2 position, int type);
+		void CreateObject(std::vector<FunctionalObject*> &objects, Game* game, Scene* scene, glm::vec2 position, char* type);
+		void CreateObject(std::vector<GameObject*> &objects, Game* game, glm::vec2 position, int type);
 		
 		std::vector<char*> GetValidObjects();
 		std::vector<char*> GetValidTiles();

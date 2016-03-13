@@ -30,8 +30,8 @@ Sprite::~Sprite()
 
 void Sprite::Update()
 {
-	dest.x = origin->x - (dest.w / 2);
-	dest.y = origin->y - (dest.h / 2);
+	dest.x = (origin->x + offset.x) - (dest.w / 2);
+	dest.y = (origin->y + offset.y) - (dest.h / 2);
 }
 
 void Sprite::Render()
@@ -40,10 +40,13 @@ void Sprite::Render()
 }
 
 void Sprite::ChangeAnimation(char* id) { }
+void Sprite::SetToStaticAnimation() { }
 
-void Sprite::FlipHorizontal()
+void Sprite::FlipHorizontal(float xVelocity)
 {
-	flipFlags = flipFlags == SDL_FLIP_NONE ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+	if (xVelocity < 0.0f)
+		flipFlags = SDL_FLIP_HORIZONTAL;
+	else flipFlags = SDL_FLIP_NONE;
 }
 
 void Sprite::SetScale(float x, float y)
@@ -59,6 +62,13 @@ void Sprite::SetOrigin(glm::vec2* origin)
 	this->origin = origin;
 }
 
+void Sprite::SetOffset(float x, float y)
+{
+	offset = glm::vec2(x, y);
+}
+
 glm::vec2 Sprite::GetScale() { return scale; }
 glm::vec2 Sprite::GetOrigin() { return *origin; }
+glm::vec2 Sprite::GetOffset() { return offset; }
 SDL_Rect Sprite::GetRect() { return dest; }
+Timer &Sprite::GetTimer() { return Timer(); }

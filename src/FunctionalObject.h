@@ -15,6 +15,7 @@ class FunctionalObject : public GameObject
 		virtual void HandleCollision(GameObject* o);
 
 		bool isGrounded;
+		bool canClimb;
 
 	protected:
 		Scene* scene;

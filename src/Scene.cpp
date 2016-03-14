@@ -98,9 +98,9 @@ int Scene::GetTileID(int x, int y)
 	else return -1;
 }
 
-bool Scene::TileExists(GameObject* o, int relativeCoordX, int relativeCoordY)
+int Scene::TileExists(glm::vec2 pos, int relativeCoordX, int relativeCoordY)
 {
-	glm::vec2 position = glm::vec2(o->GetPosition().x - (tileSize.x / 2), o->GetPosition().y);
+	glm::vec2 position = glm::vec2(pos.x - (tileSize.x / 2), pos.y);
 	int pX = -1, pY = -1;
 
 	while (position.x > 0)
@@ -115,9 +115,7 @@ bool Scene::TileExists(GameObject* o, int relativeCoordX, int relativeCoordY)
 		pY++;
 	}
 
-	if (GetTileID(pX + relativeCoordX, pY + relativeCoordY) >= 0)
-		return true;
-	else return false;
+	return GetTileID(pX + relativeCoordX, pY + relativeCoordY);
 }
 
 void Scene::SetGravity(float value)

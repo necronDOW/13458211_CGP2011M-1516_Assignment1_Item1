@@ -1,6 +1,5 @@
 #include "ObjectConstructor.h"
 #include "FunctionalObject.h"
-#include "Player.h"
 
 ObjectConstructor::ObjectConstructor(std::vector<char*> levelData)
 {
@@ -65,7 +64,15 @@ void ObjectConstructor::CreateObject(std::vector<GameObject*> &objects, Game* ga
 	{
 		if (type >= 0 && type < validTiles.size())
 		{
-			objects.push_back(new Tile(game, position.x, position.y));
+			switch (type)
+			{
+				case 1:
+					objects.push_back(new Ladder(game, position.x, position.y));
+					break;
+				default:
+					objects.push_back(new Tile(game, position.x, position.y));
+					break;
+			}
 			objects[objects.size() - 1]->SetSprite(1.0f, validTiles[type]);
 			return;
 		}

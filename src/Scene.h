@@ -20,7 +20,7 @@ class Scene
 		void Update();
 		void Render();
 		int GetTileID(int x, int y);
-		bool TileExists(GameObject* o, int relativeCoordX, int relativeCoordY);
+		int TileExists(glm::vec2 pos, int relativeCoordX, int relativeCoordY);
 
 		void SetGravity(float value);
 		glm::vec2 GetTileSize();

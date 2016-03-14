@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include <vector>
-#include "Tile.h"
+#include "Ladder.h"
+#include "Player.h"
 
 class FunctionalObject;
 

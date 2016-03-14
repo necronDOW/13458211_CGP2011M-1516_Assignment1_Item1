@@ -9,6 +9,7 @@ FunctionalObject::FunctionalObject(Game* game, Scene* scene, float x, float y)
 {
 	this->scene = scene;
 	isGrounded = false;
+	canClimb = false;
 }
 
 FunctionalObject::~FunctionalObject()
@@ -18,22 +19,17 @@ FunctionalObject::~FunctionalObject()
 
 void FunctionalObject::Update()
 {
-	velocity.y = 0.0f;
-
-	if (!scene->TileExists(this, 0, 1))
+	if (scene->TileExists(position, 0, 1) < 0)
 		isGrounded = false;
 
 	if (!isGrounded)
 		velocity.y += scene->GetGravity();
-
-	if (velocity.x != 0.0f)
-	{
-		sprite->FlipHorizontal(velocity.x);
-		sprite->ChangeAnimation("walk");
-	}
-	else sprite->SetToStaticAnimation();
 	
 	GameObject::Update();
+
+	sprite->FlipHorizontal(velocity.x);
+
+	canClimb = false;
 }
 
 void FunctionalObject::HandleCollision(GameObject* o)

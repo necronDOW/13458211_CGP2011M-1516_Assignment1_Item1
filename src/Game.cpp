@@ -62,11 +62,11 @@ void Game::HandleInput()
 						case SDLK_ESCAPE:
 							done = true;
 							break;
-						case SDLK_LEFT:
+						case SDLK_PAGEDOWN:
 							s->PreviousScene();
 							instance->SetRenderScale(s->GetScalar().x, s->GetScalar().y);
 							break;
-						case SDLK_RIGHT:
+						case SDLK_PAGEUP:
 							s->NextScene();
 							instance->SetRenderScale(s->GetScalar().x, s->GetScalar().y);
 							break;

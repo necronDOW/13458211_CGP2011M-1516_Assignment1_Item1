@@ -61,6 +61,7 @@ void AnimatedSprite::ChangeAnimation(char* newID)
 		{
 			currentFrame = anims[i].first;
 			currentAnim = &anims[i];
+			src = frames[currentFrame];
 			return;
 		}
 	}

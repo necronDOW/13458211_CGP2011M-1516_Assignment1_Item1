@@ -25,6 +25,7 @@ void Tile::HandleCollision(GameObject* o)
 	glm::vec2 oV = o->GetVelocity();
 	Bounds oldB = Bounds(oB.top - oV.y, oB.left - oV.x, oB.bottom - oV.y, oB.right - oV.x);
 	SDL_Rect oRect = o->GetSprite()->GetRect();
+	Bounds dfsgdf = GetBounds();
 
 	// Check collision with left side of tile.
 	if ((oldB.right <= GetBounds().left && oB.right > GetBounds().left) ||
@@ -35,15 +36,8 @@ void Tile::HandleCollision(GameObject* o)
 	}
 
 	// Check collision with top side of tile.
-	if (oldB.bottom <= GetBounds().top && oB.bottom > GetBounds().top)
-	{
-		o->SetPosition(o->GetPosition().x, o->GetPosition().y - oV.y);
-		dynamic_cast<FunctionalObject*>(o)->isGrounded = true;
-		return;
-	}
-
-	// Check collision with bottom side of tile.
-	if (oldB.top >= GetBounds().bottom && oB.top < GetBounds().bottom)
+	if ((oldB.bottom <= GetBounds().top && oB.bottom > GetBounds().top) ||
+		(oldB.top >= GetBounds().bottom && oB.top < GetBounds().bottom))
 	{
 		o->SetPosition(o->GetPosition().x, o->GetPosition().y - oV.y);
 		return;

@@ -2,7 +2,8 @@
 #define FUNCTIONALOBJECT_H
 
 #include "GameObject.h"
-#include "Tile.h"
+
+class Ladder;
 
 class FunctionalObject : public GameObject
 {
@@ -15,8 +16,8 @@ class FunctionalObject : public GameObject
 		virtual void HandleInput(SDL_Event &event);
 		virtual void HandleCollision(GameObject* o);
 
-		bool isGrounded;
 		bool canClimb;
+		bool isClimbing;
 
 	protected:
 		Scene* scene;

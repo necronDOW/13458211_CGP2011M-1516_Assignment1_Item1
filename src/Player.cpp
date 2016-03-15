@@ -23,16 +23,42 @@ void Player::Update()
 
 void Player::HandleInput(SDL_Event &event)
 {
-	velocity.x = 0.0f;
-	velocity.y = 0.0f;
-
 	switch (event.type)
 	{
 		case SDL_KEYDOWN:
-			HandleMovement(event, 2.0f);
+			if (!event.key.repeat)
+				HandleMovement(event, 2.0f);
 			break;
 
 		case SDL_KEYUP:
+			switch (event.key.keysym.sym)
+			{
+				case SDLK_w:
+					if (velocity.y < 0.0f)
+					{
+						velocity.y = 0.0f;
+						isClimbing = false;
+					}
+					break;
+
+				case SDLK_a:
+					if (velocity.x < 0.0f)
+						velocity.x = 0.0f;
+					break;
+
+				case SDLK_s:
+					if (velocity.y > 0.0f)
+					{
+						velocity.y = 0.0f;
+						isClimbing = false;
+					}
+					break;
+
+				case SDLK_d:
+					if (velocity.x > 0.0f)
+						velocity.x = 0.0f;
+					break;
+			}
 			break;
 	}
 }
@@ -42,19 +68,29 @@ void Player::HandleMovement(SDL_Event &event, float effect)
 	switch (event.key.keysym.sym)
 	{
 		case SDLK_w: 
-			velocity.y = -effect;
+			if (canClimb)
+			{
+				velocity.y = -effect;
+				isClimbing = true;
+			}
 			break;
 
 		case SDLK_a:
-			velocity.x = -effect;
+			if (!isClimbing)
+				velocity.x = -effect;
 			break;
 
 		case SDLK_s:
-			velocity.y = effect;
+			if (canClimb)
+			{
+				velocity.y = effect;
+				isClimbing = true;
+			}
 			break;
 
 		case SDLK_d:
-			velocity.x = effect;
+			if (!isClimbing)
+				velocity.x = effect;
 			break;
 	}
 }

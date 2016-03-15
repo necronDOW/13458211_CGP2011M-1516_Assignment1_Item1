@@ -104,7 +104,7 @@ int Scene::GetTileID(int x, int y)
 
 int Scene::TileExists(glm::vec2 pos, int relativeCoordX, int relativeCoordY)
 {
-	glm::vec2 position = glm::vec2(pos.x - (tileSize.x / 2), pos.y);
+	glm::vec2 position = glm::vec2(pos.x - (tileSize.x / 2), pos.y - (tileSize.y / 4));
 	int pX = -1, pY = -1;
 
 	while (position.x > 0)
@@ -120,6 +120,26 @@ int Scene::TileExists(glm::vec2 pos, int relativeCoordX, int relativeCoordY)
 	}
 
 	return GetTileID(pX + relativeCoordX, pY + relativeCoordY);
+}
+
+void Scene::SnapToY(glm::vec2 &pos)
+{
+	glm::vec2 position = glm::vec2(pos.x - (tileSize.x / 2), pos.y);
+	int pX = -1, pY = -1;
+
+	while (position.x > 0)
+	{
+		position.x -= tileSize.x;
+		pX++;
+	}
+
+	while (position.y > 0)
+	{
+		position.y -= tileSize.y;
+		pY++;
+	}
+
+	pos.y = pY * tileSize.y + 3;
 }
 
 void Scene::SetGravity(float value)

@@ -67,15 +67,19 @@ void Scene::Update()
 	}
 }
 
+void Scene::HandleInput(SDL_Event &event)
+{
+	for (unsigned int i = 0; i < objects.size(); i++)
+		objects[i]->HandleInput(event);
+}
+
 void Scene::Render()
 {
 	for (unsigned int i = 0; i < tiles.size(); i++)
 		tiles[i]->Render();
 
 	for (unsigned int i = 0; i < objects.size(); i++)
-	{
 		objects[i]->Render();
-	}
 }
 
 int Scene::InstantiateDynObjects(Game* game, std::vector<char*> &levelsData, int dataStart, ObjectConstructor* &constructor)

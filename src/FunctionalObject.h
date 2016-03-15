@@ -12,6 +12,7 @@ class FunctionalObject : public GameObject
 		~FunctionalObject();
 
 		virtual void Update();
+		virtual void HandleInput(SDL_Event &event);
 		virtual void HandleCollision(GameObject* o);
 
 		bool isGrounded;

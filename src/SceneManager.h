@@ -17,6 +17,7 @@ class SceneManager
 		~SceneManager();
 
 		void Update();
+		void HandleInput(SDL_Event &event);
 		void Render();
 		void NextScene();
 		void PreviousScene();

@@ -19,17 +19,12 @@ FunctionalObject::~FunctionalObject()
 
 void FunctionalObject::Update()
 {
-	if (scene->TileExists(position, 0, 1) < 0)
-		isGrounded = false;
-
-	if (!isGrounded)
-		velocity.y += scene->GetGravity();
-	
 	GameObject::Update();
+}
 
-	sprite->FlipHorizontal(velocity.x);
+void FunctionalObject::HandleInput(SDL_Event &event)
+{
 
-	canClimb = false;
 }
 
 void FunctionalObject::HandleCollision(GameObject* o)

@@ -48,6 +48,8 @@ void Game::HandleInput()
 {
 	while (SDL_PollEvent(&event))
 	{
+		s->HandleInput(event);
+
 		switch (event.type)
 		{
 			case SDL_QUIT:

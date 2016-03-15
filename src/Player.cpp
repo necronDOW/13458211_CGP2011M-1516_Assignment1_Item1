@@ -18,48 +18,44 @@ Player::~Player()
 
 void Player::Update()
 {
-	velocity.y = 0.0f;
-	velocity.x = 0.0f;
-
-	if (scene->TileExists(position, 0, 0) == 1)
-		canClimb = true;
-	else canClimb = false;
-
-	HandleInput();
-
-	if (canClimb && velocity.y != 0.0f) 
-		sprite->ChangeAnimation("climb");
-
-	if (!canClimb && velocity.x != 0.0f)
-		sprite->ChangeAnimation("walk");
-
-	if (velocity.x == 0.0f && velocity.y == 0.0f)
-		sprite->SetToStaticAnimation();
-
 	FunctionalObject::Update();
 }
 
-void Player::HandleInput()
+void Player::HandleInput(SDL_Event &event)
 {
-	SDL_Event event = game->GetEvent();
-	const Uint8* keystate = SDL_GetKeyboardState(NULL);
+	velocity.x = 0.0f;
+	velocity.y = 0.0f;
 
-	if (keystate[SDL_SCANCODE_A])
-		velocity.x = -2.0f;
-	else if (keystate[SDL_SCANCODE_D])
-		velocity.x = 2.0f;
-	
-	if (canClimb)
+	switch (event.type)
 	{
-		if (keystate[SDL_SCANCODE_W])
-			velocity.y = -2.0f;
-		else if (keystate[SDL_SCANCODE_S])
-			velocity.y = 2.0f;
+		case SDL_KEYDOWN:
+			HandleMovement(event, 2.0f);
+			break;
+
+		case SDL_KEYUP:
+			break;
 	}
-	
-	if (keystate[SDL_SCANCODE_SPACE])
+}
+
+void Player::HandleMovement(SDL_Event &event, float effect)
+{
+	switch (event.key.keysym.sym)
 	{
-		velocity.y -= 1.0f;
+		case SDLK_w: 
+			velocity.y = -effect;
+			break;
+
+		case SDLK_a:
+			velocity.x = -effect;
+			break;
+
+		case SDLK_s:
+			velocity.y = effect;
+			break;
+
+		case SDLK_d:
+			velocity.x = effect;
+			break;
 	}
 }
 

@@ -18,6 +18,7 @@ class Scene
 		~Scene();
 
 		void Update();
+		void HandleInput(SDL_Event &event);
 		void Render();
 		int GetTileID(int x, int y);
 		int TileExists(glm::vec2 pos, int relativeCoordX, int relativeCoordY);

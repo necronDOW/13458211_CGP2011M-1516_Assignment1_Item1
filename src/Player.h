@@ -11,7 +11,8 @@ class Player : public FunctionalObject
 		~Player();
 
 		void Update();
-		void HandleInput();
+		void HandleInput(SDL_Event &event);
+		void HandleMovement(SDL_Event &event, float effect);
 
 		int GetID();
 

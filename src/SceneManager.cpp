@@ -45,6 +45,12 @@ void SceneManager::Update()
 		scenes[currentScene]->Update();
 }
 
+void SceneManager::HandleInput(SDL_Event &event)
+{
+	if (currentScene >= 0)
+		scenes[currentScene]->HandleInput(event);
+}
+
 void SceneManager::Render()
 {
 	if (currentScene >= 0)

@@ -97,7 +97,7 @@ int Scene::InstantiateDynObjects(Game* game, std::vector<char*> &levelsData, int
 
 int Scene::GetTileID(int x, int y)
 {
-	if (x < tileCount.x && y < tileCount.y)
+	if (x < tileCount.x - 1&& y < tileCount.y)
 		return tileMap[(y * (tileCount.x - 1)) + x];
 	else return -1;
 }

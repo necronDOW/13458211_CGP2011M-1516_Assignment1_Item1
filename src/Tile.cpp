@@ -1,5 +1,6 @@
 #include "Tile.h"
 #include "Scene.h"
+#include "Enemy.h"
 
 Tile::Tile(Game* game, float x, float y)
 	: GameObject(game, x, y)
@@ -32,6 +33,9 @@ void Tile::HandleCollision(GameObject* o)
 		(oldB.left > GetBounds().right && oB.left <= GetBounds().right))
 	{
 		o->SetPosition(o->GetPosition().x - oV.x, o->GetPosition().y);
+
+		if (dynamic_cast<Enemy*>(o))
+			dynamic_cast<Enemy*>(o)->ChangeDirectionX();
 		return;
 	}
 

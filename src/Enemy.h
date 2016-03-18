@@ -1,6 +1,7 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include <ctime>
 #include "FunctionalObject.h"
 #include "Ladder.h"
 
@@ -13,13 +14,18 @@ class Enemy : public FunctionalObject
 
 		void Update();
 		void HandleCollision(GameObject* o);
+		void ChangeDirectionX();
+		void SetDirection(float x, float y);
+
+		glm::vec2 GetDirection();
+
+	private:
 		void Climb();
 		void Walk();
 
-	private:
 		glm::vec2 direction;
 		float speed;
-		float startClimbY;
+		float startClimbY, startWalkX;
 		bool checkClimb, checkWalk;
 };
 

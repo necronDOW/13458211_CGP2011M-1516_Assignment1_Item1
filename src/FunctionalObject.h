@@ -16,11 +16,16 @@ class FunctionalObject : public GameObject
 		virtual void HandleInput(SDL_Event &event);
 		virtual void HandleCollision(GameObject* o);
 
-		bool canClimb;
-		bool isClimbing;
+		void SetJumpVelocity(float value);
 
 	protected:
+		void AnimationHandler();
+
 		Scene* scene;
+		bool canClimb;
+		bool isClimbing;
+		bool isJumping;
+		float jumpVelocity;
 };
 
 #endif

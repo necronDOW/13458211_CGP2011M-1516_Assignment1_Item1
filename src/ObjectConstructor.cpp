@@ -52,7 +52,7 @@ void ObjectConstructor::CreateObject(std::vector<FunctionalObject*> &objects, Ga
 			objects[objects.size() - 1]->SetSprite(1.0f, type, type);
 
 			if (StringHelper::str_contains(type, "player"))
-				objects[objects.size() - 1]->GetSprite()->SetScale(0.75f, 0.75f);
+				objects[objects.size() - 1]->GetSprite()->SetScale(0.9f, 0.9f);
 
 			Sprite* tmp = objects[objects.size() - 1]->GetSprite();
 			tmp->SetOffset(0, -tmp->GetRect().h / 2);

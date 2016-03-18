@@ -49,8 +49,8 @@ void GameObject::CheckCollision(GameObject* other)
 	SDL_Rect thisRect = sprite->GetRect();
 	SDL_Rect otherRect = other->GetSprite()->GetRect();
 
-	if (distance.x < ((thisRect.w + otherRect.w) / 2)
-		&& distance.y < ((thisRect.h + otherRect.h) / 2))
+	if (distance.x <= ((thisRect.w + otherRect.w) / 2)
+		&& distance.y <= ((thisRect.h + otherRect.h) / 2))
 	{
 		HandleCollision(other);
 		other->HandleCollision(this);

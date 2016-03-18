@@ -76,8 +76,7 @@ void Player::HandleMovement(SDL_Event &event, float effect)
 			break;
 
 		case SDLK_a:
-			if (!isClimbing)
-				velocity.x = -effect;
+			velocity.x = -effect;
 			break;
 
 		case SDLK_s:
@@ -89,9 +88,12 @@ void Player::HandleMovement(SDL_Event &event, float effect)
 			break;
 
 		case SDLK_d:
-			if (!isClimbing)
-				velocity.x = effect;
+			velocity.x = effect;
 			break;
+
+		case SDLK_SPACE:
+			if (!isJumping)
+				SetJumpVelocity(-4.0f);
 	}
 }
 

@@ -28,16 +28,22 @@ void Tile::HandleCollision(GameObject* o)
 	Bounds dfsgdf = GetBounds();
 
 	// Check collision with left side of tile.
-	if ((oldB.right <= GetBounds().left && oB.right > GetBounds().left) ||
-		(oldB.left >= GetBounds().right && oB.left < GetBounds().right))
+	if ((oldB.right < GetBounds().left && oB.right >= GetBounds().left) ||
+		(oldB.left > GetBounds().right && oB.left <= GetBounds().right))
 	{
 		o->SetPosition(o->GetPosition().x - oV.x, o->GetPosition().y);
 		return;
 	}
 
 	// Check collision with top side of tile.
-	if ((oldB.bottom <= GetBounds().top && oB.bottom > GetBounds().top) ||
-		(oldB.top >= GetBounds().bottom && oB.top < GetBounds().bottom))
+	if (oldB.bottom <= GetBounds().top && oB.bottom > GetBounds().top)
+	{
+		o->SetPosition(o->GetPosition().x, o->GetPosition().y - oV.y);
+		dynamic_cast<FunctionalObject*>(o)->SetJumpVelocity(0.0f);
+		return;
+	}
+
+	if ((oldB.top >= GetBounds().bottom && oB.top < GetBounds().bottom))
 	{
 		o->SetPosition(o->GetPosition().x, o->GetPosition().y - oV.y);
 		return;

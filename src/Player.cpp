@@ -18,6 +18,15 @@ Player::~Player()
 
 void Player::Update()
 {
+	if (isJumping)
+	{
+		velocity.y = jumpVelocity;
+		jumpVelocity += 0.5f;
+
+		if (jumpVelocity > scene->GetGravity())
+			isJumping = false;
+	}
+
 	FunctionalObject::Update();
 }
 

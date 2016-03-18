@@ -5,6 +5,7 @@
 #include <vector>
 #include "Ladder.h"
 #include "Player.h"
+#include "Enemy.h"
 
 class FunctionalObject;
 

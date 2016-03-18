@@ -1,5 +1,4 @@
 #include "ObjectConstructor.h"
-#include "FunctionalObject.h"
 
 ObjectConstructor::ObjectConstructor(std::vector<char*> levelData)
 {
@@ -47,15 +46,15 @@ void ObjectConstructor::CreateObject(std::vector<FunctionalObject*> &objects, Ga
 		{
 			if (StringHelper::str_contains(type, "player"))
 				objects.push_back(new Player(game, scene, position.x, position.y, 1));
+			else if (StringHelper::str_contains(type, "chick"))
+				objects.push_back(new Enemy(game, scene, position.x, position.y));
 			else objects.push_back(new FunctionalObject(game, scene, position.x, position.y));
 
-			objects[objects.size() - 1]->SetSprite(1.0f, type, type);
+			FunctionalObject* tmp = objects[objects.size() - 1];
+			tmp->SetSprite(1.0f, type, type);
+			tmp->GetSprite()->SetScale(0.9f, 0.9f);
 
-			if (StringHelper::str_contains(type, "player"))
-				objects[objects.size() - 1]->GetSprite()->SetScale(0.9f, 0.9f);
-
-			Sprite* tmp = objects[objects.size() - 1]->GetSprite();
-			tmp->SetOffset(0, -tmp->GetRect().h / 2);
+			tmp->GetSprite()->SetOffset(0, -tmp->GetSprite()->GetRect().h / 2);
 			return;
 		}
 	}
@@ -65,7 +64,7 @@ void ObjectConstructor::CreateObject(std::vector<GameObject*> &objects, Game* ga
 {
 	for (unsigned int i = 0; i < validTiles.size(); i++)
 	{
-		if (type >= 0 && type < validTiles.size())
+		if (type >= 0 && type < 2)
 		{
 			switch (type)
 			{

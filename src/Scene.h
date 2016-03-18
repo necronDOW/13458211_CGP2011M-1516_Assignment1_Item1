@@ -22,7 +22,9 @@ class Scene
 		void Render();
 		int GetTileID(int x, int y);
 		int TileExists(glm::vec2 pos, int relativeCoordX, int relativeCoordY);
-		void SnapToY(glm::vec2 &pos);
+		void SnapToX(glm::vec2 &pos, int offset);
+		void SnapToY(glm::vec2 &pos, int offset);
+		glm::vec2 GetCurrentTile(glm::vec2 pos);
 
 		void SetGravity(float value);
 		glm::vec2 GetTileSize();

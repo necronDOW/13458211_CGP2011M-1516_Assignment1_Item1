@@ -31,18 +31,9 @@ void FunctionalObject::Update()
 	}
 
 	if (scene->TileExists(position, 0, 1) > -1 && !isClimbing && !isJumping)
-		scene->SnapToY(position);
+		scene->SnapToY(position, 0);
 	else if (!canClimb && !isJumping)
 		velocity.y = scene->GetGravity();
-
-	if (isJumping)
-	{
-		velocity.y = jumpVelocity;
-		jumpVelocity += 0.5f;
-
-		if (jumpVelocity > scene->GetGravity())
-			isJumping = false;
-	}
 
 	AnimationHandler();
 

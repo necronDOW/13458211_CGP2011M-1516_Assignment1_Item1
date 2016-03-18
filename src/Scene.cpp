@@ -105,41 +105,39 @@ int Scene::GetTileID(int x, int y)
 int Scene::TileExists(glm::vec2 pos, int relativeCoordX, int relativeCoordY)
 {
 	glm::vec2 position = glm::vec2(pos.x - (tileSize.x / 2), pos.y - (tileSize.y / 4));
-	int pX = -1, pY = -1;
+	glm::vec2 tileIndices = GetCurrentTile(position);
 
-	while (position.x > 0)
-	{
-		position.x -= tileSize.x;
-		pX++;
-	}
-
-	while (position.y > 0)
-	{
-		position.y -= tileSize.y;
-		pY++;
-	}
-
-	return GetTileID(pX + relativeCoordX, pY + relativeCoordY);
+	return GetTileID(tileIndices.x + relativeCoordX, tileIndices.y + relativeCoordY);
 }
 
-void Scene::SnapToY(glm::vec2 &pos)
+void Scene::SnapToX(glm::vec2 &pos, int offset)
+{
+	pos.x = (GetCurrentTile(pos).x + offset) * tileSize.x;
+}
+
+void Scene::SnapToY(glm::vec2 &pos, int offset)
 {
 	glm::vec2 position = glm::vec2(pos.x - (tileSize.x / 2), pos.y);
+	pos.y = (GetCurrentTile(position).y + offset) * tileSize.y + 3;
+}
+
+glm::vec2 Scene::GetCurrentTile(glm::vec2 pos)
+{
 	int pX = -1, pY = -1;
 
-	while (position.x > 0)
+	while (pos.x > 0)
 	{
-		position.x -= tileSize.x;
+		pos.x -= tileSize.x;
 		pX++;
 	}
 
-	while (position.y > 0)
+	while (pos.y > 0)
 	{
-		position.y -= tileSize.y;
+		pos.y -= tileSize.y;
 		pY++;
 	}
 
-	pos.y = pY * tileSize.y + 3;
+	return glm::vec2(pX, pY);
 }
 
 void Scene::SetGravity(float value)

@@ -32,6 +32,8 @@ class SceneManager
 		std::vector<Scene*> scenes;
 		unsigned int currentScene = -1;
 		ObjectConstructor* constructor;
+		SDL_Instance* instance;
+		AudioManager* audioMngr;
 };
 
 #endif

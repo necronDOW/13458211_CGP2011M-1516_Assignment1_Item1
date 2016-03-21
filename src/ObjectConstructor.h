@@ -6,6 +6,7 @@
 #include "Ladder.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Pickup.h"
 
 class FunctionalObject;
 

@@ -30,6 +30,7 @@ class Scene
 		glm::vec2 GetTileSize();
 		glm::vec2 GetSize();
 		float GetGravity();
+		int GetObjectiveCount();
 
 	private:
 		int InstantiateDynObjects(Game* game, std::vector<char*> &levelsData, int dataStart, ObjectConstructor* &constructor);
@@ -40,6 +41,7 @@ class Scene
 		glm::vec2 tileSize;
 		glm::vec2 tileCount;
 		float gravity;
+		int objectiveCount;
 };
 
 #endif

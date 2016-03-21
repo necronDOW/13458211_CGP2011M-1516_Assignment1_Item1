@@ -2,6 +2,8 @@
 #define PLAYER_H
 
 #include "FunctionalObject.h"
+#include "Enemy.h"
+#include "Pickup.h"
 
 class Player : public FunctionalObject
 {
@@ -13,11 +15,13 @@ class Player : public FunctionalObject
 		void Update();
 		void HandleInput(SDL_Event &event);
 		void HandleMovement(SDL_Event &event, float effect);
+		void HandleCollision(GameObject* o);
 
 		int GetID();
 
 	private:
 		int id;
+		int score;
 };
 
 #endif

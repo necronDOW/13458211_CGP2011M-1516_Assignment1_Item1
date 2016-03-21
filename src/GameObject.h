@@ -31,6 +31,8 @@ class GameObject
 		virtual void Render();
 		glm::vec2 AbsolutePosition();
 		void CheckCollision(GameObject* other);
+		void Delete();
+		bool Deleted();
 		virtual void HandleCollision(GameObject* o);
 
 		// Get/Set functions
@@ -49,6 +51,7 @@ class GameObject
 		glm::vec2 velocity;
 		Bounds bounds;
 		Sprite* sprite;
+		bool deleted;
 };
 
 #endif

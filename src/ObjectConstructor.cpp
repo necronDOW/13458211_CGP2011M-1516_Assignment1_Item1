@@ -64,17 +64,22 @@ void ObjectConstructor::CreateObject(std::vector<GameObject*> &objects, Game* ga
 {
 	for (unsigned int i = 0; i < validTiles.size(); i++)
 	{
-		if (type >= 0 && type < 2)
+		if (type >= 0)
 		{
-			switch (type)
+			if (type == 1)
 			{
-				case 1:
-					objects.push_back(new Ladder(game, position.x, position.y));
-					break;
-				default:
-					objects.push_back(new Tile(game, position.x, position.y));
-					break;
+				objects.push_back(new Ladder(game, position.x, position.y));
 			}
+			else if (type == 2 || type == 3)
+			{
+				objects.push_back(new Pickup(game, position.x, position.y, 1.0f, validTiles[type]));
+				return;
+			}
+			else
+			{
+				objects.push_back(new Tile(game, position.x, position.y));
+			}
+
 			objects[objects.size() - 1]->SetSprite(1.0f, validTiles[type]);
 			return;
 		}

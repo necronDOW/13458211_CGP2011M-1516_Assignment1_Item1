@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include "TextureManager.h"
+#include "AudioManager.h"
 
 // SDL includes
 #include <SDL.h>
@@ -28,8 +29,11 @@ class Game
 
 		char* &GetName();
 		SDL_Instance* &GetSDLInstance();
+		AudioManager* &GetAudioManager();
 		TextureManager* &GetTextureManager();
 		SDL_Event &GetEvent();
+
+		bool done;							// Whether or not the game is done.
 
 	private:
 		/* Initialization logic for the Game. */
@@ -45,11 +49,11 @@ class Game
 		void Render();
 
 		char* exeName;						// The name of this application.
-		bool done;							// Whether or not the game is done.
 		SDL_Instance* instance;				// The SDL instance through which this application runs on.
 		TextureManager* texManager;
 		glm::vec2 testPos;
-		SceneManager* s;
+		SceneManager* sceneMngr;
+		AudioManager* audioMngr;
 		SDL_Event event;
 };
 

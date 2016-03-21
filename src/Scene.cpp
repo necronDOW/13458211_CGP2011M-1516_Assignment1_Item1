@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "FunctionalObject.h"
 #include "ObjectConstructor.h"
+#include "Pickup.h"
 
 Scene::Scene()
 {
@@ -14,6 +15,7 @@ Scene::Scene(Game* game, std::vector<char*> &levelsData, int dataStart, ObjectCo
 	Sprite tmp = Sprite(game, glm::vec2(0, 0), 1.0f, constructor->GetValidTiles()[0]);
 	tileCount = glm::vec2(0, 0);
 	tileSize = glm::vec2(tmp.GetRect().w, tmp.GetRect().h);
+	objectiveCount = 0;
 
 	for (unsigned int i = dataStart; i < levelsData.size(); i++)
 	{
@@ -37,6 +39,9 @@ Scene::Scene(Game* game, std::vector<char*> &levelsData, int dataStart, ObjectCo
 			tileMap.push_back(val);
 			constructor->CreateObject(tiles, game, glm::vec2(j * tileSize.x, (i - dataStart) * tileSize.y), val);
 
+			if (val == 2)
+				objectiveCount++;
+
 			if (j > tileCount.x)
 				tileCount.x = (float)j;
 		}
@@ -56,14 +61,34 @@ Scene::~Scene()
 void Scene::Update()
 {
 	for (unsigned int i = 0; i < tiles.size(); i++)
-		tiles[i]->Update();
+	{
+		if (!tiles[i]->Deleted())
+			tiles[i]->Update();
+		else
+		{
+			if (dynamic_cast<Pickup*>(tiles[i])->GetType() == Pickup::Type::player_object)
+				objectiveCount--;
+
+			tiles.erase(tiles.begin() + i);
+		}
+	}
 
 	for (unsigned int i = 0; i < objects.size(); i++)
 	{
-		for (unsigned int j = 0; j < tiles.size(); j++)
-			objects[i]->CheckCollision(tiles[j]);
+		if (!objects[i]->Deleted())
+		{
+			for (unsigned int j = 0; j < tiles.size(); j++)
+				objects[i]->CheckCollision(tiles[j]);
 
-		objects[i]->Update();
+			if (dynamic_cast<Player*>(objects[i]))
+			{
+				for (unsigned int j = 0; j < objects.size(); j++)
+					if (i != j) objects[i]->CheckCollision(objects[j]);
+			}
+
+			objects[i]->Update();
+		}
+		else objects.erase(objects.begin() + i);
 	}
 }
 
@@ -148,3 +173,4 @@ void Scene::SetGravity(float value)
 glm::vec2 Scene::GetTileSize() { return tileSize; }
 glm::vec2 Scene::GetSize() { return tileCount * tileSize; }
 float Scene::GetGravity() { return gravity; }
+int Scene::GetObjectiveCount() { return objectiveCount; }

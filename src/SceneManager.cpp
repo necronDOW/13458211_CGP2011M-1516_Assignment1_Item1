@@ -7,6 +7,9 @@ SceneManager::SceneManager()
 
 SceneManager::SceneManager(Game* game, char* filePath)
 {
+	instance = game->GetSDLInstance();
+	audioMngr = game->GetAudioManager();
+
 	std::vector<int> levelIndices;
 	std::vector<char*> lines;
 	std::ifstream file(filePath);
@@ -42,7 +45,12 @@ SceneManager::~SceneManager()
 void SceneManager::Update()
 {
 	if (currentScene >= 0)
+	{
 		scenes[currentScene]->Update();
+		
+		if (scenes[currentScene]->GetObjectiveCount() <= 0)
+			NextScene();
+	}
 }
 
 void SceneManager::HandleInput(SDL_Event &event)
@@ -60,13 +68,21 @@ void SceneManager::Render()
 void SceneManager::NextScene()
 {
 	if (currentScene + 1 < scenes.size())
+	{
 		currentScene++;
+		instance->SetRenderScale(GetScalar().x, GetScalar().y);
+		audioMngr->PauseMusic();
+	}
 }
 
 void SceneManager::PreviousScene()
 {
 	if (currentScene > 0)
+	{
 		currentScene--;
+		instance->SetRenderScale(GetScalar().x, GetScalar().y);
+		audioMngr->PauseMusic();
+	}
 }
 
 void SceneManager::LoadScenes(Game* game, std::vector<char*> &lines, std::vector<int> &indices)

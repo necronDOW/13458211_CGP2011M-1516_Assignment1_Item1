@@ -9,6 +9,7 @@ GameObject::GameObject(Game* game, float x, float y)
 {
 	this->game = game;
 	this->position = glm::vec2(x, y);
+	deleted = false;
 }
 
 GameObject::~GameObject()
@@ -55,6 +56,16 @@ void GameObject::CheckCollision(GameObject* other)
 		HandleCollision(other);
 		other->HandleCollision(this);
 	}
+}
+
+void GameObject::Delete()
+{
+	deleted = true;
+}
+
+bool GameObject::Deleted()
+{
+	return deleted;
 }
 
 void GameObject::HandleCollision(GameObject* o) { }

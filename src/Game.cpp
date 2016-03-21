@@ -35,20 +35,28 @@ void Game::Initialize()
 	texManager = new TextureManager(*instance, "./assets/");
 	texManager->LoadTexture("spritesheet");
 
-	s = new SceneManager(this, "./assets/levels.data");
-	instance->SetRenderScale(s->GetScalar().x, s->GetScalar().y);
+	sceneMngr = new SceneManager(this, "./assets/levels.data");
+	instance->SetRenderScale(sceneMngr->GetScalar().x, sceneMngr->GetScalar().y);
+
+	audioMngr = new AudioManager(this);
+	audioMngr->LoadClip("jump", "./assets/audio/player_jump.wav");
+	audioMngr->LoadClip("pickup", "./assets/audio/player_pickup.wav");
+	audioMngr->LoadClip("fall", "./assets/audio/player_fall.wav");
+	audioMngr->LoadMusic("./assets/audio/player_walk.wav");
+	audioMngr->PauseMusic();
 }
 
 void Game::Update()
 {
-	s->Update();
+	sceneMngr->Update();
+	audioMngr->Update();
 }
 
 void Game::HandleInput()
 {
 	while (SDL_PollEvent(&event))
 	{
-		s->HandleInput(event);
+		sceneMngr->HandleInput(event);
 
 		switch (event.type)
 		{
@@ -65,12 +73,10 @@ void Game::HandleInput()
 							done = true;
 							break;
 						case SDLK_PAGEDOWN:
-							s->PreviousScene();
-							instance->SetRenderScale(s->GetScalar().x, s->GetScalar().y);
+							sceneMngr->PreviousScene();
 							break;
 						case SDLK_PAGEUP:
-							s->NextScene();
-							instance->SetRenderScale(s->GetScalar().x, s->GetScalar().y);
+							sceneMngr->NextScene();
 							break;
 					}
 				}
@@ -86,7 +92,7 @@ void Game::Render()
 {
 	SDL_RenderClear(instance->GetRenderer());
 
-	s->Render();
+	sceneMngr->Render();
 
 	SDL_RenderPresent(instance->GetRenderer());
 }
@@ -97,10 +103,12 @@ void Game::CleanExit(char* message)
 		std::cout << message << std::endl;
 
 	if (instance != nullptr) instance->CleanUp();
+	if (audioMngr != nullptr) audioMngr->CleanUp();
 	exit(1);
 }
 
 char* &Game::GetName() { return exeName; }
 SDL_Instance* &Game::GetSDLInstance() { return instance; }
+AudioManager* &Game::GetAudioManager() { return audioMngr; }
 TextureManager* &Game::GetTextureManager() { return texManager; }
 SDL_Event &Game::GetEvent() { return event; }

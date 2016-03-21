@@ -58,7 +58,7 @@ void Enemy::HandleCollision(GameObject* o)
 
 			if (lowerLadder && upperLadder)
 			{
-				if (rand() % 3 == 1) SetDirection(0, 1);
+				if (rand() % 2 == 1) SetDirection(0, 1);
 				else SetDirection(0, -1);
 			}
 			else if (lowerLadder) SetDirection(0, 1);

@@ -44,6 +44,9 @@ void Game::Initialize()
 	audioMngr->LoadClip("fall", "./assets/audio/player_fall.wav");
 	audioMngr->LoadMusic("./assets/audio/player_walk.wav");
 	audioMngr->PauseMusic();
+
+	server = new Server(2);
+	client = new Client("127.0.0.1");
 }
 
 void Game::Update()

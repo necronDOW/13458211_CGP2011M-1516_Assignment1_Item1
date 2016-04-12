@@ -13,29 +13,29 @@ SDL_Instance::SDL_Instance(Game* game, int width, int height)
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
-		game->CleanExit("Error when instanting SDL (SDL_init).");
+		game->CleanExit("Error when instanting SDL (SDL_init).\n");
 	}
 	std::cout << "SDL initialized successfully." << std::endl;
 
 	window = SDL_CreateWindow(game->GetName(), 100, 100, width, height, SDL_WINDOW_SHOWN);
 	if (window == nullptr)
 	{
-		game->CleanExit("Error when creating SDL window (SDL_CreateWindow).");
+		game->CleanExit("Error when creating SDL window (SDL_CreateWindow).\n");
 	}
 	std::cout << "SDL window created successfully." << std::endl;
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	if (renderer == nullptr)
 	{
-		game->CleanExit("Error when creating SDL renderer (SDL_CreateRenderer).");
+		game->CleanExit("Error when creating SDL renderer (SDL_CreateRenderer).\n");
 	}
 	std::cout << "SDL renderer created successfully." << std::endl;
 
 	if (TTF_Init() == -1)
 	{
-		game->CleanExit("Error when instantiating TTF (TTF_Init).");
+		game->CleanExit("Error when instantiating TTF (TTF_Init).\n");
 	}
-	std::cout << "TTF engine instantiated successfully." << std::endl;
+	std::cout << "TTF engine instantiated successfully.\n" << std::endl;
 }
 
 SDL_Instance::~SDL_Instance()

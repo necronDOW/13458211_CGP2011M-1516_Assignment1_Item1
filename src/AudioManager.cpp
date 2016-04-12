@@ -5,9 +5,11 @@ AudioManager::AudioManager(Game* game)
 {
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
 	{
-		std::cout << "Failed to Initialize SDL_mixer." << std::endl;
+		std::cout << "Failed to Initialize SDL_mixer.\n" << std::endl;
 		return;
 	}
+
+	std::cout << "Audio Manager successfully Initialized.\n" << std::endl;
 }
 
 AudioManager::~AudioManager()

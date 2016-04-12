@@ -7,31 +7,34 @@ Client::Client()
 
 Client::Client(const char* ip)
 {
+	server = SDLNet_AllocSocketSet(1);
+
 	if (SDLNet_Init() != 0)
 	{
-		std::cout << "Error when instantiating SDL_net (SDLNet_Init)." << std::endl;
+		std::cout << "Error when instantiating SDL_net (SDLNet_Init).\n" << std::endl;
 		Quit();
 	}
 	std::cout << "SDL_net initialized successfully." << std::endl;
 
 	if (SDLNet_ResolveHost(&this->ip, ip, 1234) == -1)
 	{
-		std::cout << "There was a problem when connecting IP " << ip << " to the server." << std::endl;
+		std::cout << "There was a problem when connecting IP " << ip << " to the server.\n" << std::endl;
 		Quit();
 	}
 
 	connection = SDLNet_TCP_Open(&this->ip);
 	if (connection == NULL)
 	{
-		std::cout << "Error: Bad IP address (" << ip << "), connection aborted." << std::endl;
+		std::cout << "Error: Bad server IP address (" << ip << "), connection aborted.\n" << std::endl;
 		Quit();
 	}
+	else
+	{
+		SDLNet_TCP_AddSocket(server, connection);
+		online = true;
 
-	server = SDLNet_AllocSocketSet(1);
-	SDLNet_TCP_AddSocket(server, connection);
-	online = true;
-
-	std::cout << "Connection established successfully (" << ip << ")." << std::endl;
+		std::cout << "Connection established successfully (" << ip << ").\n" << std::endl;
+	}
 }
 
 Client::~Client()

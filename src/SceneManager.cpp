@@ -34,7 +34,11 @@ SceneManager::SceneManager(Game* game, char* filePath)
 	}
 
 	LoadScenes(game, lines, levelIndices);
-	if (scenes.size() > 0) currentScene = 0;
+	if (scenes.size() > 0)
+	{
+		currentScene = 0;
+		std::cout << "\n";
+	}
 }
 
 SceneManager::~SceneManager()

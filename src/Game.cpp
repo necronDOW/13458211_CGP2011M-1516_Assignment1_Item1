@@ -45,7 +45,6 @@ void Game::Initialize()
 	audioMngr->LoadMusic("./assets/audio/player_walk.wav");
 	audioMngr->PauseMusic();
 
-	server = new Server(2);
 	client = new Client("127.0.0.1");
 }
 

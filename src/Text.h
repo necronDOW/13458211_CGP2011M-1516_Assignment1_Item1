@@ -11,21 +11,23 @@ class Text
 		Text(Game* game, glm::vec2 position, int fontPt, char* text, uint8_t r, uint8_t g, uint8_t b);
 		~Text();
 
-		void Update();
-		void Render();
-		void SetColor(uint8_t r, uint8_t g, uint8_t b);
-		void SetSize(int fontPt);
+		virtual void Render();
+		void SetSize(char* text, int fontPt);
+		void SetPosition(int x, int y);
 
-	private:
-		void Initialize(int fontPt);
+	protected:
+		virtual void Initialize(char* text, int fontPt, int x, int y);
+		SDL_Color Text::CreateSDL_Color(uint8_t r, uint8_t g, uint8_t b);
 
 		SDL_Instance* instance;
 		SDL_Texture* texture;
 		TTF_Font* font = NULL;
-		char* text;
-		SDL_Color textColor;
-		glm::vec2* origin;
+		SDL_Color color;
 		SDL_Rect dest;
+		int fontPt;
+		char* text;
+		glm::vec2 origin;
+		char* fontStyle = "./assets/fonts/slkscr.ttf";
 };
 
 #endif

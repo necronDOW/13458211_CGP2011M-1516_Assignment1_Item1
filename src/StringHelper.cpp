@@ -54,3 +54,20 @@ bool StringHelper::str_contains(char* haystack, char* needle)
 
 	return false;
 }
+
+char* StringHelper::str_concat(char** elements)
+{
+	int N = sizeof(elements) / sizeof(elements[0]);
+	int bufferN = 0;
+
+	for (int i = 0; i < N; i++)
+		bufferN += strlen(elements[i]);
+
+	char* buffer = new char[bufferN];
+	strcpy(buffer, elements[0]);
+
+	for (int i = 1; i < N; i++)
+		strcat(buffer, elements[i]);
+
+	return buffer;
+}

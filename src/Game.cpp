@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "SDL_Instance.h"
 #include "SceneManager.h"
+#include "DynamicText.h"
 
 Game::Game()
 {
@@ -45,9 +46,10 @@ void Game::Initialize()
 	audioMngr->LoadMusic("./assets/audio/player_walk.wav");
 	audioMngr->PauseMusic();
 
-	client = new Client("127.0.0.1");
+	textTest = new DynamicText(this, glm::vec2(100, 24), 36, "0123456789");
 }
 
+int x = 0;
 void Game::Update()
 {
 	sceneMngr->Update();
@@ -95,6 +97,7 @@ void Game::Render()
 	SDL_RenderClear(instance->GetRenderer());
 
 	sceneMngr->Render();
+	textTest->Render();
 
 	SDL_RenderPresent(instance->GetRenderer());
 }

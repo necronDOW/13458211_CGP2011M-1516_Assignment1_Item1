@@ -13,7 +13,8 @@
 
 class Server
 {
-	struct data {
+	struct data
+	{
 		TCPsocket socket;
 		unsigned int timeout;
 		int id;

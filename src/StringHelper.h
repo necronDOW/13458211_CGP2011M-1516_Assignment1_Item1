@@ -13,6 +13,7 @@ class StringHelper
 		static void str_copy(char* original, char* &target);
 		static std::vector<char*> str_split(char* word, char* delimiter);
 		static bool str_contains(char* haystack, char* needle);
+		static char* str_concat(char** elements);
 };
 
 #endif

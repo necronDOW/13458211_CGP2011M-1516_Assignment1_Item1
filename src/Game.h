@@ -16,6 +16,7 @@
 // Forward declarations
 class SDL_Instance;
 class SceneManager;
+class DynamicText;
 
 class Game
 {
@@ -59,6 +60,7 @@ class Game
 		SDL_Event event;
 		Client* client;
 		Server* server;
+		DynamicText* textTest;
 };
 
 #endif

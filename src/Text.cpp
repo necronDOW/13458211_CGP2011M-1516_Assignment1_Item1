@@ -8,34 +8,24 @@ Text::Text()
 Text::Text(Game* game, glm::vec2 position, int fontPt, char* text)
 {
 	instance = game->GetSDLInstance();
-	origin = new glm::vec2(position.x, position.y);
-	font = TTF_OpenFont("./assets/fonts/opensans_light.ttf", 100);
-	this->text = text;
+	font = TTF_OpenFont(fontStyle, fontPt);
 
-	SetColor(255, 255, 255);
-	Initialize(fontPt);
+	color = CreateSDL_Color(255, 255, 255);
+	Initialize(text, fontPt, position.x, position.y);
 }
 
 Text::Text(Game* game, glm::vec2 position, int fontPt, char* text, uint8_t r, uint8_t g, uint8_t b)
 {
 	instance = game->GetSDLInstance();
-	origin = new glm::vec2(position.x, position.y);
-	font = TTF_OpenFont("./assets/fonts/opensans_light.ttf", fontPt);
-	this->text = text;
+	font = TTF_OpenFont(fontStyle, fontPt);
 
-	SetColor(r, g, b);
-	Initialize(fontPt);
+	color = CreateSDL_Color(r, g, b);
+	Initialize(text, fontPt, position.x, position.y);
 }
 
 Text::~Text()
 {
-	
-}
 
-void Text::Update()
-{
-	dest.x = origin->x - (dest.w / 2);
-	dest.y = origin->y - (dest.h / 2);
 }
 
 void Text::Render()
@@ -43,22 +33,38 @@ void Text::Render()
 	SDL_RenderCopy(instance->GetRenderer(), texture, NULL, &dest);
 }
 
-void Text::SetColor(uint8_t r, uint8_t g, uint8_t b)
+SDL_Color Text::CreateSDL_Color(uint8_t r, uint8_t g, uint8_t b)
 {
-	textColor.r = r;
-	textColor.g = g;
-	textColor.b = b;
+	SDL_Color tmp;
+
+	tmp.r = r;
+	tmp.g = g;
+	tmp.b = b;
+
+	return tmp;
 }
 
-void Text::SetSize(int fontPt)
+void Text::SetSize(char* text, int fontPt)
 {
-	dest.w = strlen(text) * (fontPt / 3);
+	this->fontPt = fontPt;
+
+	dest.w = strlen(text) * (fontPt / 2);
 	dest.h = fontPt;
 }
 
-void Text::Initialize(int fontPt)
+void Text::SetPosition(int x, int y)
 {
-	SDL_Surface* surface = TTF_RenderText_Solid(font, text, textColor);
+	origin = glm::vec2(x, y);
+
+	dest.x = origin.x - (dest.w / 2);
+	dest.y = origin.y - (dest.h / 2);
+}
+
+void Text::Initialize(char* text, int fontPt, int x, int y)
+{
+	this->text = text;
+
+	SDL_Surface* surface = TTF_RenderText_Solid(font, text, color);
 	if (surface == NULL)
 	{
 		std::cout << "Failed to generate text surface! TEXT:" << text << "." << std::endl;
@@ -73,5 +79,7 @@ void Text::Initialize(int fontPt)
 	}
 
 	SDL_FreeSurface(surface);
-	SetSize(fontPt);
+
+	SetSize(text, fontPt);
+	SetPosition(x, y);
 }

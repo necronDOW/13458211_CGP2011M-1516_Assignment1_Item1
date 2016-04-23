@@ -8,6 +8,7 @@
 #include "AudioManager.h"
 #include "Client.h"
 #include "Server.h"
+#include "MenuManager.h"
 
 // SDL includes
 #include <SDL.h>
@@ -16,7 +17,6 @@
 // Forward declarations
 class SDL_Instance;
 class SceneManager;
-class DynamicText;
 
 class Game
 {
@@ -56,11 +56,11 @@ class Game
 		TextureManager* texManager;
 		glm::vec2 testPos;
 		SceneManager* sceneMngr;
+		MenuManager* menuMngr;
 		AudioManager* audioMngr;
 		SDL_Event event;
 		Client* client;
 		Server* server;
-		DynamicText* textTest;
 };
 
 #endif

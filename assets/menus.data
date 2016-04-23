@@ -1,0 +1,135 @@
+*menu_main
+{
+	label
+	{
+		text:CHUCKIE EGG
+		font-size:50
+		position:500,150
+		color:255,255,0
+	}
+	
+	label
+	{
+		text:PLAY OFFLINE
+		font-size:30
+		position:500,250
+		color:255,0,255
+		action:1,play-offline
+	}
+	
+	label
+	{
+		text:PLAY ONLINE
+		font-size:30
+		position:500,300
+		color:255,0,255
+		action:2,menu_play-online
+	}
+	
+	label
+	{
+		text:QUIT
+		font-size:30
+		position:500,350
+		color:255,0,255
+		action:Q,quit
+	}
+}
+
+*menu_play-online
+{
+	label
+	{
+		text:CHUCKIE EGG
+		font-size:50
+		position:500,150
+		color:255,255,0
+	}
+	
+	label
+	{
+		text:HOST GAME
+		font-size:30
+		position:500,250
+		color:255,0,255
+		action:H,menu_wait-online
+	}
+	
+	label
+	{
+		text:FIND GAME
+		font-size:30
+		position:500,300
+		color:255,0,255
+		action:F,menu_find-game
+	}
+}
+
+*menu_wait-online
+{
+	action:host-game
+
+	label
+	{
+		text:CHUCKIE EGG
+		font-size:50
+		position:500,150
+		color:255,255,0
+	}
+	
+	label
+	{
+		text:WAITING FOR PLAYER 2...
+		font-size:30
+		position:500,250
+		color:255,0,255
+	}
+	
+	label
+	{
+		text:QUIT
+		font-size:30
+		position:500,300
+		color:255,0,255
+		action:Q,menu_play-online
+	}
+}
+
+*menu_find-game
+{
+	action:find-game
+	
+	label
+	{
+		text:CHUCKIE EGG
+		font-size:50
+		position:500,150
+		color:255,255,0
+	}
+	
+	label
+	{
+		text:NO GAME FOUND
+		font-size:30
+		position:500,250
+		color:255,0,255
+	}
+	
+	label
+	{
+		text:RETRY
+		font-size:30
+		position:500,300
+		color:255,0,255
+		action:Q,menu_find-game
+	}
+	
+	label
+	{
+		text:QUIT
+		font-size:30
+		position:500,350
+		color:255,0,255
+		action:Q,menu_play-online
+	}
+}

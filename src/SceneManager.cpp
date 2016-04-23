@@ -17,7 +17,7 @@ SceneManager::SceneManager(Game* game, char* filePath)
 
 	if (!file)
 	{
-		std::cout << std::endl << "Levels.data file was loaded unsuccessfully." << std::endl;
+		std::cout << std::endl << "File was loaded unsuccessfully (" << filePath << ")." << std::endl;
 		return;
 	}
 

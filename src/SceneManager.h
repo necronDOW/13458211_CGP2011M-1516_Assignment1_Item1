@@ -5,7 +5,7 @@
 #include <fstream>
 #include <string>
 #include "Game.h"
-#include "StringHelper.h"
+#include "StrLib.h"
 #include "Scene.h"
 #include "ObjectConstructor.h"
 

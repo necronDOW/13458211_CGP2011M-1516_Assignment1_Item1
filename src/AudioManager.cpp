@@ -36,9 +36,9 @@ void AudioManager::LoadClip(char* id, char* fileName)
 
 void AudioManager::PlayClip(char* id)
 {
-	for (int i = 0; i < clips.size(); i++)
+	for (unsigned int i = 0; i < clips.size(); i++)
 	{
-		if (StringHelper::str_contains(clips[i].id, id))
+		if (StrLib::str_contains(clips[i].id, id))
 		{
 			Mix_PlayChannel(0, clips[i].clip, 0);
 			return;
@@ -62,7 +62,7 @@ void AudioManager::CleanUp()
 {
 	Mix_FreeMusic(music);
 
-	for (int i = 0; i < clips.size(); i++)
+	for (unsigned int i = 0; i < clips.size(); i++)
 	{
 		Mix_FreeChunk(clips[i].clip);
 		clips.erase(clips.begin() + i);

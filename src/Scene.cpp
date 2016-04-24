@@ -19,13 +19,13 @@ Scene::Scene(Game* game, std::vector<char*> &levelsData, int dataStart, ObjectCo
 
 	for (unsigned int i = dataStart; i < levelsData.size(); i++)
 	{
-		if (StringHelper::str_contains(levelsData[i], "#"))
+		if (StrLib::str_contains(levelsData[i], "#"))
 		{
 			tileCount.y = (float)(i - dataStart);
 			i = InstantiateDynObjects(game, levelsData, i + 1, constructor);
 		}
 
-		if (StringHelper::str_contains(levelsData[i], "};"))
+		if (StrLib::str_contains(levelsData[i], "};"))
 		{
 			std::cout << "Scene loaded successfully: TILES:" << tiles.size() << "." << std::endl;
 			tileCount.x++;
@@ -111,10 +111,10 @@ int Scene::InstantiateDynObjects(Game* game, std::vector<char*> &levelsData, int
 {
 	for (unsigned int i = dataStart; i < levelsData.size(); i++)
 	{
-		if (StringHelper::str_contains(levelsData[i], "};"))
+		if (StrLib::str_contains(levelsData[i], "};"))
 			return i;
 
-		std::vector<char*> dynData = StringHelper::str_split(levelsData[i], "=,");
+		std::vector<char*> dynData = StrLib::str_split(levelsData[i], "=,");
 
 		constructor->CreateObject(objects, game, this, glm::vec2(atoi(dynData[1]) * tileSize.x, atoi(dynData[2]) * tileSize.y), dynData[0] + 1);
 	}

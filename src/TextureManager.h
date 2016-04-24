@@ -7,7 +7,7 @@
 #include <fstream>
 #include <string>
 #include "SDL_Instance.h"
-#include "StringHelper.h"
+#include "StrLib.h"
 
 // SDL includes
 #include <SDL_image.h>

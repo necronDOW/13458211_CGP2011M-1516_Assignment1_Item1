@@ -50,6 +50,16 @@ void FunctionalObject::HandleCollision(GameObject* o)
 
 }
 
+char* FunctionalObject::Serialize()
+{
+	return "";
+}
+
+void FunctionalObject::Deserialize(char* serialized)
+{
+
+}
+
 void FunctionalObject::AnimationHandler()
 {
 	if (velocity.y != 0.0f && isClimbing)

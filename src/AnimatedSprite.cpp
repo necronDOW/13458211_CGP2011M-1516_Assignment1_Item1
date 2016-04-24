@@ -52,12 +52,12 @@ void AnimatedSprite::SetToStaticAnimation()
 
 void AnimatedSprite::ChangeAnimation(char* newID)
 {
-	if (currentAnim != nullptr && !StringHelper::str_contains(newID, currentAnim->id))
+	if (currentAnim != nullptr && !StrLib::str_contains(newID, currentAnim->id))
 		return;
 	
 	for (unsigned int i = 0; i < anims.size(); i++)
 	{
-		if (StringHelper::str_contains(anims[i].id, newID))
+		if (StrLib::str_contains(anims[i].id, newID))
 		{
 			currentFrame = anims[i].first;
 			currentAnim = &anims[i];
@@ -73,17 +73,17 @@ void AnimatedSprite::GenerateAnimations(char* staticID, std::vector<char*> ids)
 
 	for (unsigned int i = 0; i < ids.size(); i++)
 	{
-		if (staticFrame == -1 && StringHelper::str_contains(ids[i], staticID))
+		if (staticFrame == -1 && StrLib::str_contains(ids[i], staticID))
 			staticFrame = i;
 
-		if (!StringHelper::str_contains(ids[i], last))
+		if (!StrLib::str_contains(ids[i], last))
 		{
 			if (anims.size() > 0)
 				anims[anims.size() - 1].last = i - 1;
 
 			char* tmp;
-			StringHelper::str_copy(ids[i], tmp);
-			anims.push_back(Animation(StringHelper::str_split(tmp, ".")[0], i));
+			StrLib::str_copy(ids[i], tmp);
+			anims.push_back(Animation(StrLib::str_split(tmp, ".")[0], i));
 			last = tmp;
 		}
 	}

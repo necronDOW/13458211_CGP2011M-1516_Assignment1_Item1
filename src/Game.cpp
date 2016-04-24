@@ -121,9 +121,9 @@ void Game::CleanExit(char* message)
 
 void Game::SetGameState(char* state)
 {
-	if (StringHelper::str_contains(state, "quit"))
+	if (StrLib::str_contains(state, "quit"))
 		CleanExit();
-	else if (StringHelper::str_contains(state, "play"))
+	else if (StrLib::str_contains(state, "play"))
 	{
 		playing = !playing;
 		paused = false;
@@ -131,16 +131,16 @@ void Game::SetGameState(char* state)
 		if (!playing)
 			menuMngr->SetActiveMenu(menuMngr->FindMenuByTag("main"));
 	}
-	else if (StringHelper::str_contains(state, "pause"))
+	else if (StrLib::str_contains(state, "pause"))
 	{
 		paused = !paused;
 
 		if (paused)
 			menuMngr->SetActiveMenu(menuMngr->FindMenuByTag(state));
 	}
-	else if (StringHelper::str_contains(state, "host-game"))
+	else if (StrLib::str_contains(state, "host-game"))
 		server = new Server(2);
-	else if (StringHelper::str_contains(state, "find-game"))
+	else if (StrLib::str_contains(state, "find-game"))
 	{
 		client = new Client("127.0.0.1");
 

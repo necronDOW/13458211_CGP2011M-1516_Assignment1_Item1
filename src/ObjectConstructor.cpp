@@ -4,11 +4,11 @@ ObjectConstructor::ObjectConstructor(std::vector<char*> levelData)
 {
 	for (unsigned int i = 0; i < levelData.size(); i++)
 	{
-		if (StringHelper::str_contains(levelData[i], "valid"))
+		if (StrLib::str_contains(levelData[i], "valid"))
 		{
-			for (int j = i + 1; j < levelData.size(); j++)
+			for (unsigned int j = i + 1; j < levelData.size(); j++)
 			{
-				if (StringHelper::str_contains(levelData[j], "};"))
+				if (StrLib::str_contains(levelData[j], "};"))
 				{
 					i = j + 1;
 					break;
@@ -17,11 +17,11 @@ ObjectConstructor::ObjectConstructor(std::vector<char*> levelData)
 				validObjects.push_back(levelData[j] + 1);
 			}
 		}
-		else if (StringHelper::str_contains(levelData[i], "tiles"))
+		else if (StrLib::str_contains(levelData[i], "tiles"))
 		{
-			for (int j = i + 1; j < levelData.size(); j++)
+			for (unsigned int j = i + 1; j < levelData.size(); j++)
 			{
-				if (StringHelper::str_contains(levelData[j], "};"))
+				if (StrLib::str_contains(levelData[j], "};"))
 				{
 					i = j + 1;
 					break;
@@ -42,11 +42,11 @@ void ObjectConstructor::CreateObject(std::vector<FunctionalObject*> &objects, Ga
 {
 	for (unsigned int i = 0; i < validObjects.size(); i++)
 	{
-		if (StringHelper::str_contains(validObjects[i], type))
+		if (StrLib::str_contains(validObjects[i], type))
 		{
-			if (StringHelper::str_contains(type, "player"))
+			if (StrLib::str_contains(type, "player"))
 				objects.push_back(new Player(game, scene, position.x, position.y, 1));
-			else if (StringHelper::str_contains(type, "chick"))
+			else if (StrLib::str_contains(type, "chick"))
 				objects.push_back(new Enemy(game, scene, position.x, position.y));
 			else objects.push_back(new FunctionalObject(game, scene, position.x, position.y));
 

@@ -1,7 +1,7 @@
 #ifndef AUDIOMANAGER_H
 #define AUDIOMANAGER_H
 
-#include "StringHelper.h"
+#include "StrLib.h"
 
 #include <SDL.h>
 #include "SDL_mixer.h"

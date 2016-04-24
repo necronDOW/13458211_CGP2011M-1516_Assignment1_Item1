@@ -25,11 +25,11 @@ SceneManager::SceneManager(Game* game, char* filePath)
 	while (std::getline(file, buffer))
 	{
 		char* tmp;
-		StringHelper::str_copy((char*)buffer.c_str(), tmp);
+		StrLib::str_copy((char*)buffer.c_str(), tmp);
 		lines.push_back(tmp);
 
 		i++;
-		if (StringHelper::str_contains(tmp, "level"))
+		if (StrLib::str_contains(tmp, "level"))
 			levelIndices.push_back(i);
 	}
 

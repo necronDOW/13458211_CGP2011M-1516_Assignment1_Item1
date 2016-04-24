@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "Text.h"
-#include "StringHelper.h"
+#include "StrLib.h"
 
 class HUD
 {

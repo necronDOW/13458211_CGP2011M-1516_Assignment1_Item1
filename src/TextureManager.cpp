@@ -64,8 +64,8 @@ void TextureManager::LoadTextureData(Texture &tex, char* fileName)
 		if (buffer != "")
 		{
 			char* tmp;
-			StringHelper::str_copy((char*)buffer.c_str(), tmp);
-			std::vector<char*> tmpArr = StringHelper::str_split(tmp, " ");
+			StrLib::str_copy((char*)buffer.c_str(), tmp);
+			std::vector<char*> tmpArr = StrLib::str_split(tmp, " ");
 
 			tex.ids.push_back("");
 			tex.data.push_back(SDL_Rect());
@@ -97,7 +97,7 @@ bool TextureManager::GetSlice(int textureIndex, char* id, SDL_Texture* &outTextu
 
 	for (unsigned int i = 0; i < ids.size(); i++)
 	{
-		if (StringHelper::str_contains(ids[i], id))
+		if (StrLib::str_contains(ids[i], id))
 		{
 			outTexture = textures[textureIndex].texture;
 			outData = &textures[textureIndex].data[i];
@@ -116,7 +116,7 @@ bool TextureManager::GetSlice(int textureIndex, char* id, SDL_Texture* &outTextu
 
 	for (unsigned int i = 0; i < ids.size(); i++)
 	{
-		if (StringHelper::str_contains(ids[i], id))
+		if (StrLib::str_contains(ids[i], id))
 		{
 			if (!found) outTexture = textures[textureIndex].texture;
 			outData.push_back(&textures[textureIndex].data[i]);

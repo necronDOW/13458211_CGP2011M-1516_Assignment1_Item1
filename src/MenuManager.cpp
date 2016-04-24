@@ -24,10 +24,10 @@ MenuManager::MenuManager(Game* game, char* filePath)
 	while (std::getline(file, buffer))
 	{
 		char* tmp;
-		StringHelper::str_copy((char*)buffer.c_str(), tmp);
+		StrLib::str_copy((char*)buffer.c_str(), tmp);
 		lines.push_back(tmp);
 
-		if (StringHelper::str_contains(tmp, "*menu_"))
+		if (StrLib::str_contains(tmp, "*menu_"))
 			menuIndices.push_back(i);
 
 		i++;
@@ -61,9 +61,9 @@ void MenuManager::Render()
 
 Menu* MenuManager::FindMenuByTag(char* tag)
 {
-	for (int i = 0; i < menus.size(); i++)
+	for (unsigned int i = 0; i < menus.size(); i++)
 	{
-		if (StringHelper::str_contains(menus[i]->GetTag(), tag))
+		if (StrLib::str_contains(menus[i]->GetTag(), tag))
 			return menus[i];
 	}
 
@@ -72,7 +72,7 @@ Menu* MenuManager::FindMenuByTag(char* tag)
 
 void MenuManager::LoadMenus(Game* game, std::vector<char*> data, std::vector<int> indices)
 {
-	for (int i = 0; i < indices.size(); i++)
+	for (unsigned int i = 0; i < indices.size(); i++)
 		menus.push_back(new Menu(game, this, data, indices[i]));
 
 	SetActiveMenu(FindMenuByTag("main"));

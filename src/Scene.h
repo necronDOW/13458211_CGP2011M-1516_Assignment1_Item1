@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include "StringHelper.h"
+#include "StrLib.h"
 #include "Game.h"
 
 class GameObject;

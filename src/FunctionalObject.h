@@ -15,6 +15,8 @@ class FunctionalObject : public GameObject
 		virtual void Update();
 		virtual void HandleInput(SDL_Event &event);
 		virtual void HandleCollision(GameObject* o);
+		virtual char* Serialize();
+		virtual void Deserialize(char* serialized);
 
 		void SetJumpVelocity(float value);
 

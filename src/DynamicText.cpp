@@ -11,7 +11,7 @@ DynamicText::DynamicText(Game* game, glm::vec2 position, int fontPt, char* text)
 	font = TTF_OpenFont(fontStyle, fontPt);
 
 	color = CreateSDL_Color(255, 255, 255);
-	Initialize(textBuffer, fontPt, position.x, position.y);
+	Initialize(textBuffer, fontPt, (int)position.x, (int)position.y);
 	SetText(text);
 }
 
@@ -21,7 +21,7 @@ DynamicText::DynamicText(Game* game, glm::vec2 position, int fontPt, char* text,
 	font = TTF_OpenFont(fontStyle, fontPt);
 
 	color = CreateSDL_Color(r, g, b);
-	Initialize(textBuffer, fontPt, position.x, position.y);
+	Initialize(textBuffer, fontPt, (int)position.x, (int)position.y);
 	SetText(text);
 }
 
@@ -41,7 +41,7 @@ void DynamicText::Initialize(char* text, int fontPt, int x, int y)
 
 void DynamicText::Render()
 {
-	for (int i = 0; i < srcRects.size(); i++)
+	for (unsigned int i = 0; i < srcRects.size(); i++)
 		SDL_RenderCopy(instance->GetRenderer(), texture, &srcRects[i], &destRects[i]);
 }
 
@@ -50,15 +50,15 @@ void DynamicText::SetText(char* text)
 	std::vector<int> tmp;
 
 	SetSize(text, fontPt);
-	SetPosition(origin.x, origin.y);
+	SetPosition((int)origin.x, (int)origin.y);
 
-	for (int i = 0; i < strlen(text); i++)
+	for (unsigned int i = 0; i < strlen(text); i++)
 	{
 		if (i < strlen(this->text) && this->text[i] == text[i])
 			tmp.push_back(-1);
 		else
 		{
-			for (int j = 0; j < strlen(textBuffer); j++)
+			for (unsigned int j = 0; j < strlen(textBuffer); j++)
 			{
 				if (text[i] == textBuffer[j])
 				{

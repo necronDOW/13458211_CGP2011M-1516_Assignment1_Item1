@@ -55,18 +55,17 @@ bool StringHelper::str_contains(char* haystack, char* needle)
 	return false;
 }
 
-char* StringHelper::str_concat(char** elements)
+char* StringHelper::str_concat(std::vector<char*> elements)
 {
-	int N = sizeof(elements) / sizeof(elements[0]);
 	int bufferN = 0;
 
-	for (int i = 0; i < N; i++)
+	for (int i = 0; i < elements.size(); i++)
 		bufferN += strlen(elements[i]);
 
 	char* buffer = new char[bufferN];
 	strcpy(buffer, elements[0]);
 
-	for (int i = 1; i < N; i++)
+	for (int i = 1; i < elements.size(); i++)
 		strcat(buffer, elements[i]);
 
 	return buffer;

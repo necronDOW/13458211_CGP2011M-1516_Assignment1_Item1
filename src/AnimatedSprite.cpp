@@ -16,7 +16,7 @@ AnimatedSprite::AnimatedSprite(Game* game, glm::vec2 position, float scale, char
 	GenerateAnimations(staticID, ids);
 
 	origin = new glm::vec2(position);
-	src = frames[staticFrame];
+	ChangeAnimation(staticID);
 	SetScale(scale, scale);
 
 	animTimer = Timer(0.1f);

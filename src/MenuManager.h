@@ -3,9 +3,9 @@
 
 #include <fstream>
 #include <vector>
+#include "Game.h"
 
 class Menu;
-class Game;
 
 class MenuManager
 {
@@ -15,6 +15,7 @@ class MenuManager
 		~MenuManager();
 
 		void Update();
+		void HandleInput(SDL_Event &event);
 		void Render();
 		Menu* FindMenuByTag(char* tag);
 
@@ -22,7 +23,7 @@ class MenuManager
 		void SetVisible(bool value);
 
 	private:
-		void LoadMenus(std::vector<char*> data, std::vector<int> indices);
+		void LoadMenus(Game* game, std::vector<char*> data, std::vector<int> indices);
 		std::vector<Menu*> menus;
 		Menu* activeMenu;
 		bool visible;

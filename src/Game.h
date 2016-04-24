@@ -8,7 +8,6 @@
 #include "AudioManager.h"
 #include "Client.h"
 #include "Server.h"
-#include "MenuManager.h"
 
 // SDL includes
 #include <SDL.h>
@@ -17,6 +16,7 @@
 // Forward declarations
 class SDL_Instance;
 class SceneManager;
+class MenuManager;
 
 class Game
 {

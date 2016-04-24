@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "SDL_Instance.h"
 #include "SceneManager.h"
+#include "MenuManager.h"
 
 Game::Game()
 {
@@ -61,6 +62,7 @@ void Game::HandleInput()
 	while (SDL_PollEvent(&event))
 	{
 		sceneMngr->HandleInput(event);
+		menuMngr->HandleInput(event);
 
 		switch (event.type)
 		{
@@ -96,7 +98,7 @@ void Game::Render()
 {
 	SDL_RenderClear(instance->GetRenderer());
 
-	sceneMngr->Render();
+	//sceneMngr->Render();
 	menuMngr->Render();
 
 	SDL_RenderPresent(instance->GetRenderer());

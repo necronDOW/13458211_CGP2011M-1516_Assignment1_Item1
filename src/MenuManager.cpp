@@ -1,5 +1,4 @@
 #include "MenuManager.h"
-#include "Game.h"
 #include "Menu.h"
 
 MenuManager::MenuManager()
@@ -34,7 +33,8 @@ MenuManager::MenuManager(Game* game, char* filePath)
 		i++;
 	}
 
-	LoadMenus(lines, menuIndices);
+	LoadMenus(game, lines, menuIndices);
+	visible = true;
 }
 
 MenuManager::~MenuManager()
@@ -46,6 +46,12 @@ void MenuManager::Update()
 {
 	if (activeMenu != nullptr && visible)
 		activeMenu->Update();
+}
+
+void MenuManager::HandleInput(SDL_Event &event)
+{
+	if (activeMenu != nullptr && visible)
+		activeMenu->HandleInput(event);
 }
 
 void MenuManager::Render()
@@ -65,10 +71,10 @@ Menu* MenuManager::FindMenuByTag(char* tag)
 	return nullptr;
 }
 
-void MenuManager::LoadMenus(std::vector<char*> data, std::vector<int> indices)
+void MenuManager::LoadMenus(Game* game, std::vector<char*> data, std::vector<int> indices)
 {
 	for (int i = 0; i < indices.size(); i++)
-		menus.push_back(new Menu(this, data, indices[i]));
+		menus.push_back(new Menu(game, this, data, indices[i]));
 
 	activeMenu = FindMenuByTag("main");
 	visible = false;

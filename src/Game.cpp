@@ -52,17 +52,21 @@ void Game::Initialize()
 int x = 0;
 void Game::Update()
 {
-	sceneMngr->Update();
-	audioMngr->Update();
-	menuMngr->Update();
+	if (playing && !paused)
+	{
+		sceneMngr->Update();
+		audioMngr->Update();
+	}
+	else menuMngr->Update();
 }
 
 void Game::HandleInput()
 {
 	while (SDL_PollEvent(&event))
 	{
-		sceneMngr->HandleInput(event);
-		menuMngr->HandleInput(event);
+		if (playing && !paused)
+			sceneMngr->HandleInput(event);
+		else menuMngr->HandleInput(event);
 
 		switch (event.type)
 		{
@@ -76,7 +80,7 @@ void Game::HandleInput()
 					switch (event.key.keysym.sym)
 					{
 						case SDLK_ESCAPE:
-							done = true;
+							SetGameState("pause");
 							break;
 						case SDLK_PAGEDOWN:
 							sceneMngr->PreviousScene();
@@ -98,8 +102,9 @@ void Game::Render()
 {
 	SDL_RenderClear(instance->GetRenderer());
 
-	//sceneMngr->Render();
-	menuMngr->Render();
+	if (playing && !paused)
+		sceneMngr->Render();
+	else menuMngr->Render();
 
 	SDL_RenderPresent(instance->GetRenderer());
 }
@@ -112,6 +117,36 @@ void Game::CleanExit(char* message)
 	if (instance != nullptr) instance->CleanUp();
 	if (audioMngr != nullptr) audioMngr->CleanUp();
 	exit(1);
+}
+
+void Game::SetGameState(char* state)
+{
+	if (StringHelper::str_contains(state, "quit"))
+		CleanExit();
+	else if (StringHelper::str_contains(state, "play"))
+	{
+		playing = !playing;
+		paused = false;
+
+		if (!playing)
+			menuMngr->SetActiveMenu(menuMngr->FindMenuByTag("main"));
+	}
+	else if (StringHelper::str_contains(state, "pause"))
+	{
+		paused = !paused;
+
+		if (paused)
+			menuMngr->SetActiveMenu(menuMngr->FindMenuByTag(state));
+	}
+	else if (StringHelper::str_contains(state, "host-game"))
+		server = new Server(2);
+	else if (StringHelper::str_contains(state, "find-game"))
+	{
+		client = new Client("127.0.0.1");
+
+		if (!client->IsOnline())
+			client = nullptr;
+	}
 }
 
 char* &Game::GetName() { return exeName; }

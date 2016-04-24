@@ -26,14 +26,14 @@ Client::Client(const char* ip)
 	if (connection == NULL)
 	{
 		std::cout << "Error: Bad server IP address (" << ip << "), connection aborted.\n" << std::endl;
+		online = false;
 		Quit();
 	}
 	else
 	{
+		std::cout << "Connection established successfully (" << ip << ").\n" << std::endl;
 		SDLNet_TCP_AddSocket(server, connection);
 		online = true;
-
-		std::cout << "Connection established successfully (" << ip << ").\n" << std::endl;
 	}
 }
 

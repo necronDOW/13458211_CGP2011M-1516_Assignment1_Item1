@@ -30,6 +30,9 @@ class Game
 		/* Function used for deleting and exiting all SDL content within this application. */
 		void CleanExit(char* message = "");
 
+		/* */
+		void SetGameState(char* state);
+
 		char* &GetName();
 		SDL_Instance* &GetSDLInstance();
 		AudioManager* &GetAudioManager();
@@ -52,9 +55,9 @@ class Game
 		void Render();
 
 		char* exeName;						// The name of this application.
+		bool playing = false, paused = false;
 		SDL_Instance* instance;				// The SDL instance through which this application runs on.
 		TextureManager* texManager;
-		glm::vec2 testPos;
 		SceneManager* sceneMngr;
 		MenuManager* menuMngr;
 		AudioManager* audioMngr;

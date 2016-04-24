@@ -20,13 +20,11 @@ class MenuManager
 		Menu* FindMenuByTag(char* tag);
 
 		void SetActiveMenu(Menu* value);
-		void SetVisible(bool value);
 
 	private:
 		void LoadMenus(Game* game, std::vector<char*> data, std::vector<int> indices);
 		std::vector<Menu*> menus;
 		Menu* activeMenu;
-		bool visible;
 };
 
 #endif

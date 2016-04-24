@@ -11,8 +11,6 @@ Menu::Menu(Game* game, MenuManager* manager, std::vector<char*> data, int startI
 	this->manager = manager;
 	tag = StringHelper::str_split(data[startIndex++], "_")[1];
 
-	char* action = "";
-
 	for (int i = startIndex; i < data.size(); i++)
 	{
 		if (StringHelper::str_contains(data[i], "};"))
@@ -26,9 +24,6 @@ Menu::Menu(Game* game, MenuManager* manager, std::vector<char*> data, int startI
 		else if (StringHelper::str_contains(data[i], "timer"))
 			i = CreateTimer(data, i);
 	}
-
-	if (action != "")
-		; // Tell state manager to do action;
 }
 
 Menu::~Menu()
@@ -77,6 +72,12 @@ void Menu::Render()
 
 	for (int i = 0; i < sprites.size(); i++)
 		sprites[i]->sprite->Render();
+}
+
+void Menu::InitialAction()
+{
+	if (action != "")
+		game->SetGameState(action);
 }
 
 void Menu::Reset()
@@ -201,7 +202,7 @@ void Menu::DoAction(menuAction* a)
 	if (a->type == actionType::type_menu)
 		manager->SetActiveMenu(manager->FindMenuByTag(a->actionTag));
 	else if (a->type == actionType::type_state)
-		; // Tell state manager to do action;
+		game->SetGameState(a->actionTag);
 }
 
 char* Menu::GetTag() { return tag; }

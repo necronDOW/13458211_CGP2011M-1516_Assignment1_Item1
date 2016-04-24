@@ -34,7 +34,6 @@ MenuManager::MenuManager(Game* game, char* filePath)
 	}
 
 	LoadMenus(game, lines, menuIndices);
-	visible = true;
 }
 
 MenuManager::~MenuManager()
@@ -44,19 +43,19 @@ MenuManager::~MenuManager()
 
 void MenuManager::Update()
 {
-	if (activeMenu != nullptr && visible)
+	if (activeMenu != nullptr)
 		activeMenu->Update();
 }
 
 void MenuManager::HandleInput(SDL_Event &event)
 {
-	if (activeMenu != nullptr && visible)
+	if (activeMenu != nullptr)
 		activeMenu->HandleInput(event);
 }
 
 void MenuManager::Render()
 {
-	if (activeMenu != nullptr && visible)
+	if (activeMenu != nullptr)
 		activeMenu->Render();
 }
 
@@ -76,16 +75,11 @@ void MenuManager::LoadMenus(Game* game, std::vector<char*> data, std::vector<int
 	for (int i = 0; i < indices.size(); i++)
 		menus.push_back(new Menu(game, this, data, indices[i]));
 
-	activeMenu = FindMenuByTag("main");
-	visible = false;
+	SetActiveMenu(FindMenuByTag("main"));
 }
 
 void MenuManager::SetActiveMenu(Menu* value)
 {
 	activeMenu = value;
-}
-
-void MenuManager::SetVisible(bool value)
-{
-	visible = value;
+	activeMenu->InitialAction();
 }

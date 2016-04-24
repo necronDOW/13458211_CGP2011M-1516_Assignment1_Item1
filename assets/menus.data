@@ -145,8 +145,6 @@
 
 *menu_pause
 {
-	action:pause
-	
 	label
 	{
 		text:PAUSED
@@ -161,7 +159,7 @@
 		font-size:30
 		position:250,225
 		color:255,0,255
-		action:C,state_play
+		action:C,state_pause
 	}
 	
 	label
@@ -170,7 +168,7 @@
 		font-size:30
 		position:250,275
 		color:255,0,255
-		action:Q,menu_main
+		action:Q,state_play
 	}
 };
 
@@ -211,6 +209,6 @@
 	timer
 	{
 		delay:10.0
-		action:menu_main
+		action:state_play
 	}
 };

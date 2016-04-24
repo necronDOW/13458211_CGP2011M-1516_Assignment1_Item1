@@ -75,6 +75,7 @@ class Menu
 		void Update();
 		void HandleInput(SDL_Event &event);
 		void Render();
+		void InitialAction();
 
 		char* GetTag();
 
@@ -94,6 +95,7 @@ class Menu
 		std::vector<menuSprite*> sprites;
 		menuTimer* timer = nullptr;
 		char* tag;
+		char* action = "";
 };
 
 #endif

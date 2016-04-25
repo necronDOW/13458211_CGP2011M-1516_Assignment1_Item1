@@ -14,7 +14,7 @@ void StringHelper::str_copy(char* original, char* &target)
 {
 	target = new char[strlen(original)];
 
-	for (int i = 0; i < strlen(target); i++)
+	for (unsigned int i = 0; i < strlen(target); i++)
 		target[i] = original[i];
 }
 
@@ -59,13 +59,13 @@ char* StringHelper::str_concat(std::vector<char*> elements)
 {
 	int bufferN = 0;
 
-	for (int i = 0; i < elements.size(); i++)
+	for (unsigned int i = 0; i < elements.size(); i++)
 		bufferN += strlen(elements[i]);
 
 	char* buffer = new char[bufferN];
 	strcpy(buffer, elements[0]);
 
-	for (int i = 1; i < elements.size(); i++)
+	for (unsigned int i = 1; i < elements.size(); i++)
 		strcat(buffer, elements[i]);
 
 	return buffer;

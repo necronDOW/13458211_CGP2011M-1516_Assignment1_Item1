@@ -8,7 +8,7 @@ Enemy::Enemy()
 Enemy::Enemy(Game* game, Scene* scene, float x, float y)
 	: FunctionalObject(game, scene, x, y)
 {
-	srand(std::time(NULL));
+	srand((unsigned int)std::time(NULL));
 	if (rand() % 10 < 5) direction.x = 1;
 	else direction.x = -1;
 
@@ -44,11 +44,26 @@ void Enemy::SetDirection(float x, float y)
 	velocity = direction;
 }
 
+char* Enemy::Serialize()
+{
+	return StrLib::str_concat(std::vector<char*> {
+		"uniqueID:", StrLib::to_char(uniqueID),
+			";position:", StrLib::to_char(position),
+			";", sprite->Serialize(),
+	});
+}
+
+void Enemy::Deserialize(std::vector<char*> serialized)
+{
+	position = StrLib::char_to_vec2(StrLib::str_split(serialized[1], ":")[1]);
+	sprite->Deserialize(StrLib::str_split(serialized[2], ":")[1]);
+}
+
 void Enemy::HandleCollision(GameObject* o)
 {
 	if (dynamic_cast<Ladder*>(o) && checkClimb)
 	{
-		srand(std::time(NULL));
+		srand((unsigned int)std::time(NULL));
 		if (rand() % 3 == 1)
 		{
 			position.x = o->GetPosition().x;
@@ -82,7 +97,7 @@ void Enemy::Climb()
 		{
 			if (scene->TileExists(position, checkDir[i], direction.y > 0.0f ? 1 : 2) == 0)
 			{
-				SetDirection(checkDir[i], 0);
+				SetDirection((float)checkDir[i], 0.0);
 				startWalkX = position.x;
 
 				isClimbing = false;
@@ -108,15 +123,14 @@ void Enemy::Walk()
 	{
 		checkClimb = true;
 
-		if (scene->TileExists(checkPosition, direction.x, 1) == -1)
+		if (scene->TileExists(checkPosition, (int)direction.x, 1) == -1)
 		{
 			ChangeDirectionX();
 			startWalkX = position.x;
 		}
 	}
 
-	if (game->GetClient() != nullptr)
-		velocity.x = (float)direction.x * speed;
+	velocity.x = (float)direction.x * speed;
 }
 
 glm::vec2 Enemy::GetDirection() { return direction; }

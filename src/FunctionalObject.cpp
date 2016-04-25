@@ -54,13 +54,13 @@ char* FunctionalObject::Serialize()
 {
 	return StrLib::str_concat(std::vector<char*> {
 		"uniqueID:", StrLib::to_char(uniqueID),
-		",velocity.x:", StrLib::to_char(velocity.x)
+		";position:", StrLib::to_char(position)
 	});
 }
 
 void FunctionalObject::Deserialize(std::vector<char*> serialized)
 {
-	velocity.x = atoi(StrLib::str_split(serialized[1], ":")[1]);
+	position = StrLib::char_to_vec2(StrLib::str_split(serialized[1], ":")[1]);
 }
 
 void FunctionalObject::AnimationHandler()

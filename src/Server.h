@@ -43,7 +43,7 @@ class Server
 		void CalculateAvailableIDs();
 		int GetAvailableID();
 
-		int playerCount = 0, maxPlayers;
+		unsigned int playerCount = 0, maxPlayers;
 		TCPsocket server;
 		IPaddress ip;
 		std::vector<data> socketVector;

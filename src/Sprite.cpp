@@ -30,8 +30,8 @@ Sprite::~Sprite()
 
 void Sprite::Update()
 {
-	dest.x = (origin->x + offset.x) - (dest.w / 2);
-	dest.y = (origin->y + offset.y) - (dest.h / 2);
+	dest.x = (int)((origin->x + offset.x) - (dest.w / 2));
+	dest.y = (int)((origin->y + offset.y) - (dest.h / 2));
 }
 
 void Sprite::Render()
@@ -47,6 +47,16 @@ void Sprite::FlipHorizontal(float xVelocity)
 	if (xVelocity < 0.0f)
 		flipFlags = SDL_FLIP_HORIZONTAL;
 	else flipFlags = SDL_FLIP_NONE;
+}
+
+char* Sprite::Serialize()
+{
+	return "";
+}
+
+void Sprite::Deserialize(char* serialized)
+{
+
 }
 
 void Sprite::SetScale(float x, float y)

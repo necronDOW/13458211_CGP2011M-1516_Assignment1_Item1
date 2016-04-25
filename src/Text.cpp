@@ -11,7 +11,7 @@ Text::Text(Game* game, glm::vec2 position, int fontPt, char* text)
 	font = TTF_OpenFont(fontStyle, fontPt);
 
 	color = CreateSDL_Color(255, 255, 255);
-	Initialize(text, fontPt, position.x, position.y);
+	Initialize(text, fontPt, (int)position.x, (int)position.y);
 }
 
 Text::Text(Game* game, glm::vec2 position, int fontPt, char* text, uint8_t r, uint8_t g, uint8_t b)
@@ -20,7 +20,7 @@ Text::Text(Game* game, glm::vec2 position, int fontPt, char* text, uint8_t r, ui
 	font = TTF_OpenFont(fontStyle, fontPt);
 
 	color = CreateSDL_Color(r, g, b);
-	Initialize(text, fontPt, position.x, position.y);
+	Initialize(text, fontPt, (int)position.x, (int)position.y);
 }
 
 Text::~Text()
@@ -56,8 +56,8 @@ void Text::SetPosition(int x, int y)
 {
 	origin = glm::vec2(x, y);
 
-	dest.x = origin.x - (dest.w / 2);
-	dest.y = origin.y - (dest.h / 2);
+	dest.x = (int)origin.x - (dest.w / 2);
+	dest.y = (int)origin.y - (dest.h / 2);
 }
 
 void Text::Initialize(char* text, int fontPt, int x, int y)

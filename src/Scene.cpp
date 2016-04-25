@@ -93,7 +93,7 @@ void Scene::Update()
 			if (game->GetClient() != nullptr)
 			{
 				char* serializedInfo = objects[i]->Serialize();
-				game->GetClient()->SendMessage("1", serializedInfo);
+                game->GetClient()->SendMessage("1", serializedInfo);
 			}
 		}
 		else objects.erase(objects.begin() + i);
@@ -126,6 +126,8 @@ int Scene::InstantiateDynObjects(std::vector<char*> &levelsData, int dataStart, 
 
 		constructor->CreateObject(objects, game, this, glm::vec2(atoi(dynData[1]) * tileSize.x, atoi(dynData[2]) * tileSize.y), dynData[0] + 1);
 	}
+
+	return dataStart;
 }
 
 int Scene::GetTileID(int x, int y)
@@ -140,7 +142,7 @@ int Scene::TileExists(glm::vec2 pos, int relativeCoordX, int relativeCoordY)
 	glm::vec2 position = glm::vec2(pos.x - (tileSize.x / 2), pos.y - (tileSize.y / 4));
 	glm::vec2 tileIndices = GetCurrentTile(position);
 
-	return GetTileID(tileIndices.x + relativeCoordX, tileIndices.y + relativeCoordY);
+	return GetTileID((int)tileIndices.x + relativeCoordX, (int)tileIndices.y + relativeCoordY);
 }
 
 void Scene::SnapToX(glm::vec2 &pos, int offset)
@@ -175,7 +177,7 @@ glm::vec2 Scene::GetCurrentTile(glm::vec2 pos)
 
 FunctionalObject* Scene::FindObjectWithID(int id)
 {
-	for (int i = 0; i < objects.size(); i++)
+	for (unsigned int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->GetUniqueID() == id)
 			return objects[i];

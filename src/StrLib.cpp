@@ -73,7 +73,9 @@ char* StrLib::str_concat(std::vector<char*> elements)
 
 char* StrLib::to_char(int value)
 {
-	return (char*)std::to_string(value).c_str();
+	char* tmp;
+	str_copy((char*)std::to_string(value).c_str(), tmp);
+	return tmp;
 }
 
 char* StrLib::to_char(float value)
@@ -88,7 +90,7 @@ char* StrLib::to_char(bool value)
 
 char* StrLib::to_char(glm::vec2 value)
 {
-	return str_concat(std::vector<char*> { to_char(value.x), ",", to_char(value.y) });
+	return str_concat(std::vector<char*> { to_char((int)value.x), ",", to_char((int)value.y) });
 }
 
 char* StrLib::to_char(SDL_Color value)
@@ -100,8 +102,7 @@ bool StrLib::char_to_bool(char* value)
 {
 	if (str_contains(value, "true"))
 		return true;
-	else if (str_contains(value, "false"))
-		return false;
+	else return false;
 }
 
 glm::vec2 StrLib::char_to_vec2(char* value)

@@ -21,6 +21,8 @@ class Sprite
 		virtual void ChangeAnimation(char* id);
 		virtual void SetToStaticAnimation();
 		void FlipHorizontal(float xVelocity);
+		virtual char* Serialize();
+		virtual void Deserialize(char* serialized);
 
 		void SetScale(float x, float y);
 		void SetOrigin(glm::vec2* origin);

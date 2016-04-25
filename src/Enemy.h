@@ -16,6 +16,8 @@ class Enemy : public FunctionalObject
 		void HandleCollision(GameObject* o);
 		void ChangeDirectionX();
 		void SetDirection(float x, float y);
+		char* Serialize();
+		void Deserialize(std::vector<char*> serialized);
 
 		glm::vec2 GetDirection();
 

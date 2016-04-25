@@ -26,7 +26,7 @@ void GameObject::Update()
 		sprite->Update();
 
 		SDL_Rect tmp = sprite->GetRect();
-		bounds = Bounds(tmp.y, tmp.x, tmp.y + tmp.h, tmp.x + tmp.w);
+		bounds = Bounds((float)tmp.y, (float)tmp.x, (float)(tmp.y + tmp.h), (float)(tmp.x + tmp.w));
 	}
 }
 

@@ -54,7 +54,7 @@ void ObjectConstructor::CreateObject(std::vector<FunctionalObject*> &objects, Ga
 			tmp->SetSprite(1.0f, type, type);
 			tmp->GetSprite()->SetScale(0.9f, 0.9f);
 
-			tmp->GetSprite()->SetOffset(0, -tmp->GetSprite()->GetRect().h / 2);
+			tmp->GetSprite()->SetOffset(0.0, (float)(-tmp->GetSprite()->GetRect().h / 2));
 			tmp->SetUniqueID(objects.size() - 1);
 			return;
 		}

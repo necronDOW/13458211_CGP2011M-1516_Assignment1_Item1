@@ -60,7 +60,7 @@ void Game::Update()
 		{
 			server->CheckIncoming();
 
-			if (!playing && server->GetPlayerCount() > 0)
+			if (!playing && server->GetPlayerCount() > 1)
 				menuMngr->SetActiveMenu(menuMngr->FindMenuByTag("load"));
 		}
 		else server = nullptr;
@@ -164,7 +164,10 @@ void Game::SetGameState(char* state)
 			menuMngr->SetActiveMenu(menuMngr->FindMenuByTag(state));
 	}
 	else if (StrLib::str_contains(state, "host-game"))
+	{
 		server = new Server(2);
+		client = new Client("127.0.0.1");
+	}
 	else if (StrLib::str_contains(state, "find-game"))
 		client = new Client("127.0.0.1");
 }

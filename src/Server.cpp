@@ -43,12 +43,12 @@ void Server::CheckIncoming()
 		// Check for incoming messages from existing connections.
 		while (SDLNet_CheckSockets(sockets, 0) > 0)
 		{
-			for (int i = 0; i < playerCount; i++)
+			for (unsigned int i = 0; i < playerCount; i++)
 				InterpretIncoming(i, socketVector[i], temp);
 		}
 
 		// Disconnect players due to timeout.
-		for (int i = 0; i < playerCount; i++)
+		for (unsigned int i = 0; i < playerCount; i++)
 		{
 			if (SDL_GetTicks() - socketVector[i].timeout > 5000)
 			{
@@ -120,7 +120,7 @@ void Server::InterpretIncoming(int index, data &incoming, char* str)
 
 void Server::CirculateMsg(int originIndex, char* str)
 {
-	for (int i = 0; i < playerCount; i++)
+	for (unsigned int i = 0; i < playerCount; i++)
 	{
 		if (i == originIndex)
 			continue;
@@ -150,11 +150,11 @@ void Server::CalculateAvailableIDs()
 	if (socketVector.size() == maxPlayers)
 		return;
 
-	for (int i = 0; i < maxPlayers; i++)
+	for (unsigned int i = 0; i < maxPlayers; i++)
 	{
 		bool available = true;
 
-		for (int j = 0; j < socketVector.size(); j++)
+		for (unsigned int j = 0; j < socketVector.size(); j++)
 		{
 			if (socketVector[j].id == i)
 			{

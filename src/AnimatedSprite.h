@@ -23,6 +23,8 @@ class AnimatedSprite : public Sprite
 		void Update();
 		void SetToStaticAnimation();
 		void ChangeAnimation(char* newID);
+		virtual char* Serialize();
+		virtual void Deserialize(char* serialized);
 
 		Timer &GetTimer();
 

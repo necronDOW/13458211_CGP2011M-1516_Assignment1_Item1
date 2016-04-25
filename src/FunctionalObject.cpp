@@ -35,8 +35,7 @@ void FunctionalObject::Update()
 	else if (!canClimb && !isJumping)
 		velocity.y = scene->GetGravity();
 
-	if (game->GetClient() == nullptr)
-		AnimationHandler();
+	AnimationHandler();
 
 	GameObject::Update();
 }

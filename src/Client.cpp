@@ -59,6 +59,7 @@ void Client::CheckIncoming(Game* game)
 		if (SDLNet_SocketReady(connection))
 		{
 			SDLNet_TCP_Recv(connection, temp, 1400);
+			std::vector<char*> messages;
 
 			int commandID = GetCommandID(temp);
 			switch (commandID)
@@ -69,7 +70,13 @@ void Client::CheckIncoming(Game* game)
 					break;
 
 				case 1:
-					game->GetSceneManager()->UpdateSceneObject(StrLib::str_split(temp, "*")[1]);
+					messages = StrLib::str_split(temp, "*");
+
+					for (int i = 1; i < messages.size(); i++)
+					{
+						char* tmp = StrLib::str_split(messages[i], " ")[0];
+						game->GetSceneManager()->UpdateSceneObject(tmp);
+					}
 					break;
 
 				case 2:

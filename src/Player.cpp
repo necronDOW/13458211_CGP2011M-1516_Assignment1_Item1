@@ -132,3 +132,19 @@ void Player::HandleCollision(GameObject* o)
 		game->done = true;
 	}
 }
+
+char* Player::Serialize()
+{
+	return StrLib::str_concat(std::vector<char*> {
+		"uniqueID:", StrLib::to_char(uniqueID),
+			";position:", StrLib::to_char(position),
+			";velocity:", StrLib::to_char(velocity)
+	});
+}
+
+void Player::Deserialize(std::vector<char*> serialized)
+{
+	position = StrLib::char_to_vec2(StrLib::str_split(serialized[1], ":")[1]);
+	velocity = StrLib::char_to_vec2(StrLib::str_split(serialized[2], ":")[1]);
+	//sprite->Deserialize(StrLib::str_split(serialized[3], ":")[1]);
+}

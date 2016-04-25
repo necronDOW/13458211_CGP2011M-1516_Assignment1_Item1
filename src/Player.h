@@ -16,6 +16,8 @@ class Player : public FunctionalObject
 		void HandleInput(SDL_Event &event);
 		void HandleMovement(SDL_Event &event, float effect);
 		void HandleCollision(GameObject* o);
+		char* Serialize();
+		void Deserialize(std::vector<char*> serialized);
 
 	private:
 		int score;

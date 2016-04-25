@@ -35,7 +35,8 @@ void FunctionalObject::Update()
 	else if (!canClimb && !isJumping)
 		velocity.y = scene->GetGravity();
 
-	AnimationHandler();
+	if (game->GetClient() == nullptr)
+		AnimationHandler();
 
 	GameObject::Update();
 }
@@ -54,7 +55,7 @@ char* FunctionalObject::Serialize()
 {
 	return StrLib::str_concat(std::vector<char*> {
 		"uniqueID:", StrLib::to_char(uniqueID),
-		";position:", StrLib::to_char(position)
+		";position:", StrLib::to_char(position),
 	});
 }
 

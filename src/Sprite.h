@@ -34,6 +34,9 @@ class Sprite
 		virtual Timer &GetTimer();
 
 	protected:
+		char* RendererFlip_to_char(SDL_RendererFlip f);
+		SDL_RendererFlip char_to_RendererFlip(char* c);
+
 		SDL_Instance* instance;
 		SDL_Texture* texture;
 		SDL_Rect* src;

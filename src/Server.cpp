@@ -38,7 +38,7 @@ void Server::CheckIncoming()
 		{
 			if (playerCount < maxPlayers)
 				AddSocket(tmpSocket, temp);
-			else sprintf(temp, "3 \n");
+			else sprintf(temp, "3* \n");
 
 			SDLNet_TCP_Send(tmpSocket, temp, strlen(temp) + 1);
 		}
@@ -46,19 +46,19 @@ void Server::CheckIncoming()
 		// Check for incoming messages from existing connections.
 		while (SDLNet_CheckSockets(sockets, 0) > 0)
 		{
-			for (unsigned int i = 0; i < playerCount; i++)
+			for (unsigned int i = 0; i < playerCount - 1; i++)
 				InterpretIncoming(i, socketVector[i], temp);
 		}
 
 		// Disconnect players due to timeout.
 		for (unsigned int i = 0; i < playerCount - 1; i++)
 		{
-			if (SDL_GetTicks() - socketVector[i].timeout > 5000)
+			if (SDL_GetTicks() - socketVector[i].timeout > 10000)
 			{
-				sprintf(temp, "2 %d \n", socketVector[i].id);
+				sprintf(temp, "2*%d \n", socketVector[i].id);
 				CirculateMsg(i, temp);
 
-				SDLNet_TCP_Send(socketVector[i].socket, "4 \n", 4);
+				SDLNet_TCP_Send(socketVector[i].socket, "4* \n", 4);
 				RemoveSocket(i);
 			}
 		}
@@ -82,7 +82,8 @@ void Server::AddSocket(TCPsocket newSocket, char* str)
 	SDLNet_TCP_AddSocket(sockets, newSocket);
 	socketVector.push_back(data(newSocket, SDL_GetTicks(), id));
 	playerCount++;
-	sprintf(str, "0 %d \n", id);
+	sprintf(str, "0*%d \n", id);
+
 
 	std::cout << "Player Connected: " << id << "." << std::endl;
 }

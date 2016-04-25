@@ -19,8 +19,7 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
-	if (game->GetClient() == nullptr)
-		position += velocity;
+	position += velocity;
 
 	if (sprite != nullptr)
 	{

@@ -94,7 +94,7 @@ void Scene::Update()
 			if (game->GetServer() != nullptr)
 			{
 				char* serializedInfo = objects[i]->Serialize();
-				game->GetServer()->CirculateMsg(-1, StrLib::str_concat(std::vector<char*> { "1 ", serializedInfo }));
+				game->GetServer()->CirculateMsg(-1, StrLib::str_concat(std::vector<char*> { "1*", serializedInfo, " \n" }));
 			}
 		}
 		else objects.erase(objects.begin() + i);

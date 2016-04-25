@@ -59,6 +59,20 @@ void Sprite::Deserialize(char* serialized)
 
 }
 
+char* Sprite::RendererFlip_to_char(SDL_RendererFlip f)
+{
+	if (f == SDL_FLIP_HORIZONTAL)
+		return "horizontal";
+	return "none";
+}
+
+SDL_RendererFlip Sprite::char_to_RendererFlip(char* c)
+{
+	if (c == "horizontal")
+		return SDL_FLIP_HORIZONTAL;
+	return SDL_FLIP_NONE;
+}
+
 void Sprite::SetScale(float x, float y)
 {
 	scale = glm::vec2(x, y);

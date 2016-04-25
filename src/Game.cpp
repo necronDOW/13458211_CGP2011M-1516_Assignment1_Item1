@@ -2,7 +2,6 @@
 #include "SDL_Instance.h"
 #include "SceneManager.h"
 #include "MenuManager.h"
-#include "Server.h"
 #include "Client.h"
 
 Game::Game()
@@ -140,7 +139,6 @@ void Game::CleanExit(char* message)
 	if (instance != nullptr) instance->CleanUp();
 	if (audioMngr != nullptr) audioMngr->CleanUp();
 	if (server != nullptr) server->Quit();
-	if (client != nullptr) client->Quit();
 	exit(1);
 }
 

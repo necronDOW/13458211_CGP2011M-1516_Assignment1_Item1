@@ -37,7 +37,7 @@ Client::Client(const char* ip)
 Client::~Client()
 {
 	if (connection != NULL)
-		SDLNet_TCP_Send(connection, "2 \n", 4);
+		SDLNet_TCP_Send(connection, "2*\n", 4);
 	Quit();
 }
 
@@ -45,7 +45,7 @@ void Client::SendMessage(char* flag, char* msg)
 {
 	if (online)
 	{
-		char* fullMsg = StrLib::str_concat(std::vector<char*> { flag, " ", msg });
+		char* fullMsg = StrLib::str_concat(std::vector<char*> { flag, "*", msg });
 		SDLNet_TCP_Send(connection, fullMsg, strlen(fullMsg + 1));
 	}
 }
@@ -69,15 +69,15 @@ void Client::CheckIncoming(Game* game)
 					break;
 
 				case 1:
-					game->GetSceneManager()->UpdateSceneObject(StrLib::str_split(temp, " ")[1]);
+					game->GetSceneManager()->UpdateSceneObject(StrLib::str_split(temp, "*")[1]);
 					break;
 
 				case 2:
-					std::cout << "Player " << StrLib::str_split(temp, " ")[1] << " disconnected." << std::endl;
+					std::cout << "Player " << StrLib::str_split(temp, "*")[1] << " disconnected." << std::endl;
 					break;
 
 				case 3:
-					std::cout << "Unabled to connect to server (" << ip.host << "), too many players." << std::endl;
+					std::cout << "Unable to connect to server (" << ip.host << "), too many players." << std::endl;
 					Quit();
 					break;
 
@@ -88,7 +88,7 @@ void Client::CheckIncoming(Game* game)
 					break;
 
 				case 5:
-					// Change scene
+					game->SetGameState("play");
 					break;
 			}
 		}

@@ -70,8 +70,9 @@ void AnimatedSprite::ChangeAnimation(char* newID)
 char* AnimatedSprite::Serialize()
 {
 	return StrLib::str_concat(std::vector<char*> {
-		"anim:", currentAnim->id, 
-		",", StrLib::to_char((int)currentFrame)
+		"anim:", currentAnim->id,
+			",", StrLib::to_char((int)currentFrame),
+			",", RendererFlip_to_char(flipFlags)
 	});
 }
 
@@ -81,6 +82,7 @@ void AnimatedSprite::Deserialize(char* serialized)
 
 	currentAnim->id = elements[0];
 	currentFrame = atoi(elements[1]);
+	flipFlags = char_to_RendererFlip(elements[2]);
 }
 
 void AnimatedSprite::GenerateAnimations(char* staticID, std::vector<char*> ids)

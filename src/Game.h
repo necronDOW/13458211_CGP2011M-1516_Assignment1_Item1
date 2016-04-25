@@ -6,6 +6,7 @@
 #include <vector>
 #include "TextureManager.h"
 #include "AudioManager.h"
+#include "Server.h"
 
 // SDL includes
 #include <SDL.h>
@@ -15,7 +16,6 @@
 class SDL_Instance;
 class SceneManager;
 class MenuManager;
-class Server;
 class Client;
 
 class Game

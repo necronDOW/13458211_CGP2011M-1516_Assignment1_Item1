@@ -2,6 +2,7 @@
 #include "FunctionalObject.h"
 #include "ObjectConstructor.h"
 #include "Pickup.h"
+#include "Client.h"
 
 Scene::Scene()
 {
@@ -10,6 +11,7 @@ Scene::Scene()
 
 Scene::Scene(Game* game, std::vector<char*> &levelsData, int dataStart, ObjectConstructor* &constructor)
 {
+	this->game = game;
 	gravity = 4.0f;
 
 	Sprite tmp = Sprite(game, glm::vec2(0, 0), 1.0f, constructor->GetValidTiles()[0]);
@@ -22,7 +24,7 @@ Scene::Scene(Game* game, std::vector<char*> &levelsData, int dataStart, ObjectCo
 		if (StrLib::str_contains(levelsData[i], "#"))
 		{
 			tileCount.y = (float)(i - dataStart);
-			i = InstantiateDynObjects(game, levelsData, i + 1, constructor);
+			i = InstantiateDynObjects(levelsData, i + 1, constructor);
 		}
 
 		if (StrLib::str_contains(levelsData[i], "};"))
@@ -87,6 +89,12 @@ void Scene::Update()
 			}
 
 			objects[i]->Update();
+
+			if (game->GetClient() != nullptr)
+			{
+				char* serializedInfo = objects[i]->Serialize();
+				game->GetClient()->SendMessage("1", serializedInfo);
+			}
 		}
 		else objects.erase(objects.begin() + i);
 	}
@@ -107,7 +115,7 @@ void Scene::Render()
 		objects[i]->Render();
 }
 
-int Scene::InstantiateDynObjects(Game* game, std::vector<char*> &levelsData, int dataStart, ObjectConstructor* &constructor)
+int Scene::InstantiateDynObjects(std::vector<char*> &levelsData, int dataStart, ObjectConstructor* &constructor)
 {
 	for (unsigned int i = dataStart; i < levelsData.size(); i++)
 	{
@@ -163,6 +171,17 @@ glm::vec2 Scene::GetCurrentTile(glm::vec2 pos)
 	}
 
 	return glm::vec2(pX, pY);
+}
+
+FunctionalObject* Scene::FindObjectWithID(int id)
+{
+	for (int i = 0; i < objects.size(); i++)
+	{
+		if (objects[i]->GetUniqueID() == id)
+			return objects[i];
+	}
+
+	return nullptr;
 }
 
 void Scene::SetGravity(float value)

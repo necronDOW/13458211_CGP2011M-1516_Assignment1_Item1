@@ -1,10 +1,5 @@
 #include "Server.h"
 
-Server::Server()
-{
-
-}
-
 Server::Server(int maxPlayers)
 {
 	if (SDLNet_Init() != 0)
@@ -20,6 +15,7 @@ Server::Server(int maxPlayers)
 	SDLNet_ResolveHost(&ip, NULL, 1234);
 	server = SDLNet_TCP_Open(&ip);
 	sockets = SDLNet_AllocSocketSet(maxPlayers);
+	CalculateAvailableIDs();
 }
 
 Server::~Server()
@@ -58,6 +54,8 @@ void Server::CheckIncoming()
 			{
 				sprintf(temp, "2 %d \n", socketVector[i].id);
 				CirculateMsg(i, temp);
+
+				SDLNet_TCP_Send(socketVector[i].socket, "4 \n", 4);
 				RemoveSocket(i);
 			}
 		}
@@ -76,12 +74,14 @@ void Server::Quit()
 
 void Server::AddSocket(TCPsocket newSocket, char* str)
 {
-	SDLNet_TCP_AddSocket(sockets, newSocket);
-	socketVector.push_back(data(newSocket, SDL_GetTicks(), currentID));
-	playerCount++;
-	sprintf(str, "0 %d \n", currentID++);
+	int id = GetAvailableID();
 
-	std::cout << "Player Connected: " << currentID << "." << std::endl;
+	SDLNet_TCP_AddSocket(sockets, newSocket);
+	socketVector.push_back(data(newSocket, SDL_GetTicks(), id));
+	playerCount++;
+	sprintf(str, "0 %d \n", id);
+
+	std::cout << "Player Connected: " << id << "." << std::endl;
 }
 
 void Server::RemoveSocket(int index)
@@ -89,6 +89,7 @@ void Server::RemoveSocket(int index)
 	SDLNet_TCP_DelSocket(sockets, socketVector[index].socket);
 	SDLNet_TCP_Close(socketVector[index].socket);
 	socketVector.erase(socketVector.begin() + index);
+	CalculateAvailableIDs();
 
 	std::cout << "Player Disconnected: " << playerCount-- << "." << std::endl;
 }
@@ -141,3 +142,43 @@ int Server::GetCommandID(char* msg)
 
 	return commandID;
 }
+
+void Server::CalculateAvailableIDs()
+{
+	availableIDs.clear();
+
+	if (socketVector.size() == maxPlayers)
+		return;
+
+	for (int i = 0; i < maxPlayers; i++)
+	{
+		bool available = true;
+
+		for (int j = 0; j < socketVector.size(); j++)
+		{
+			if (socketVector[j].id == i)
+			{
+				available = false;
+				break;
+			}
+		}
+
+		if (available)
+			availableIDs.push_back(i);
+	}
+}
+
+int Server::GetAvailableID()
+{
+	if (availableIDs.size() > 0)
+	{
+		int id = availableIDs[0];
+		availableIDs.erase(availableIDs.begin());
+
+		return id;
+	}
+
+	return -1;
+}
+
+int Server::GetPlayerCount() { return playerCount; }

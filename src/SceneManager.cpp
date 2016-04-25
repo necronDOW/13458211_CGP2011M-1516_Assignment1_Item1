@@ -89,6 +89,14 @@ void SceneManager::PreviousScene()
 	}
 }
 
+void SceneManager::UpdateSceneObject(char* serialized)
+{
+	std::vector<char*> elements = StrLib::str_split(serialized, ",");
+	FunctionalObject* target = scenes[currentScene]->FindObjectWithID(atoi(StrLib::str_split(elements[0], ":")[1]));
+
+	target->Deserialize(elements);
+}
+
 void SceneManager::LoadScenes(Game* game, std::vector<char*> &lines, std::vector<int> &indices)
 {
 	constructor = new ObjectConstructor(lines);

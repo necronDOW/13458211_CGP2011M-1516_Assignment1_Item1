@@ -2,6 +2,8 @@
 #define CLIENT_H
 
 #include <iostream>
+#include "Game.h"
+
 #include <SDL.h>
 #include <SDL_net.h>
 
@@ -13,20 +15,25 @@
 class Client
 {
 	public:
-		Client();
 		Client(const char* ip);
 		~Client();
 
+		void SendMessage(char* flag, char* msg);
+		void CheckIncoming(Game* game);
 		bool IsOnline();
+
+		int GetClientID();
 
 	private:
 		void Quit();
+		int GetCommandID(char* msg);
 
 		IPaddress ip;
 		SDLNet_SocketSet server;
 		TCPsocket connection;
 		char message[1400];
 		bool online;
+		int clientID = -1;
 };
 
 #endif

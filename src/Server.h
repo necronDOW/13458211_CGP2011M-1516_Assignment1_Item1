@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+
 #include <SDL.h>
 #include <SDL_net.h>
 
@@ -24,11 +25,12 @@ class Server
 	};
 
 	public:
-		Server();
 		Server(int maxPlayers);
 		~Server();
 		void CheckIncoming();
 		void Quit();
+
+		int GetPlayerCount();
 
 		bool online = false;
 
@@ -38,12 +40,15 @@ class Server
 		void InterpretIncoming(int index, data &incoming, char* str);
 		void CirculateMsg(int originIndex, char* str);
 		int GetCommandID(char* msg);
+		void CalculateAvailableIDs();
+		int GetAvailableID();
 
-		int currentID = 0, playerCount = 0, maxPlayers;
+		int playerCount = 0, maxPlayers;
 		TCPsocket server;
 		IPaddress ip;
 		std::vector<data> socketVector;
 		SDLNet_SocketSet sockets;
+		std::vector<int> availableIDs;
 };
 
 #endif

@@ -6,8 +6,6 @@
 #include <vector>
 #include "TextureManager.h"
 #include "AudioManager.h"
-#include "Client.h"
-#include "Server.h"
 
 // SDL includes
 #include <SDL.h>
@@ -17,6 +15,8 @@
 class SDL_Instance;
 class SceneManager;
 class MenuManager;
+class Server;
+class Client;
 
 class Game
 {
@@ -35,9 +35,13 @@ class Game
 
 		char* &GetName();
 		SDL_Instance* &GetSDLInstance();
-		AudioManager* &GetAudioManager();
 		TextureManager* &GetTextureManager();
+		SceneManager* &GetSceneManager();
+		MenuManager* &GetMenuManager();
+		AudioManager* &GetAudioManager();
 		SDL_Event &GetEvent();
+		Client* &GetClient();
+		Server* &GetServer();
 
 		bool done;							// Whether or not the game is done.
 
@@ -62,8 +66,8 @@ class Game
 		MenuManager* menuMngr;
 		AudioManager* audioMngr;
 		SDL_Event event;
-		Client* client;
-		Server* server;
+		Client* client = nullptr;
+		Server* server = nullptr;
 };
 
 #endif

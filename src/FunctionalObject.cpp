@@ -52,12 +52,15 @@ void FunctionalObject::HandleCollision(GameObject* o)
 
 char* FunctionalObject::Serialize()
 {
-	return "";
+	return StrLib::str_concat(std::vector<char*> {
+		"uniqueID:", StrLib::to_char(uniqueID),
+		",velocity.x:", StrLib::to_char(velocity.x)
+	});
 }
 
-void FunctionalObject::Deserialize(char* serialized)
+void FunctionalObject::Deserialize(std::vector<char*> serialized)
 {
-
+	velocity.x = atoi(StrLib::str_split(serialized[1], ":")[1]);
 }
 
 void FunctionalObject::AnimationHandler()
@@ -79,3 +82,10 @@ void FunctionalObject::SetJumpVelocity(float value)
 		isJumping = false;
 	else isJumping = true;
 }
+
+void FunctionalObject::SetUniqueID(int value)
+{
+	uniqueID = value;
+}
+
+int FunctionalObject::GetUniqueID() { return uniqueID; }

@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <vector>
-#include "StrLib.h"
 #include "Game.h"
+#include "StrLib.h"
 
 class GameObject;
 class FunctionalObject;
@@ -25,6 +25,7 @@ class Scene
 		void SnapToX(glm::vec2 &pos, int offset);
 		void SnapToY(glm::vec2 &pos, int offset);
 		glm::vec2 GetCurrentTile(glm::vec2 pos);
+		FunctionalObject* FindObjectWithID(int id);
 
 		void SetGravity(float value);
 		glm::vec2 GetTileSize();
@@ -33,8 +34,9 @@ class Scene
 		int GetObjectiveCount();
 
 	private:
-		int InstantiateDynObjects(Game* game, std::vector<char*> &levelsData, int dataStart, ObjectConstructor* &constructor);
+		int InstantiateDynObjects(std::vector<char*> &levelsData, int dataStart, ObjectConstructor* &constructor);
 		
+		Game* game;
 		std::vector<int> tileMap;
 		std::vector<GameObject*> tiles;
 		std::vector<FunctionalObject*> objects;

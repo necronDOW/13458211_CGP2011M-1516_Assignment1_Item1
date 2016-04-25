@@ -5,10 +5,9 @@ Player::Player()
 	score = 0;
 }
 
-Player::Player(Game* game, Scene* scene, float x, float y, int id)
+Player::Player(Game* game, Scene* scene, float x, float y)
 	: FunctionalObject(game, scene, x, y)
 {
-	this->id = id;
 	score = 0;
 }
 
@@ -133,5 +132,3 @@ void Player::HandleCollision(GameObject* o)
 		game->done = true;
 	}
 }
-
-int Player::GetID() { return id; }

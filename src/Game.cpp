@@ -2,6 +2,8 @@
 #include "SDL_Instance.h"
 #include "SceneManager.h"
 #include "MenuManager.h"
+#include "Server.h"
+#include "Client.h"
 
 Game::Game()
 {
@@ -52,6 +54,25 @@ void Game::Initialize()
 int x = 0;
 void Game::Update()
 {
+	if (server != nullptr)
+	{
+		if (server->online)
+		{
+			server->CheckIncoming();
+
+			if (!playing && server->GetPlayerCount() > 0)
+				menuMngr->SetActiveMenu(menuMngr->FindMenuByTag("load"));
+		}
+		else server = nullptr;
+	}
+
+	if (client != nullptr)
+	{
+		if (client->IsOnline())
+			client->CheckIncoming(this);
+		else client = nullptr;
+	}
+
 	if (playing && !paused)
 	{
 		sceneMngr->Update();
@@ -129,7 +150,11 @@ void Game::SetGameState(char* state)
 		paused = false;
 
 		if (!playing)
+		{
 			menuMngr->SetActiveMenu(menuMngr->FindMenuByTag("main"));
+			client = nullptr;
+			server = nullptr;
+		}
 	}
 	else if (StrLib::str_contains(state, "pause"))
 	{
@@ -141,16 +166,15 @@ void Game::SetGameState(char* state)
 	else if (StrLib::str_contains(state, "host-game"))
 		server = new Server(2);
 	else if (StrLib::str_contains(state, "find-game"))
-	{
 		client = new Client("127.0.0.1");
-
-		if (!client->IsOnline())
-			client = nullptr;
-	}
 }
 
 char* &Game::GetName() { return exeName; }
 SDL_Instance* &Game::GetSDLInstance() { return instance; }
-AudioManager* &Game::GetAudioManager() { return audioMngr; }
 TextureManager* &Game::GetTextureManager() { return texManager; }
+SceneManager* &Game::GetSceneManager() { return sceneMngr; }
+MenuManager* &Game::GetMenuManager() { return menuMngr; }
+AudioManager* &Game::GetAudioManager() { return audioMngr; }
 SDL_Event &Game::GetEvent() { return event; }
+Client* &Game::GetClient() { return client; }
+Server* &Game::GetServer() { return server; }

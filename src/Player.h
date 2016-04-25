@@ -9,7 +9,7 @@ class Player : public FunctionalObject
 {
 	public:
 		Player();
-		Player(Game* game, Scene* scene, float x, float y, int id);
+		Player(Game* game, Scene* scene, float x, float y);
 		~Player();
 
 		void Update();
@@ -17,10 +17,7 @@ class Player : public FunctionalObject
 		void HandleMovement(SDL_Event &event, float effect);
 		void HandleCollision(GameObject* o);
 
-		int GetID();
-
 	private:
-		int id;
 		int score;
 };
 

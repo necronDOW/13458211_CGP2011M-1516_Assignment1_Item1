@@ -1,9 +1,6 @@
 #include "Client.h"
-
-Client::Client()
-{
-	online = false;
-}
+#include "MenuManager.h"
+#include "SceneManager.h"
 
 Client::Client(const char* ip)
 {
@@ -44,6 +41,60 @@ Client::~Client()
 	Quit();
 }
 
+void Client::SendMessage(char* flag, char* msg)
+{
+	if (online)
+	{
+		char* fullMsg = StrLib::str_concat(std::vector<char*> { flag, " ", msg });
+		SDLNet_TCP_Send(connection, fullMsg, strlen(fullMsg + 1));
+	}
+}
+
+void Client::CheckIncoming(Game* game)
+{
+	if (online && SDLNet_CheckSockets(server, 0) > 0)
+	{
+		char temp[1400];
+
+		if (SDLNet_SocketReady(connection))
+		{
+			SDLNet_TCP_Recv(connection, temp, 1400);
+
+			int commandID = GetCommandID(temp);
+			switch (commandID)
+			{
+				case 0:
+					std::cout << "Connected to server (" << ip.host << ") successfully." << std::endl;
+					game->GetMenuManager()->SetActiveMenu(game->GetMenuManager()->FindMenuByTag("load"));
+					break;
+
+				case 1:
+					game->GetSceneManager()->UpdateSceneObject(StrLib::str_split(temp, " ")[1]);
+					break;
+
+				case 2:
+					std::cout << "Player " << StrLib::str_split(temp, " ")[1] << " disconnected." << std::endl;
+					break;
+
+				case 3:
+					std::cout << "Unabled to connect to server (" << ip.host << "), too many players." << std::endl;
+					Quit();
+					break;
+
+				case 4:
+					std::cout << "Timed out, disconnected from server (" << ip.host << ")." << std::endl;
+					game->SetGameState("play");
+					Quit();
+					break;
+
+				case 5:
+					// Change scene
+					break;
+			}
+		}
+	}
+}
+
 bool Client::IsOnline()
 {
 	return online;
@@ -55,5 +106,23 @@ void Client::Quit()
 	SDLNet_FreeSocketSet(server);
 	SDLNet_Quit();
 
+	clientID = -1;
 	online = false;
 }
+
+int Client::GetCommandID(char* msg)
+{
+	int commandID = msg[0] - '0';
+	int i = 1;
+
+	while (msg[i] >= '0' && msg[i] <= '9')
+	{
+		commandID *= 10;
+		commandID += msg[i] - '0';
+		i++;
+	}
+
+	return commandID;
+}
+
+int Client::GetClientID() { return clientID; }

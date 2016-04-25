@@ -115,7 +115,8 @@ void Enemy::Walk()
 		}
 	}
 
-	velocity.x = (float)direction.x * speed;
+	if (game->GetClient() != nullptr)
+		velocity.x = (float)direction.x * speed;
 }
 
 glm::vec2 Enemy::GetDirection() { return direction; }

@@ -21,6 +21,7 @@ class SceneManager
 		void Render();
 		void NextScene();
 		void PreviousScene();
+		void UpdateSceneObject(char* serialized);
 
 		Scene* &GetScene(int index);
 		int GetCurrentIndex();

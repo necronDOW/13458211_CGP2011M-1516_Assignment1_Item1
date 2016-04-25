@@ -16,9 +16,11 @@ class FunctionalObject : public GameObject
 		virtual void HandleInput(SDL_Event &event);
 		virtual void HandleCollision(GameObject* o);
 		virtual char* Serialize();
-		virtual void Deserialize(char* serialized);
+		virtual void Deserialize(std::vector<char*> serialized);
 
 		void SetJumpVelocity(float value);
+		void SetUniqueID(int value);
+		int GetUniqueID();
 
 	protected:
 		void AnimationHandler();
@@ -28,6 +30,7 @@ class FunctionalObject : public GameObject
 		bool isClimbing;
 		bool isJumping;
 		float jumpVelocity;
+		int uniqueID = -1;
 };
 
 #endif

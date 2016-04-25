@@ -29,6 +29,7 @@ class Server
 		~Server();
 		void CheckIncoming();
 		void Quit();
+		void CirculateMsg(int originIndex, char* str);
 
 		int GetPlayerCount();
 
@@ -38,7 +39,6 @@ class Server
 		void AddSocket(TCPsocket newSocket, char* str);
 		void RemoveSocket(int index);
 		void InterpretIncoming(int index, data &incoming, char* str);
-		void CirculateMsg(int originIndex, char* str);
 		int GetCommandID(char* msg);
 		void CalculateAvailableIDs();
 		int GetAvailableID();

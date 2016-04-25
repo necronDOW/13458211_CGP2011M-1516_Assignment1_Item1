@@ -21,11 +21,11 @@ class Client
 		void SendMessage(char* flag, char* msg);
 		void CheckIncoming(Game* game);
 		bool IsOnline();
+		void Quit();
 
 		int GetClientID();
 
 	private:
-		void Quit();
 		int GetCommandID(char* msg);
 
 		IPaddress ip;

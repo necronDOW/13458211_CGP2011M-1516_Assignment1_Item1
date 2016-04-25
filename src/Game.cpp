@@ -63,14 +63,16 @@ void Game::Update()
 			if (!playing && server->GetPlayerCount() > 1)
 				menuMngr->SetActiveMenu(menuMngr->FindMenuByTag("load"));
 		}
-		else server = nullptr;
+		else 
+			server = nullptr;
 	}
 
 	if (client != nullptr)
 	{
 		if (client->IsOnline())
 			client->CheckIncoming(this);
-		else client = nullptr;
+		else 
+			client = nullptr;
 	}
 
 	if (playing && !paused)
@@ -137,6 +139,8 @@ void Game::CleanExit(char* message)
 
 	if (instance != nullptr) instance->CleanUp();
 	if (audioMngr != nullptr) audioMngr->CleanUp();
+	if (server != nullptr) server->Quit();
+	if (client != nullptr) client->Quit();
 	exit(1);
 }
 
@@ -164,10 +168,7 @@ void Game::SetGameState(char* state)
 			menuMngr->SetActiveMenu(menuMngr->FindMenuByTag(state));
 	}
 	else if (StrLib::str_contains(state, "host-game"))
-	{
 		server = new Server(2);
-		client = new Client("127.0.0.1");
-	}
 	else if (StrLib::str_contains(state, "find-game"))
 		client = new Client("127.0.0.1");
 }

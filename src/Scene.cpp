@@ -3,6 +3,7 @@
 #include "ObjectConstructor.h"
 #include "Pickup.h"
 #include "Client.h"
+#include "Server.h"
 
 Scene::Scene()
 {
@@ -90,10 +91,10 @@ void Scene::Update()
 
 			objects[i]->Update();
 
-			if (game->GetClient() != nullptr)
+			if (game->GetServer() != nullptr)
 			{
 				char* serializedInfo = objects[i]->Serialize();
-                game->GetClient()->SendMessage("1", serializedInfo);
+				game->GetServer()->CirculateMsg(-1, StrLib::str_concat(std::vector<char*> { "1 ", serializedInfo }));
 			}
 		}
 		else objects.erase(objects.begin() + i);

@@ -110,11 +110,9 @@ void Server::InterpretIncoming(int index, data &incoming, char* str)
 		switch (commandID)
 		{
 			case 1:
-				// Circulate a message to all players.
 				CirculateMsg(index, str);
 				break;
 			case 2:
-				// Disconnect a player from this server and circulate message to all players.
 				CirculateMsg(index, str);
 				RemoveSocket(index);
 				break;

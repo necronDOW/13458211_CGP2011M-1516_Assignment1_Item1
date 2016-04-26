@@ -293,6 +293,6 @@ level 8 {
 	#
 	chick=11,5
 	chick=11,15
-	chick=18,25
+	chick=18,26
 	player=8,25
 };

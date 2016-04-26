@@ -23,12 +23,13 @@ class FunctionalObject : public GameObject
 		int GetUniqueID();
 
 	protected:
-		void AnimationHandler();
+		void SetClimbing(bool value);
 
 		Scene* scene;
 		bool canClimb;
 		bool isClimbing;
 		bool isJumping;
+		float speed;
 		float jumpVelocity;
 		int uniqueID = -1;
 };

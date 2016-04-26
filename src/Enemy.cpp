@@ -81,7 +81,7 @@ void Enemy::HandleCollision(GameObject* o)
 			else if (upperLadder) SetDirection(0, -1);
 
 			startClimbY = position.y;
-			isClimbing = true;
+			SetClimbing(true);
 		}
 
 		checkClimb = false;
@@ -99,9 +99,10 @@ void Enemy::Climb()
 			if (scene->TileExists(position, checkDir[i], direction.y > 0.0f ? 1 : 2) == 0)
 			{
 				SetDirection((float)checkDir[i], 0.0);
+				sprite->ChangeAnimation("walk");
 				startWalkX = position.x;
 
-				isClimbing = false;
+				SetClimbing(false);
 				checkWalk = false;
 			}
 		}

@@ -27,15 +27,16 @@ void FunctionalObject::Update()
 	else
 	{
 		canClimb = false;
-		isClimbing = false;
+		SetClimbing(false);
 	}
 
-	if (scene->TileExists(position, 0, 1) > -1 && !isClimbing && !isJumping)
+	int tmpTileVal = scene->TileExists(position, 0, 1);
+	if ((tmpTileVal == 0 || tmpTileVal == 1) && !isClimbing && !isJumping)
 		scene->SnapToY(position, 0);
 	else if (!canClimb && !isJumping)
 		velocity.y = scene->GetGravity();
 
-	AnimationHandler();
+	sprite->FlipHorizontal(velocity.x);
 
 	GameObject::Update();
 }
@@ -63,15 +64,16 @@ void FunctionalObject::Deserialize(std::vector<char*> serialized)
 	position = StrLib::char_to_vec2(StrLib::str_split(serialized[1], ":")[1]);
 }
 
-void FunctionalObject::AnimationHandler()
+void FunctionalObject::SetClimbing(bool value)
 {
-	if (velocity.y != 0.0f && isClimbing)
+	if (value == true && canClimb)
+	{
+		isClimbing = value;
 		sprite->ChangeAnimation("climb");
-	else if (velocity.x != 0.0f)
-		sprite->ChangeAnimation("walk");
-	else sprite->SetToStaticAnimation();
+	}
+	else if (value == false)
+		isClimbing = value;
 
-	sprite->FlipHorizontal(velocity.x);
 }
 
 void FunctionalObject::SetJumpVelocity(float value)

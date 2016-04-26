@@ -6,14 +6,12 @@
 
 Game::Game()
 {
-	// Set local member variables to the given values.
 	exeName = "Chuckie Egg";
 	done = false;
 	instance = new SDL_Instance(this, 1080, 720);
 
 	Initialize();
 
-	// SDL program will loop until done is equal to true.
 	while (!done)
 	{
 		HandleInput();
@@ -23,7 +21,6 @@ Game::Game()
 		SDL_Delay(20);
 	}
 
-	// When done is true, cleanly exit the application.
 	CleanExit();
 }
 
@@ -75,10 +72,7 @@ void Game::Update()
 	}
 
 	if (playing && !paused)
-	{
 		sceneMngr->Update();
-		audioMngr->Update();
-	}
 	else menuMngr->Update();
 }
 
@@ -147,28 +141,34 @@ void Game::SetGameState(char* state)
 	if (StrLib::str_contains(state, "quit"))
 		CleanExit();
 	else if (StrLib::str_contains(state, "play"))
-	{
-		playing = !playing;
-		paused = false;
-
-		if (!playing)
-		{
-			menuMngr->SetActiveMenu(menuMngr->FindMenuByTag("main"));
-			client = nullptr;
-			server = nullptr;
-		}
-	}
+		SetPlaying(!playing);
 	else if (StrLib::str_contains(state, "pause"))
-	{
-		paused = !paused;
-
-		if (paused)
-			menuMngr->SetActiveMenu(menuMngr->FindMenuByTag(state));
-	}
+		SetPaused(!paused);
 	else if (StrLib::str_contains(state, "host-game"))
 		server = new Server(2);
 	else if (StrLib::str_contains(state, "find-game"))
 		client = new Client("127.0.0.1");
+}
+
+void Game::SetPlaying(bool value)
+{
+	playing = value;
+	paused = false;
+
+	if (!value)
+	{
+		menuMngr->SetActiveMenu(menuMngr->FindMenuByTag("main"));
+		client = nullptr;
+		server = nullptr;
+	}
+}
+
+void Game::SetPaused(bool value)
+{
+	paused = value;
+
+	if (value)
+		menuMngr->SetActiveMenu(menuMngr->FindMenuByTag("pause"));
 }
 
 char* &Game::GetName() { return exeName; }

@@ -53,11 +53,9 @@ void SDL_Instance::SetRenderScale(float modX, float modY)
 
 void SDL_Instance::CleanUp()
 {
-	// Destroy both the window and renderer.
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 
-	// Quit instantiated SDL libraries.
 	SDL_Quit();
 	TTF_Quit();
 }

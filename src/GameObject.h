@@ -21,12 +21,10 @@ class GameObject
 				: top(t), left(l), bottom(b), right(r) { }
 		};
 
-		// Constructors/Destructors
 		GameObject();
 		GameObject(Game* game, float x, float y);
 		~GameObject();
 
-		// General functions
 		virtual void Update();
 		virtual void Render();
 		glm::vec2 AbsolutePosition();
@@ -35,7 +33,6 @@ class GameObject
 		bool Deleted();
 		virtual void HandleCollision(GameObject* o);
 
-		// Get/Set functions
 		void SetPosition(float x, float y);
 		void SetSprite(float scale, char* frameID);
 		void SetSprite(float scale, char* frameID, char* staticID);

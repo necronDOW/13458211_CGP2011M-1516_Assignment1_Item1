@@ -8,7 +8,7 @@ MenuManager::MenuManager()
 
 MenuManager::MenuManager(Game* game, char* filePath)
 {
-	//TODO:Make File helper class for this and SceneManager file loading.
+	//TODO: Make File helper class for this and SceneManager file loading.
 	std::vector<int> menuIndices;
 	std::vector<char*> lines;
 	std::ifstream file(filePath);

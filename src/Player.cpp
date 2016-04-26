@@ -9,6 +9,7 @@ Player::Player(Game* game, Scene* scene, float x, float y)
 	: FunctionalObject(game, scene, x, y)
 {
 	score = 0;
+	speed = 3.0f;
 }
 
 Player::~Player()
@@ -21,10 +22,17 @@ void Player::Update()
 	if (isJumping)
 	{
 		velocity.y = jumpVelocity;
-		jumpVelocity += 0.5f;
+		jumpVelocity += 0.4f;
 
 		if (jumpVelocity > scene->GetGravity())
 			isJumping = false;
+	}
+
+	if (!isClimbing)
+	{
+		if (velocity.x != 0.0f)
+			sprite->ChangeAnimation("walk");
+		else sprite->SetToStaticAnimation();
 	}
 
 	FunctionalObject::Update();
@@ -36,7 +44,7 @@ void Player::HandleInput(SDL_Event &event)
 	{
 		case SDL_KEYDOWN:
 			if (!event.key.repeat)
-				HandleMovement(event, 2.0f);
+				HandleMovement(event);
 			break;
 
 		case SDL_KEYUP:
@@ -46,7 +54,7 @@ void Player::HandleInput(SDL_Event &event)
 					if (velocity.y < 0.0f)
 					{
 						velocity.y = 0.0f;
-						isClimbing = false;
+						SetClimbing(false);
 					}
 					break;
 
@@ -62,7 +70,7 @@ void Player::HandleInput(SDL_Event &event)
 					if (velocity.y > 0.0f)
 					{
 						velocity.y = 0.0f;
-						isClimbing = false;
+						SetClimbing(false);
 					}
 					break;
 
@@ -78,40 +86,40 @@ void Player::HandleInput(SDL_Event &event)
 	}
 }
 
-void Player::HandleMovement(SDL_Event &event, float effect)
+void Player::HandleMovement(SDL_Event &event)
 {
 	switch (event.key.keysym.sym)
 	{
 		case SDLK_w: 
 			if (canClimb)
 			{
-				velocity.y = -effect;
-				isClimbing = true;
+				velocity.y = -speed;
+				SetClimbing(true);
 			}
 			break;
 
 		case SDLK_a:
-			velocity.x = -effect;
+			velocity.x = -speed;
 			game->GetAudioManager()->PlayMusic();
 			break;
 
 		case SDLK_s:
 			if (canClimb)
 			{
-				velocity.y = effect;
-				isClimbing = true;
+				velocity.y = speed;
+				SetClimbing(true);
 			}
 			break;
 
 		case SDLK_d:
-			velocity.x = effect;
+			velocity.x = speed;
 			game->GetAudioManager()->PlayMusic();
 			break;
 
 		case SDLK_SPACE:
 			if (!isJumping)
 			{
-				SetJumpVelocity(-4.0f);
+				SetJumpVelocity(-4.5f);
 				game->GetAudioManager()->PlayClip("jump");
 			}
 	}
@@ -124,6 +132,9 @@ void Player::HandleCollision(GameObject* o)
 		game->GetAudioManager()->PlayClip("pickup");
 		score += dynamic_cast<Pickup*>(o)->GetValue();
 		o->Delete();
+
+		glm::vec2 oTile = scene->GetCurrentTile(o->GetPosition());
+		scene->SetTile(-1, oTile.x, oTile.y + 1);
 		return;
 	}
 

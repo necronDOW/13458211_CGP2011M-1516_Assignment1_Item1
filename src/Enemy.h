@@ -26,7 +26,6 @@ class Enemy : public FunctionalObject
 		void Walk();
 
 		glm::vec2 direction;
-		float speed;
 		float startClimbY, startWalkX;
 		bool checkClimb, checkWalk;
 };

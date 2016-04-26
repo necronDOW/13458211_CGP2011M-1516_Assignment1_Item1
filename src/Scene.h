@@ -26,6 +26,7 @@ class Scene
 		void SnapToY(glm::vec2 &pos, int offset);
 		glm::vec2 GetCurrentTile(glm::vec2 pos);
 		FunctionalObject* FindObjectWithID(int id);
+		void SetTile(int value, int x, int y);
 
 		void SetGravity(float value);
 		glm::vec2 GetTileSize();

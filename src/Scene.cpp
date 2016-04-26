@@ -133,7 +133,7 @@ int Scene::InstantiateDynObjects(std::vector<char*> &levelsData, int dataStart, 
 
 int Scene::GetTileID(int x, int y)
 {
-	if (x < tileCount.x - 1&& y < tileCount.y)
+	if (x < tileCount.x - 1 && x > 0 && y < tileCount.y && y > 0)
 		return tileMap[(y * (tileCount.x - 1)) + x];
 	else return -1;
 }
@@ -185,6 +185,12 @@ FunctionalObject* Scene::FindObjectWithID(int id)
 	}
 
 	return nullptr;
+}
+
+void Scene::SetTile(int value, int x, int y)
+{
+	if (x < tileCount.x - 1 && x > 0 && y < tileCount.y && y > 0)
+		tileMap[(y * (tileCount.x - 1)) + x] = value;
 }
 
 void Scene::SetGravity(float value)

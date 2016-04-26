@@ -16,8 +16,7 @@ class HUD
 		void Render();
 
 	private:
-		Game* game;
-		std::vector<Text*> elements;
+
 };
 
 #endif

@@ -21,14 +21,12 @@ Tile::~Tile()
 
 void Tile::HandleCollision(GameObject* o)
 {
-	// Bounds information and velocity information.
 	Bounds oB = o->GetBounds();
 	glm::vec2 oV = o->GetVelocity();
 	Bounds oldB = Bounds(oB.top - oV.y, oB.left - oV.x, oB.bottom - oV.y, oB.right - oV.x);
 	SDL_Rect oRect = o->GetSprite()->GetRect();
 	Bounds dfsgdf = GetBounds();
 
-	// Check collision with left side of tile.
 	if ((oldB.right < GetBounds().left && oB.right >= GetBounds().left) ||
 		(oldB.left > GetBounds().right && oB.left <= GetBounds().right))
 	{
@@ -39,7 +37,6 @@ void Tile::HandleCollision(GameObject* o)
 		return;
 	}
 
-	// Check collision with top side of tile.
 	if (oldB.bottom <= GetBounds().top && oB.bottom > GetBounds().top)
 	{
 		o->SetPosition(o->GetPosition().x, o->GetPosition().y - oV.y);

@@ -19,20 +19,27 @@ Player::~Player()
 
 void Player::Update()
 {
-	if (isJumping)
+	if (game->GetClient() == nullptr)
 	{
-		velocity.y = jumpVelocity;
-		jumpVelocity += 0.4f;
+		if (isJumping)
+		{
+			velocity.y = jumpVelocity;
+			jumpVelocity += 0.4f;
 
-		if (jumpVelocity > scene->GetGravity())
-			isJumping = false;
-	}
+			if (jumpVelocity > scene->GetGravity())
+				isJumping = false;
+		}
 
-	if (!isClimbing)
-	{
-		if (velocity.x != 0.0f)
-			sprite->ChangeAnimation("walk");
-		else sprite->SetToStaticAnimation();
+		if (!isClimbing)
+		{
+			if (velocity.x != 0.0f)
+				SetAnimation("walk");
+			else
+			{
+				if (game->GetClient() == nullptr)
+					sprite->SetToStaticAnimation();
+			}
+		}
 	}
 
 	FunctionalObject::Update();
@@ -149,7 +156,8 @@ char* Player::Serialize()
 	return StrLib::str_concat(std::vector<char*> {
 		"uniqueID:", StrLib::to_char(uniqueID),
 			";position:", StrLib::to_char(position),
-			";velocity:", StrLib::to_char(velocity)
+			";velocity:", StrLib::to_char(velocity),
+			";", sprite->Serialize()
 	});
 }
 
@@ -157,5 +165,5 @@ void Player::Deserialize(std::vector<char*> serialized)
 {
 	position = StrLib::char_to_vec2(StrLib::str_split(serialized[1], ":")[1]);
 	velocity = StrLib::char_to_vec2(StrLib::str_split(serialized[2], ":")[1]);
-	//sprite->Deserialize(StrLib::str_split(serialized[3], ":")[1]);
+	sprite->Deserialize(StrLib::str_split(serialized[3], ":")[1]);
 }

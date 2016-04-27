@@ -66,9 +66,11 @@ void Game::Update()
 	if (client != nullptr)
 	{
 		if (client->IsOnline())
+		{
+			client->Update();
 			client->CheckIncoming(this);
-		else 
-			client = nullptr;
+		}
+		else client = nullptr;
 	}
 
 	if (playing && !paused)

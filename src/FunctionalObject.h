@@ -24,6 +24,7 @@ class FunctionalObject : public GameObject
 
 	protected:
 		void SetClimbing(bool value);
+		void SetAnimation(char* id);
 
 		Scene* scene;
 		bool canClimb;

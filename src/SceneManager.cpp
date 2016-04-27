@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include "FileLib.h"
 
 SceneManager::SceneManager()
 {
@@ -12,26 +13,7 @@ SceneManager::SceneManager(Game* game, char* filePath)
 
 	std::vector<int> levelIndices;
 	std::vector<char*> lines;
-	std::ifstream file(filePath);
-	std::string buffer;
-
-	if (!file)
-	{
-		std::cout << std::endl << "File was loaded unsuccessfully (" << filePath << ")." << std::endl;
-		return;
-	}
-
-	int i = 0;
-	while (std::getline(file, buffer))
-	{
-		char* tmp;
-		StrLib::str_copy((char*)buffer.c_str(), tmp);
-		lines.push_back(tmp);
-
-		i++;
-		if (StrLib::str_contains(tmp, "level"))
-			levelIndices.push_back(i);
-	}
+	FileLib::LoadFromFile(filePath, lines, "level", levelIndices);
 
 	LoadScenes(game, lines, levelIndices);
 	if (scenes.size() > 0)
@@ -102,7 +84,7 @@ void SceneManager::LoadScenes(Game* game, std::vector<char*> &lines, std::vector
 	constructor = new ObjectConstructor(lines);
 
 	for (unsigned int i = 0; i < indices.size(); i++)
-		scenes.push_back(new Scene(game, lines, indices[i], constructor));
+		scenes.push_back(new Scene(game, lines, indices[i] + 1, constructor));
 }
 
 Scene* &SceneManager::GetScene(int index) { return scenes[index]; }

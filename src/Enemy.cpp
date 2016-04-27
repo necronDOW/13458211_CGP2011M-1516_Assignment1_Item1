@@ -25,9 +25,12 @@ Enemy::~Enemy()
 
 void Enemy::Update()
 {
-	if (isClimbing)
-		Climb();
-	else Walk();
+	if (game->GetClient() == nullptr)
+	{
+		if (isClimbing)
+			Climb();
+		else Walk();
+	}
 
 	FunctionalObject::Update();
 }
@@ -48,8 +51,9 @@ char* Enemy::Serialize()
 {
 	return StrLib::str_concat(std::vector<char*> {
 		"uniqueID:", StrLib::to_char(uniqueID),
-		";position:", StrLib::to_char(position),
-		";velocity:", StrLib::to_char(velocity)
+			";position:", StrLib::to_char(position),
+			";velocity:", StrLib::to_char(velocity),
+			";", sprite->Serialize()
 	});
 }
 
@@ -57,7 +61,7 @@ void Enemy::Deserialize(std::vector<char*> serialized)
 {
 	position = StrLib::char_to_vec2(StrLib::str_split(serialized[1], ":")[1]);
 	velocity = StrLib::char_to_vec2(StrLib::str_split(serialized[2], ":")[1]);
-	//sprite->Deserialize(StrLib::str_split(serialized[3], ":")[1]);
+	sprite->Deserialize(StrLib::str_split(serialized[3], ":")[1]);
 }
 
 void Enemy::HandleCollision(GameObject* o)
@@ -99,7 +103,7 @@ void Enemy::Climb()
 			if (scene->TileExists(position, checkDir[i], direction.y > 0.0f ? 1 : 2) == 0)
 			{
 				SetDirection((float)checkDir[i], 0.0);
-				sprite->ChangeAnimation("walk");
+				SetAnimation("walk");
 				startWalkX = position.x;
 
 				SetClimbing(false);

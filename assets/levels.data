@@ -1,6 +1,7 @@
 valid {
 	chick
 	player1
+	player2
 };
 
 tiles {
@@ -41,7 +42,8 @@ level 1 {
 	#
 	chick=9,5
 	chick=6,10
-	player=10,25
+	player1=10,25
+	player2=11,25
 };
 
 level 2 {
@@ -76,7 +78,8 @@ level 2 {
 	chick=7,5
 	chick=2,25
 	chick=19,15
-	player=8,25
+	player1=8,25
+	player2=9,25
 };
 
 level 3 {
@@ -112,7 +115,8 @@ level 3 {
 	chick=3,11
 	chick=10,7
 	chick=18,21
-	player=9,25
+	player1=9,25
+	player2=10,25
 };
 
 level 4 {
@@ -149,7 +153,8 @@ level 4 {
 	chick=18,5
 	chick=5,25
 	chick=18,25
-	player=8,25
+	player1=8,25
+	player2=9,25
 };
 
 level 5 {
@@ -186,7 +191,8 @@ level 5 {
 	chick=4,15
 	chick=2,20
 	chick=15,15
-	player=9,25
+	player1=9,25
+	player2=10,25
 };
 
 level 6 {
@@ -223,7 +229,8 @@ level 6 {
 	chick=19,10
 	chick=2,25
 	chick=14,20
-	player=8,25
+	player1=8,25
+	player2=9,25
 };
 
 level 7 {
@@ -259,7 +266,8 @@ level 7 {
 	chick=2,10
 	chick=14,5
 	chick=15,17
-	player=8,25
+	player1=8,25
+	player2=9,25
 };
 
 level 8 {
@@ -294,5 +302,6 @@ level 8 {
 	chick=11,5
 	chick=11,15
 	chick=18,26
-	player=8,25
+	player1=8,25
+	player2=9,25
 };

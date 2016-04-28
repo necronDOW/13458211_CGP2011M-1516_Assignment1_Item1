@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "MenuManager.h"
 #include "Client.h"
+#include "HUD.h"
 
 Game::Game()
 {
@@ -45,6 +46,8 @@ void Game::Initialize()
 	audioMngr->PauseMusic();
 
 	menuMngr = new MenuManager(this, "./assets/menus.data");
+
+	hud = new HUD(this, glm::vec2(250, 25), 18);
 }
 
 int x = 0;
@@ -74,7 +77,10 @@ void Game::Update()
 	}
 
 	if (playing && !paused)
+	{
 		sceneMngr->Update();
+		hud->Update();
+	}
 	else menuMngr->Update();
 }
 
@@ -119,9 +125,13 @@ void Game::HandleInput()
 void Game::Render()
 {
 	SDL_RenderClear(instance->GetRenderer());
+	SDL_RenderSetLogicalSize(instance->GetRenderer(), sceneMngr->GetScalar().x, sceneMngr->GetScalar().y);
 
 	if (playing && !paused)
+	{
 		sceneMngr->Render();
+		hud->Render();
+	}
 	else menuMngr->Render();
 
 	SDL_RenderPresent(instance->GetRenderer());
@@ -182,3 +192,4 @@ AudioManager* &Game::GetAudioManager() { return audioMngr; }
 SDL_Event &Game::GetEvent() { return event; }
 Client* &Game::GetClient() { return client; }
 Server* &Game::GetServer() { return server; }
+HUD* &Game::GetHUD() { return hud; }

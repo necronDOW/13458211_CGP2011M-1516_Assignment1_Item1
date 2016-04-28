@@ -15,6 +15,7 @@ class SDL_Instance;
 class SceneManager;
 class MenuManager;
 class Client;
+class HUD;
 
 class Game
 {
@@ -37,6 +38,7 @@ class Game
 		SDL_Event &GetEvent();
 		Client* &GetClient();
 		Server* &GetServer();
+		HUD* &GetHUD();
 
 		bool done;
 
@@ -56,6 +58,7 @@ class Game
 		SDL_Event event;
 		Client* client = nullptr;
 		Server* server = nullptr;
+		HUD* hud;
 };
 
 #endif

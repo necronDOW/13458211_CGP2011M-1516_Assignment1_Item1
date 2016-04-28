@@ -1,15 +1,17 @@
 #include "Player.h"
+#include "HUD.h"
+#include "Client.h"
 
 Player::Player()
 {
-	score = 0;
+
 }
 
-Player::Player(Game* game, Scene* scene, float x, float y)
+Player::Player(Game* game, Scene* scene, float x, float y, int playerIndex)
 	: FunctionalObject(game, scene, x, y)
 {
-	score = 0;
 	speed = 3.0f;
+	this->playerIndex = playerIndex;
 }
 
 Player::~Player()
@@ -47,49 +49,53 @@ void Player::Update()
 
 void Player::HandleInput(SDL_Event &event)
 {
-	switch (event.type)
+	if ((game->GetClient() == nullptr && playerIndex == 0) 
+		|| (game->GetClient() != nullptr && game->GetClient()->GetClientID() == playerIndex))
 	{
-		case SDL_KEYDOWN:
-			if (!event.key.repeat)
-				HandleMovement(event);
-			break;
+		switch (event.type)
+		{
+			case SDL_KEYDOWN:
+				if (!event.key.repeat)
+					HandleMovement(event);
+				break;
 
-		case SDL_KEYUP:
-			switch (event.key.keysym.sym)
-			{
-				case SDLK_w:
-					if (velocity.y < 0.0f)
-					{
-						velocity.y = 0.0f;
-						SetClimbing(false);
-					}
-					break;
+			case SDL_KEYUP:
+				switch (event.key.keysym.sym)
+				{
+					case SDLK_w:
+						if (velocity.y < 0.0f)
+						{
+							velocity.y = 0.0f;
+							SetClimbing(false);
+						}
+						break;
 
-				case SDLK_a:
-					if (velocity.x < 0.0f)
-					{
-						velocity.x = 0.0f;
-						game->GetAudioManager()->PauseMusic();
-					}
-					break;
+					case SDLK_a:
+						if (velocity.x < 0.0f)
+						{
+							velocity.x = 0.0f;
+							game->GetAudioManager()->PauseMusic();
+						}
+						break;
 
-				case SDLK_s:
-					if (velocity.y > 0.0f)
-					{
-						velocity.y = 0.0f;
-						SetClimbing(false);
-					}
-					break;
+					case SDLK_s:
+						if (velocity.y > 0.0f)
+						{
+							velocity.y = 0.0f;
+							SetClimbing(false);
+						}
+						break;
 
-				case SDLK_d:
-					if (velocity.x > 0.0f)
-					{
-						velocity.x = 0.0f;
-						game->GetAudioManager()->PauseMusic();
-					}
-					break;
-			}
-			break;
+					case SDLK_d:
+						if (velocity.x > 0.0f)
+						{
+							velocity.x = 0.0f;
+							game->GetAudioManager()->PauseMusic();
+						}
+						break;
+				}
+				break;
+		}
 	}
 }
 
@@ -137,7 +143,7 @@ void Player::HandleCollision(GameObject* o)
 	if (dynamic_cast<Pickup*>(o))
 	{
 		game->GetAudioManager()->PlayClip("pickup");
-		score += dynamic_cast<Pickup*>(o)->GetValue();
+		game->GetHUD()->AddScore(playerIndex, dynamic_cast<Pickup*>(o)->GetValue());
 		o->Delete();
 
 		glm::vec2 oTile = scene->GetCurrentTile(o->GetPosition());

@@ -17,7 +17,7 @@ SDL_Instance::SDL_Instance(Game* game, int width, int height)
 	}
 	std::cout << "SDL initialized successfully." << std::endl;
 
-	window = SDL_CreateWindow(game->GetName(), 100, 100, width, height, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow(game->GetName(), 100, 100, width, height, SDL_WINDOW_RESIZABLE);
 	if (window == nullptr)
 	{
 		game->CleanExit("Error when creating SDL window (SDL_CreateWindow).\n");

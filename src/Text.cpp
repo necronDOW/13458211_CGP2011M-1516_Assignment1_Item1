@@ -44,22 +44,6 @@ SDL_Color Text::CreateSDL_Color(uint8_t r, uint8_t g, uint8_t b)
 	return tmp;
 }
 
-void Text::SetSize(char* text, int fontPt)
-{
-	this->fontPt = fontPt;
-
-	dest.w = strlen(text) * (fontPt / 2);
-	dest.h = fontPt;
-}
-
-void Text::SetPosition(int x, int y)
-{
-	origin = glm::vec2(x, y);
-
-	dest.x = (int)origin.x - (dest.w / 2);
-	dest.y = (int)origin.y - (dest.h / 2);
-}
-
 void Text::Initialize(char* text, int fontPt, int x, int y)
 {
 	this->text = text;
@@ -83,3 +67,21 @@ void Text::Initialize(char* text, int fontPt, int x, int y)
 	SetSize(text, fontPt);
 	SetPosition(x, y);
 }
+
+void Text::SetSize(char* text, int fontPt)
+{
+	this->fontPt = fontPt;
+
+	dest.w = strlen(text) * (fontPt / 2);
+	dest.h = fontPt;
+}
+
+void Text::SetPosition(int x, int y)
+{
+	origin = glm::vec2(x, y);
+
+	dest.x = (int)origin.x - (dest.w / 2);
+	dest.y = (int)origin.y - (dest.h / 2);
+}
+
+glm::vec2 Text::GetDimensions() { return glm::vec2(strlen(text) * (fontPt / 2), fontPt); }

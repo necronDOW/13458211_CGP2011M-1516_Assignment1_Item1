@@ -9,6 +9,7 @@
 class GameObject;
 class FunctionalObject;
 class ObjectConstructor;
+class Player;
 
 class Scene
 {
@@ -33,6 +34,8 @@ class Scene
 		glm::vec2 GetSize();
 		float GetGravity();
 		int GetObjectiveCount();
+
+		int playerCount = 0;
 
 	private:
 		int InstantiateDynObjects(std::vector<char*> &levelsData, int dataStart, ObjectConstructor* &constructor);

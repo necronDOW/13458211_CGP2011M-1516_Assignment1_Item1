@@ -9,7 +9,7 @@ class Player : public FunctionalObject
 {
 	public:
 		Player();
-		Player(Game* game, Scene* scene, float x, float y);
+		Player(Game* game, Scene* scene, float x, float y, int playerIndex);
 		~Player();
 
 		void Update();
@@ -19,8 +19,7 @@ class Player : public FunctionalObject
 		char* Serialize();
 		void Deserialize(std::vector<char*> serialized);
 
-	private:
-		int score;
+		int playerIndex = -1;
 };
 
 #endif

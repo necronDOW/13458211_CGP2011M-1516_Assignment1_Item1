@@ -152,7 +152,7 @@ void Server::CalculateAvailableIDs()
 	if (socketVector.size() == maxPlayers)
 		return;
 
-	for (unsigned int i = 0; i < maxPlayers; i++)
+	for (unsigned int i = 1; i <= maxPlayers; i++)
 	{
 		bool available = true;
 

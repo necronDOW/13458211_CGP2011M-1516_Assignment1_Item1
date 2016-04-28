@@ -21,25 +21,28 @@ Player::~Player()
 
 void Player::Update()
 {
-	if (game->GetClient() == nullptr)
+	if (CheckAuthorization())
 	{
-		if (isJumping)
+		if (game->GetClient() == nullptr)
 		{
-			velocity.y = jumpVelocity;
-			jumpVelocity += 0.4f;
-
-			if (jumpVelocity > scene->GetGravity())
-				isJumping = false;
-		}
-
-		if (!isClimbing)
-		{
-			if (velocity.x != 0.0f)
-				SetAnimation("walk");
-			else
+			if (isJumping)
 			{
-				if (game->GetClient() == nullptr)
-					sprite->SetToStaticAnimation();
+				velocity.y = jumpVelocity;
+				jumpVelocity += 0.4f;
+
+				if (jumpVelocity > scene->GetGravity())
+					isJumping = false;
+			}
+
+			if (!isClimbing)
+			{
+				if (velocity.x != 0.0f)
+					SetAnimation("walk");
+				else
+				{
+					if (game->GetClient() == nullptr)
+						sprite->SetToStaticAnimation();
+				}
 			}
 		}
 	}
@@ -49,8 +52,7 @@ void Player::Update()
 
 void Player::HandleInput(SDL_Event &event)
 {
-	if ((game->GetClient() == nullptr && playerIndex == 0) 
-		|| (game->GetClient() != nullptr && game->GetClient()->GetClientID() == playerIndex))
+	if (CheckAuthorization())
 	{
 		switch (event.type)
 		{
@@ -172,4 +174,12 @@ void Player::Deserialize(std::vector<char*> serialized)
 	position = StrLib::char_to_vec2(StrLib::str_split(serialized[1], ":")[1]);
 	velocity = StrLib::char_to_vec2(StrLib::str_split(serialized[2], ":")[1]);
 	sprite->Deserialize(StrLib::str_split(serialized[3], ":")[1]);
+}
+
+bool Player::CheckAuthorization()
+{
+	if ((game->GetClient() == nullptr && playerIndex == 1)
+		|| (game->GetClient() != nullptr && game->GetClient()->GetClientID() == playerIndex))
+		return true;
+	return false;
 }

@@ -46,8 +46,8 @@ void ObjectConstructor::CreateObject(std::vector<FunctionalObject*> &objects, Ga
 		{
 			if (StrLib::str_contains(type, "player"))
 			{
-				objects.push_back(new Player(game, scene, position.x, position.y, scene->playerCount));
 				scene->playerCount++;
+				objects.push_back(new Player(game, scene, position.x, position.y, scene->playerCount));
 			}
 			else if (StrLib::str_contains(type, "chick"))
 				objects.push_back(new Enemy(game, scene, position.x, position.y));

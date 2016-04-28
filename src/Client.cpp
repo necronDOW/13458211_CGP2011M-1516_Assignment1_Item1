@@ -86,6 +86,7 @@ void Client::CheckIncoming(Game* game)
 					// Connection successful.
 					std::cout << "Connected to server (" << ip.host << ") successfully." << std::endl;
 					game->GetMenuManager()->SetActiveMenu(game->GetMenuManager()->FindMenuByTag("load"));
+					clientID = atoi(StrLib::str_split(temp, "*")[1]);
 					break;
 
 				case 1:

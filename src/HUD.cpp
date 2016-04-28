@@ -46,7 +46,7 @@ void HUD::Render()
 
 void HUD::AddScore(int index, int value)
 {
-	playerScores[index] += value;
+	playerScores[index - 1] += value;
 }
 
 void HUD::AddPlayerDisplay(int index, int fontPt)

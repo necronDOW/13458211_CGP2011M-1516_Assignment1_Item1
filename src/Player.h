@@ -18,6 +18,7 @@ class Player : public FunctionalObject
 		void HandleCollision(GameObject* o);
 		char* Serialize();
 		void Deserialize(std::vector<char*> serialized);
+		bool CheckAuthorization();
 
 		int playerIndex = -1;
 };

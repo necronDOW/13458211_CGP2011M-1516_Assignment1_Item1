@@ -10,16 +10,18 @@ Game::Game()
 	exeName = "Chuckie Egg";
 	done = false;
 	instance = new SDL_Instance(this, 1080, 720);
+	Timer realTime = Timer(0.02f);
 
 	Initialize();
 
 	while (!done)
 	{
-		HandleInput();
-		Update();
-		Render();
-
-		SDL_Delay(20);
+		if (realTime.IsDone())
+		{
+			HandleInput();
+			Update();
+			Render();
+		}
 	}
 
 	CleanExit();

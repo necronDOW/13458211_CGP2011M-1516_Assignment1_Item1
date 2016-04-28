@@ -29,10 +29,7 @@ HUD::~HUD()
 
 void HUD::Update()
 {
-	for (unsigned int i = 0; i < playerCount; i++)
-		scores[i]->SetText(StrLib::to_char(playerScores[i]));
 
-	//currentLevel->SetText(StrLib::to_char(game->GetSceneManager()->GetCurrentIndex()));
 }
 
 void HUD::Render()
@@ -47,6 +44,7 @@ void HUD::Render()
 void HUD::AddScore(int index, int value)
 {
 	playerScores[index - 1] += value;
+	scores[index - 1]->SetText(StrLib::to_char(playerScores[index - 1]));
 }
 
 void HUD::AddPlayerDisplay(int index, int fontPt)

@@ -13,6 +13,7 @@ FunctionalObject::FunctionalObject(Game* game, Scene* scene, float x, float y)
 	canClimb = false;
 	isClimbing = false;
 	isJumping = false;
+	usesGravity = true;
 }
 
 FunctionalObject::~FunctionalObject()
@@ -35,7 +36,7 @@ void FunctionalObject::Update()
 	int tmpTileVal = scene->TileExists(position, 0, 1);
 	if ((tmpTileVal == 0 || tmpTileVal == 1) && !isClimbing && !isJumping)
 		scene->SnapToY(position, 0);
-	else if (!canClimb && !isJumping)
+	else if (!canClimb && !isJumping && usesGravity)
 		velocity.y = scene->GetGravity();
 
 	GameObject::Update();

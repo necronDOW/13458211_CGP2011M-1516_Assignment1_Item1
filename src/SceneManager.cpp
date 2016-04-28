@@ -73,14 +73,17 @@ void SceneManager::PreviousScene()
 
 void SceneManager::UpdateSceneObject(char* serialized)
 {
-	std::vector<char*> elements = StrLib::str_split(serialized, ";");
-	FunctionalObject* target = scenes[currentScene]->FindObjectWithID(atoi(StrLib::str_split(elements[0], ":")[1]));
+	if (StrLib::str_contains(serialized, "uniqueID:"))
+	{
+		std::vector<char*> elements = StrLib::str_split(serialized, ";");
+		FunctionalObject* target = scenes[currentScene]->FindObjectWithID(atoi(StrLib::str_split(elements[0], ":")[1]));
 
-	Player* playerTmp = dynamic_cast<Player*>(target);
-	if (playerTmp && !playerTmp->CheckAuthorization())
-		target->Deserialize(elements);
-	else if (!playerTmp)
-		target->Deserialize(elements);
+		Player* playerTmp = dynamic_cast<Player*>(target);
+		if (playerTmp && !playerTmp->CheckAuthorization())
+			target->Deserialize(elements);
+		else if (!playerTmp)
+			target->Deserialize(elements);
+	}
 }
 
 void SceneManager::LoadScenes(Game* game, std::vector<char*> &lines, std::vector<int> &indices)

@@ -2,6 +2,8 @@ valid {
 	chick
 	player1
 	player2
+	chuckie
+	cage
 };
 
 tiles {
@@ -44,6 +46,8 @@ level 1 {
 	chick=6,10
 	player1=10,25
 	player2=11,25
+	cage=2,7
+	chuckie=2,6
 };
 
 level 2 {
@@ -80,6 +84,8 @@ level 2 {
 	chick=19,15
 	player1=8,25
 	player2=9,25
+	cage=3,6
+	chuckie=3,6
 };
 
 level 3 {
@@ -117,6 +123,8 @@ level 3 {
 	chick=18,21
 	player1=9,25
 	player2=10,25
+	cage=3,6
+	chuckie=3,6
 };
 
 level 4 {
@@ -155,6 +163,8 @@ level 4 {
 	chick=18,25
 	player1=8,25
 	player2=9,25
+	cage=3,6
+	chuckie=3,6
 };
 
 level 5 {
@@ -193,6 +203,8 @@ level 5 {
 	chick=15,15
 	player1=9,25
 	player2=10,25
+	cage=3,6
+	chuckie=3,6
 };
 
 level 6 {
@@ -231,6 +243,8 @@ level 6 {
 	chick=14,20
 	player1=8,25
 	player2=9,25
+	cage=3,6
+	chuckie=3,6
 };
 
 level 7 {
@@ -268,6 +282,8 @@ level 7 {
 	chick=15,17
 	player1=8,25
 	player2=9,25
+	cage=3,6
+	chuckie=3,6
 };
 
 level 8 {
@@ -304,4 +320,6 @@ level 8 {
 	chick=18,26
 	player1=8,25
 	player2=9,25
+	cage=3,6
+	chuckie=3,6
 };

@@ -23,23 +23,20 @@ void Player::Update()
 {
 	if (CheckAuthorization())
 	{
-		if (game->GetClient() == nullptr)
+		if (isJumping)
 		{
-			if (isJumping)
-			{
-				velocity.y = jumpVelocity;
-				jumpVelocity += 0.4f;
+			velocity.y = jumpVelocity;
+			jumpVelocity += 0.4f;
 
-				if (jumpVelocity > scene->GetGravity())
-					isJumping = false;
-			}
+			if (jumpVelocity > scene->GetGravity())
+				isJumping = false;
+		}
 
-			if (!isClimbing)
-			{
-				if (velocity.x != 0.0f)
-					SetAnimation("walk");
-				else sprite->SetToStaticAnimation();
-			}
+		if (!isClimbing)
+		{
+			if (velocity.x != 0.0f)
+				SetAnimation("walk");
+			else sprite->SetToStaticAnimation();
 		}
 	}
 

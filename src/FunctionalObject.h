@@ -22,6 +22,8 @@ class FunctionalObject : public GameObject
 		void SetUniqueID(int value);
 		int GetUniqueID();
 
+		bool usesGravity;
+
 	protected:
 		void SetClimbing(bool value);
 		void SetAnimation(char* id);

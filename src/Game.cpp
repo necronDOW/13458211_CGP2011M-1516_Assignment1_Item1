@@ -47,7 +47,7 @@ void Game::Initialize()
 
 	menuMngr = new MenuManager(this, "./assets/menus.data");
 
-	hud = new HUD(this, glm::vec2(250, 25), 18);
+	hud = new HUD(this, glm::vec2(150, 30), 22);
 }
 
 int x = 0;
@@ -70,7 +70,6 @@ void Game::Update()
 	{
 		if (client->IsOnline())
 		{
-			client->Update();
 			client->CheckIncoming(this);
 		}
 		else client = nullptr;
@@ -157,7 +156,7 @@ void Game::SetGameState(char* state)
 	else if (StrLib::str_contains(state, "pause"))
 		SetPaused(!paused);
 	else if (StrLib::str_contains(state, "host-game"))
-		server = new Server(2);
+		server = new Server(this, 2);
 	else if (StrLib::str_contains(state, "find-game"))
 		client = new Client("127.0.0.1");
 }

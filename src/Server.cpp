@@ -1,7 +1,12 @@
 #include "Server.h"
+#include "Game.h"
+#include "SceneManager.h"
+#include "StrLib.h"
 
-Server::Server(int maxPlayers)
+Server::Server(Game* game, int maxPlayers)
 {
+	this->game = game;
+
 	if (SDLNet_Init() != 0)
 	{
 		std::cout << "Error when instantiating SDL_net (SDLNet_Init)." << std::endl;
@@ -105,12 +110,21 @@ void Server::InterpretIncoming(int index, data &incoming, char* str)
 		incoming.timeout = SDL_GetTicks();
 
 		SDLNet_TCP_Recv(incoming.socket, str, 1400);
+		std::vector<char*> messages;
 
 		int commandID = GetCommandID(str);
 		switch (commandID)
 		{
 			case 1:
 				CirculateMsg(index, str);
+
+				messages = StrLib::str_split(str, "*");
+
+				for (int i = 1; i < messages.size(); i++)
+				{
+					char* tmp = StrLib::str_split(messages[i], " ")[0];
+					game->GetSceneManager()->UpdateSceneObject(tmp);
+				}
 				break;
 			case 2:
 				CirculateMsg(index, str);

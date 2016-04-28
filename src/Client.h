@@ -27,9 +27,6 @@ class Client
 			** Default Destructor ** */
 		~Client();
 
-		/* Update the client, telling the server that it is still online. */
-		void Update();
-
 		/* Send a message to the server. 
 			flag : Message flag, should be a number. 
 			msg : The desired message to send, like serialized data. */

@@ -47,13 +47,6 @@ Client::~Client()
 	Quit();
 }
 
-void Client::Update()
-{
-	// Inform the server that the client is still connected to prevent time out.
-	if (connection != NULL)
-		SDLNet_TCP_Send(connection, "99*\n", 4);
-}
-
 void Client::SendMessage(char* flag, char* msg)
 {
 	// If the client is online, concat (flag + msg) and send to the server.

@@ -102,10 +102,7 @@ void AnimatedSprite::Deserialize(char* serialized)
 		ChangeAnimation(elements[0]);
 		flipFlags = char_to_RendererFlip(elements[1]);
 	}
-	else
-	{
-		SetToStaticAnimation();
-	}
+	else SetToStaticAnimation();
 }
 
 void AnimatedSprite::GenerateAnimations(char* staticID, std::vector<char*> ids)

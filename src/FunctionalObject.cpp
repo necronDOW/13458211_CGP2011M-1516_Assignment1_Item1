@@ -22,18 +22,15 @@ FunctionalObject::~FunctionalObject()
 
 void FunctionalObject::Update()
 {
-	if (game->GetClient() == nullptr)
+	if (scene->TileExists(position, 0, 0) == 1 || scene->TileExists(position, 0, 1) == 1)
+		canClimb = true;
+	else
 	{
-		if (scene->TileExists(position, 0, 0) == 1 || scene->TileExists(position, 0, 1) == 1)
-			canClimb = true;
-		else
-		{
-			canClimb = false;
-			SetClimbing(false);
-		}
-
-		sprite->FlipHorizontal(velocity.x);
+		canClimb = false;
+		SetClimbing(false);
 	}
+
+	sprite->FlipHorizontal(velocity.x);
 	
 	int tmpTileVal = scene->TileExists(position, 0, 1);
 	if ((tmpTileVal == 0 || tmpTileVal == 1) && !isClimbing && !isJumping)
@@ -81,8 +78,7 @@ void FunctionalObject::SetClimbing(bool value)
 
 void FunctionalObject::SetAnimation(char* id)
 {
-	if (game->GetClient() == nullptr)
-		sprite->ChangeAnimation(id);
+	sprite->ChangeAnimation(id);
 }
 
 void FunctionalObject::SetJumpVelocity(float value)

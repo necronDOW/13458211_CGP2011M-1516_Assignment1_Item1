@@ -38,11 +38,7 @@ void Player::Update()
 			{
 				if (velocity.x != 0.0f)
 					SetAnimation("walk");
-				else
-				{
-					if (game->GetClient() == nullptr)
-						sprite->SetToStaticAnimation();
-				}
+				else sprite->SetToStaticAnimation();
 			}
 		}
 	}

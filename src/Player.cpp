@@ -38,6 +38,9 @@ void Player::Update()
 				SetAnimation("walk");
 			else sprite->SetToStaticAnimation();
 		}
+
+		if (game->GetClient() != nullptr)
+			game->GetClient()->SendMessage("1", Serialize());
 	}
 
 	FunctionalObject::Update();
@@ -148,7 +151,7 @@ void Player::HandleCollision(GameObject* o)
 
 	if (dynamic_cast<Enemy*>(o))
 	{
-		game->done = true;
+		game->SetGameState("gameover");
 	}
 }
 

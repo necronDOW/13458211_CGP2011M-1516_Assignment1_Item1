@@ -10,7 +10,18 @@ SceneManager::SceneManager(Game* game, char* filePath)
 {
 	instance = game->GetSDLInstance();
 	audioMngr = game->GetAudioManager();
+	this->filePath = filePath;
 
+	Initialize(game);
+}
+
+SceneManager::~SceneManager()
+{
+
+}
+
+void SceneManager::Initialize(Game* game)
+{
 	std::vector<int> levelIndices;
 	std::vector<char*> lines;
 	FileLib::LoadFromFile(filePath, lines, "level", levelIndices);
@@ -21,11 +32,6 @@ SceneManager::SceneManager(Game* game, char* filePath)
 		currentScene = 0;
 		std::cout << "\n";
 	}
-}
-
-SceneManager::~SceneManager()
-{
-
 }
 
 void SceneManager::Update()
@@ -89,6 +95,7 @@ void SceneManager::UpdateSceneObject(char* serialized)
 void SceneManager::LoadScenes(Game* game, std::vector<char*> &lines, std::vector<int> &indices)
 {
 	constructor = new ObjectConstructor(lines);
+	scenes.clear();
 
 	for (unsigned int i = 0; i < indices.size(); i++)
 		scenes.push_back(new Scene(game, lines, indices[i] + 1, constructor));

@@ -16,6 +16,7 @@ class FileLib
 
 		static void LoadFromFile(char* filePath, std::vector<char*> &outLines);
 		static void LoadFromFile(char* filePath, std::vector<char*> &outLines, char* indicesID, std::vector<int> &outIndices);
+		static void AppendToFile(char* filePath, std::vector<char*> appends);
 };
 
 #endif

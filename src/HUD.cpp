@@ -47,6 +47,39 @@ void HUD::AddScore(int index, int value)
 	scores[index - 1]->SetText(StrLib::to_char(playerScores[index - 1]));
 }
 
+void HUD::SaveScores(char* filePath)
+{
+	std::vector<char*> lines;
+	std::vector<char*> scoreText = { "" };
+	char* fullPath;
+
+	if (scores.size() > 1)
+	{
+		fullPath = StrLib::str_concat(std::vector<char*> { filePath, "online_scores.data" });
+
+		for (unsigned int i = 0; i < playerCount; i++)
+		{
+			char* tmp = StrLib::str_concat(std::vector<char*> { "p", StrLib::to_char((int)i + 1), " : ", StrLib::to_char(playerScores[i]) });
+
+			if (i != scores.size() - 1)
+				tmp = StrLib::str_concat(std::vector<char*> { tmp, " / " });
+
+			scoreText[0] = StrLib::str_concat(std::vector<char*> { scoreText[0], tmp });
+		}
+
+		scoreText[0] = StrLib::str_concat(std::vector<char*> { scoreText[0], "\n" });
+	}
+	else
+	{
+		fullPath = StrLib::str_concat(std::vector<char*> { filePath, "offline_scores.data" });
+
+		scoreText[0] = StrLib::str_concat(std::vector<char*> { "Player 1 : ", StrLib::to_char(scores[0]), "\n" });
+	}
+
+	FileLib::LoadFromFile(fullPath, lines);
+	FileLib::AppendToFile(fullPath, scoreText);
+}
+
 void HUD::AddPlayerDisplay(int index, int fontPt)
 {
 	char* playerName = StrLib::str_concat(std::vector<char*> { "Player ", StrLib::to_char(index + 1), ":" });

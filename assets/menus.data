@@ -228,3 +228,23 @@
 		action:state_play
 	}
 };
+
+*menu_gameover
+{
+	label
+	{
+		text:GAMEOVER
+		font-size:70
+		position:250,125
+		color:255,255,0
+	}
+	
+	label
+	{
+		text:QUIT
+		font-size:30
+		position:250,325
+		color:255,0,255
+		action:Q,menu_main
+	}
+};

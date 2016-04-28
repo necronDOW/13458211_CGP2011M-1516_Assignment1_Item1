@@ -16,6 +16,7 @@ class SceneManager
 		SceneManager(Game* game, char* filePath);
 		~SceneManager();
 
+		void Initialize(Game* game);
 		void Update();
 		void HandleInput(SDL_Event &event);
 		void Render();
@@ -30,6 +31,7 @@ class SceneManager
 	private:
 		void LoadScenes(Game* game, std::vector<char*> &lines, std::vector<int> &indices);
 
+		char* filePath = "";
 		std::vector<Scene*> scenes;
 		unsigned int currentScene = -1;
 		ObjectConstructor* constructor;

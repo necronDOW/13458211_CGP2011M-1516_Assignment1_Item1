@@ -155,6 +155,11 @@ void Game::SetGameState(char* state)
 		CleanExit();
 	else if (StrLib::str_contains(state, "play"))
 		SetPlaying(!playing);
+	else if (StrLib::str_contains(state, "gameover"))
+	{
+		SetPlaying(false);
+		menuMngr->SetActiveMenu(menuMngr->FindMenuByTag("gameover"));
+	}
 	else if (StrLib::str_contains(state, "pause"))
 		SetPaused(!paused);
 	else if (StrLib::str_contains(state, "host-game"))
@@ -170,6 +175,8 @@ void Game::SetPlaying(bool value)
 
 	if (!value)
 	{
+		sceneMngr->Initialize(this);
+		hud->SaveScores("./assets/saves/");
 		menuMngr->SetActiveMenu(menuMngr->FindMenuByTag("main"));
 		client = nullptr;
 		server = nullptr;

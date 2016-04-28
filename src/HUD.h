@@ -4,6 +4,7 @@
 #include <vector>
 #include "DynamicText.h"
 #include "StrLib.h"
+#include "FileLib.h"
 #include "Player.h"
 
 class HUD
@@ -16,6 +17,7 @@ class HUD
 		void Update();
 		void Render();
 		void AddScore(int index, int value);
+		void SaveScores(char* filePath);
 
 	private:
 		void AddPlayerDisplay(int index, int fontPt);

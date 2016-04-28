@@ -73,7 +73,10 @@ void Server::CheckIncoming()
 void Server::Quit()
 {
 	for (data s : socketVector)
+	{
+		SDLNet_TCP_Send(s.socket, "4*\n", 3);
 		SDLNet_TCP_Close(s.socket);
+	}
 
 	SDLNet_FreeSocketSet(sockets);
 	SDLNet_TCP_Close(server);

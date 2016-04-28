@@ -12,10 +12,13 @@ StrLib::~StrLib()
 
 void StrLib::str_copy(char* original, char* &target)
 {
-	target = new char[strlen(original)];
+	if (target != nullptr)
+	{
+		target = new char[strlen(original)];
 
-	for (unsigned int i = 0; i < strlen(target); i++)
-		target[i] = original[i];
+		for (unsigned int i = 0; i < strlen(target); i++)
+			target[i] = original[i];
+	}
 }
 
 std::vector<char*> StrLib::str_split(char* word, char* delimiter)

@@ -53,3 +53,14 @@ void FileLib::LoadFromFile(char* filePath, std::vector<char*> &outLines, char* i
 		i++;
 	}
 }
+
+void FileLib::AppendToFile(char* filePath, std::vector<char*> appends)
+{
+	std::ofstream file(filePath, std::ios_base::app);
+
+	if (file)
+	{
+		for (unsigned int i = 0; i < appends.size(); i++)
+			file << appends[i];
+	}
+}

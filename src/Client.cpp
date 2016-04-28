@@ -107,8 +107,8 @@ void Client::CheckIncoming(Game* game)
 				case 4:
 					// Timed out.
 					std::cout << "Timed out, disconnected from server (" << ip.host << ")." << std::endl;
-					game->SetGameState("play");
 					Quit();
+					game->SetGameState("play");
 					break;
 
 				case 5:

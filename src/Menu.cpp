@@ -38,7 +38,7 @@ void Menu::Update()
 {
 	if (timer != nullptr)
 	{
-		if (timer->timer->IsDone())
+		if (timer->timer->IsDone() && game->GetClient() == nullptr)
 			DoAction(timer->action);
 	}
 

@@ -65,8 +65,7 @@ void Game::Update()
 			if (!playing && server->GetPlayerCount() > 1)
 				menuMngr->SetActiveMenu(menuMngr->FindMenuByTag("load"));
 		}
-		else 
-			server = nullptr;
+		else server = nullptr;
 	}
 
 	if (client != nullptr)
@@ -182,8 +181,19 @@ void Game::SetPlaying(bool value)
 		sceneMngr->Initialize(this);
 		hud->SaveScores("./assets/saves/");
 		menuMngr->SetActiveMenu(menuMngr->FindMenuByTag("main"));
-		client = nullptr;
-		server = nullptr;
+
+		if (server != nullptr)
+		{
+			server->online = false;
+			server->Quit();
+		}
+		else if (client != nullptr)
+			client->Quit();
+	}
+	else
+	{
+		if (server != nullptr)
+			server->CirculateMsg(-1, "5*\n");
 	}
 }
 

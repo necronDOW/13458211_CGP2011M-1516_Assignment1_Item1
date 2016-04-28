@@ -3,10 +3,14 @@
 
 // Project includes
 #include "StrLib.h"
+#include "Timer.h"
 
 // SDL includes
 #include <SDL.h>
 #include "SDL_mixer.h"
+
+class Text;
+class Sprite;
 
 // Forward declarations
 class Game;
@@ -33,11 +37,21 @@ class AudioManager
 	public:
 		/* AudioManager
 			game : Reference to the game. */
-		AudioManager(Game* game);
+		AudioManager(Game* game, glm::vec2 position);
 
 		/* AudioManager 
 			** Default Destructor ** */
 		~AudioManager();
+
+		/* Handle audio control input. 
+			event : The SDL_Event as used in the main game loop. */
+		void HandleInput(SDL_Event &event);
+
+		/* Update the audio manager. */
+		void Update();
+
+		/* Render audio bars. */
+		void Render();
 
 		/* Load music from a given file.
 			fileName : The file name where the music clip can be located. */
@@ -52,11 +66,15 @@ class AudioManager
 			id : The id of the audio clip to play. */
 		void PlayClip(char* id);
 
-		/* Play the music. */
-		void PlayMusic();
+		void SetLoopClip(char* id);
 
-		/* Pause the music. */
-		void PauseMusic();
+		void ToggleLoopClip();
+
+		/* Toggle the music. */
+		void ToggleMusic();
+
+		/* Change the volume of the audio. */
+		void ChangeVolume(int influence, int index);
 
 		/* Clean up logic for this audio manager. */
 		void CleanUp();
@@ -64,6 +82,14 @@ class AudioManager
 	private:
 		Mix_Music* music = NULL;		// The music for this audio manager, limited to 1 track.
 		std::vector<AudioClip> clips;	// A collection of clips stored within the manager, which can be played externally.
+		AudioClip* loopClip = nullptr;
+		int clipVolume, musicVolume;
+		glm::vec2 position;
+		std::vector<Text*> barLabels;
+		std::vector<Sprite*> barSprites;
+		bool showVolume;
+		Timer timer;
+		Game* game;
 };
 
 #endif

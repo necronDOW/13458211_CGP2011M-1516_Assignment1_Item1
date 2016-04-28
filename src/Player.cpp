@@ -72,7 +72,7 @@ void Player::HandleInput(SDL_Event &event)
 						if (velocity.x < 0.0f)
 						{
 							velocity.x = 0.0f;
-							game->GetAudioManager()->PauseMusic();
+							game->GetAudioManager()->ToggleLoopClip();
 						}
 						break;
 
@@ -88,7 +88,7 @@ void Player::HandleInput(SDL_Event &event)
 						if (velocity.x > 0.0f)
 						{
 							velocity.x = 0.0f;
-							game->GetAudioManager()->PauseMusic();
+							game->GetAudioManager()->ToggleLoopClip();
 						}
 						break;
 				}
@@ -111,7 +111,7 @@ void Player::HandleMovement(SDL_Event &event)
 
 		case SDLK_a:
 			velocity.x = -speed;
-			game->GetAudioManager()->PlayMusic();
+			game->GetAudioManager()->ToggleLoopClip();
 			break;
 
 		case SDLK_s:
@@ -124,7 +124,7 @@ void Player::HandleMovement(SDL_Event &event)
 
 		case SDLK_d:
 			velocity.x = speed;
-			game->GetAudioManager()->PlayMusic();
+			game->GetAudioManager()->ToggleLoopClip();
 			break;
 
 		case SDLK_SPACE:

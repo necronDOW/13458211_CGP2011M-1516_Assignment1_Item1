@@ -40,12 +40,13 @@ void Game::Initialize()
 	sceneMngr = new SceneManager(this, "./assets/levels.data");
 	instance->SetRenderScale(sceneMngr->GetScalar().x, sceneMngr->GetScalar().y);
 
-	audioMngr = new AudioManager(this);
+	audioMngr = new AudioManager(this, glm::vec2(250, 380));
 	audioMngr->LoadClip("jump", "./assets/audio/player_jump.wav");
 	audioMngr->LoadClip("pickup", "./assets/audio/player_pickup.wav");
 	audioMngr->LoadClip("fall", "./assets/audio/player_fall.wav");
-	audioMngr->LoadMusic("./assets/audio/player_walk.wav");
-	audioMngr->PauseMusic();
+	audioMngr->LoadClip("walk", "./assets/audio/player_walk.wav");
+	audioMngr->LoadMusic("./assets/audio/music.wav");
+	audioMngr->SetLoopClip("walk");
 
 	menuMngr = new MenuManager(this, "./assets/menus.data");
 
@@ -83,6 +84,8 @@ void Game::Update()
 		hud->Update();
 	}
 	else menuMngr->Update();
+
+	audioMngr->Update();
 }
 
 void Game::HandleInput()
@@ -92,6 +95,8 @@ void Game::HandleInput()
 		if (playing && !paused)
 			sceneMngr->HandleInput(event);
 		else menuMngr->HandleInput(event);
+
+		audioMngr->HandleInput(event);
 
 		switch (event.type)
 		{
@@ -107,11 +112,8 @@ void Game::HandleInput()
 						case SDLK_ESCAPE:
 							SetGameState("pause");
 							break;
-						case SDLK_PAGEDOWN:
-							sceneMngr->PreviousScene();
-							break;
-						case SDLK_PAGEUP:
-							sceneMngr->NextScene();
+						case SDLK_F11:
+							instance->ToggleFullscreen();
 							break;
 					}
 				}
@@ -134,6 +136,8 @@ void Game::Render()
 		hud->Render();
 	}
 	else menuMngr->Render();
+
+	audioMngr->Render();
 
 	SDL_RenderPresent(instance->GetRenderer());
 }

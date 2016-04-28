@@ -51,6 +51,12 @@ void SDL_Instance::SetRenderScale(float modX, float modY)
 	SDL_RenderSetScale(renderer, sX, sY);
 }
 
+void SDL_Instance::ToggleFullscreen()
+{
+	fullScreenFlag = fullScreenFlag == 0 ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0;
+	SDL_SetWindowFullscreen(window, fullScreenFlag);
+}
+
 void SDL_Instance::CleanUp()
 {
 	SDL_DestroyWindow(window);

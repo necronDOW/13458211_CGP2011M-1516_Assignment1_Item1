@@ -63,7 +63,6 @@ void SceneManager::NextScene()
 	{
 		currentScene++;
 		instance->SetRenderScale(GetScalar().x, GetScalar().y);
-		audioMngr->PauseMusic();
 	}
 }
 
@@ -73,7 +72,6 @@ void SceneManager::PreviousScene()
 	{
 		currentScene--;
 		instance->SetRenderScale(GetScalar().x, GetScalar().y);
-		audioMngr->PauseMusic();
 	}
 }
 

@@ -14,6 +14,7 @@ class Text
 		virtual void Render();
 		void SetSize(char* text, int fontPt);
 		void SetPosition(int x, int y);
+		glm::vec2 GetDimensions();
 
 	protected:
 		virtual void Initialize(char* text, int fontPt, int x, int y);

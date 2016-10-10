@@ -17,6 +17,7 @@ class SDL_Instance
 		~SDL_Instance();
 
 		void SetRenderScale(float modX, float modY);
+		void ToggleFullscreen();
 		void CleanUp();
 
 		SDL_Window* &GetWindow();
@@ -28,6 +29,7 @@ class SDL_Instance
 		SDL_Window* window;
 		SDL_Renderer* renderer;
 		int width, height;
+		Uint32 fullScreenFlag = 0;
 };
 
 #endif

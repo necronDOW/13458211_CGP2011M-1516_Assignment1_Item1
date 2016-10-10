@@ -13,6 +13,7 @@ FunctionalObject::FunctionalObject(Game* game, Scene* scene, float x, float y)
 	canClimb = false;
 	isClimbing = false;
 	isJumping = false;
+	usesGravity = true;
 }
 
 FunctionalObject::~FunctionalObject()
@@ -30,13 +31,13 @@ void FunctionalObject::Update()
 		SetClimbing(false);
 	}
 
+	sprite->FlipHorizontal(velocity.x);
+	
 	int tmpTileVal = scene->TileExists(position, 0, 1);
 	if ((tmpTileVal == 0 || tmpTileVal == 1) && !isClimbing && !isJumping)
 		scene->SnapToY(position, 0);
-	else if (!canClimb && !isJumping)
+	else if (!canClimb && !isJumping && usesGravity)
 		velocity.y = scene->GetGravity();
-
-	sprite->FlipHorizontal(velocity.x);
 
 	GameObject::Update();
 }
@@ -55,7 +56,7 @@ char* FunctionalObject::Serialize()
 {
 	return StrLib::str_concat(std::vector<char*> {
 		"uniqueID:", StrLib::to_char(uniqueID),
-		";position:", StrLib::to_char(position),
+			";position:", StrLib::to_char(position),
 	});
 }
 
@@ -69,11 +70,16 @@ void FunctionalObject::SetClimbing(bool value)
 	if (value == true && canClimb)
 	{
 		isClimbing = value;
-		sprite->ChangeAnimation("climb");
+		SetAnimation("climb");
 	}
 	else if (value == false)
 		isClimbing = value;
 
+}
+
+void FunctionalObject::SetAnimation(char* id)
+{
+	sprite->ChangeAnimation(id);
 }
 
 void FunctionalObject::SetJumpVelocity(float value)

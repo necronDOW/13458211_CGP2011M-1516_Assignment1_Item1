@@ -1,7 +1,12 @@
 #include "Server.h"
+#include "Game.h"
+#include "SceneManager.h"
+#include "StrLib.h"
 
-Server::Server(int maxPlayers)
+Server::Server(Game* game, int maxPlayers)
 {
+	this->game = game;
+
 	if (SDLNet_Init() != 0)
 	{
 		std::cout << "Error when instantiating SDL_net (SDLNet_Init)." << std::endl;
@@ -38,7 +43,7 @@ void Server::CheckIncoming()
 		{
 			if (playerCount < maxPlayers)
 				AddSocket(tmpSocket, temp);
-			else sprintf(temp, "3* \n");
+			else sprintf(temp, "3*\n");
 
 			SDLNet_TCP_Send(tmpSocket, temp, strlen(temp) + 1);
 		}
@@ -55,20 +60,24 @@ void Server::CheckIncoming()
 		{
 			if (SDL_GetTicks() - socketVector[i].timeout > 10000)
 			{
-				sprintf(temp, "2*%d \n", socketVector[i].id);
+				sprintf(temp, "2*%d\n", socketVector[i].id);
 				CirculateMsg(i, temp);
 
-				SDLNet_TCP_Send(socketVector[i].socket, "4* \n", 4);
+				SDLNet_TCP_Send(socketVector[i].socket, "4*\n", 3);
 				RemoveSocket(i);
 			}
 		}
 	}
+	else Quit();
 }
 
 void Server::Quit()
 {
 	for (data s : socketVector)
+	{
+		SDLNet_TCP_Send(s.socket, "4*\n", 4);
 		SDLNet_TCP_Close(s.socket);
+	}
 
 	SDLNet_FreeSocketSet(sockets);
 	SDLNet_TCP_Close(server);
@@ -82,7 +91,7 @@ void Server::AddSocket(TCPsocket newSocket, char* str)
 	SDLNet_TCP_AddSocket(sockets, newSocket);
 	socketVector.push_back(data(newSocket, SDL_GetTicks(), id));
 	playerCount++;
-	sprintf(str, "0*%d \n", id);
+	sprintf(str, "0*%d\n", id);
 
 
 	std::cout << "Player Connected: " << id << "." << std::endl;
@@ -105,12 +114,21 @@ void Server::InterpretIncoming(int index, data &incoming, char* str)
 		incoming.timeout = SDL_GetTicks();
 
 		SDLNet_TCP_Recv(incoming.socket, str, 1400);
+		std::vector<char*> messages;
 
 		int commandID = GetCommandID(str);
 		switch (commandID)
 		{
 			case 1:
 				CirculateMsg(index, str);
+
+				messages = StrLib::str_split(str, "*");
+
+				for (int i = 1; i < messages.size(); i++)
+				{
+					char* tmp = StrLib::str_split(messages[i], " ")[0];
+					game->GetSceneManager()->UpdateSceneObject(tmp);
+				}
 				break;
 			case 2:
 				CirculateMsg(index, str);
@@ -152,7 +170,7 @@ void Server::CalculateAvailableIDs()
 	if (socketVector.size() == maxPlayers)
 		return;
 
-	for (unsigned int i = 0; i < maxPlayers; i++)
+	for (unsigned int i = 1; i <= maxPlayers; i++)
 	{
 		bool available = true;
 

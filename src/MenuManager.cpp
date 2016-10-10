@@ -1,5 +1,6 @@
 #include "MenuManager.h"
 #include "Menu.h"
+#include "FileLib.h"
 
 MenuManager::MenuManager()
 {
@@ -8,30 +9,9 @@ MenuManager::MenuManager()
 
 MenuManager::MenuManager(Game* game, char* filePath)
 {
-	//TODO: Make File helper class for this and SceneManager file loading.
 	std::vector<int> menuIndices;
 	std::vector<char*> lines;
-	std::ifstream file(filePath);
-	std::string buffer;
-
-	if (!file)
-	{
-		std::cout << std::endl << "File was loaded unsuccessfully (" << filePath << ")." << std::endl;
-		return;
-	}
-
-	int i = 0;
-	while (std::getline(file, buffer))
-	{
-		char* tmp;
-		StrLib::str_copy((char*)buffer.c_str(), tmp);
-		lines.push_back(tmp);
-
-		if (StrLib::str_contains(tmp, "*menu_"))
-			menuIndices.push_back(i);
-
-		i++;
-	}
+	FileLib::LoadFromFile(filePath, lines, "*menu_", menuIndices);
 
 	LoadMenus(game, lines, menuIndices);
 }

@@ -12,6 +12,8 @@
 	Author: thscplusplusguy (Youtube).
 	Link: https://www.youtube.com/watch?v=iJfC4-yNnzY */
 
+class Game;
+
 class Server
 {
 	struct data
@@ -25,7 +27,7 @@ class Server
 	};
 
 	public:
-		Server(int maxPlayers);
+		Server(Game* game, int maxPlayers);
 		~Server();
 		void CheckIncoming();
 		void Quit();
@@ -49,6 +51,7 @@ class Server
 		std::vector<data> socketVector;
 		SDLNet_SocketSet sockets;
 		std::vector<int> availableIDs;
+		Game* game;
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include "FileLib.h"
 
 SceneManager::SceneManager()
 {
@@ -9,29 +10,21 @@ SceneManager::SceneManager(Game* game, char* filePath)
 {
 	instance = game->GetSDLInstance();
 	audioMngr = game->GetAudioManager();
+	this->filePath = filePath;
 
+	Initialize(game);
+}
+
+SceneManager::~SceneManager()
+{
+
+}
+
+void SceneManager::Initialize(Game* game)
+{
 	std::vector<int> levelIndices;
 	std::vector<char*> lines;
-	std::ifstream file(filePath);
-	std::string buffer;
-
-	if (!file)
-	{
-		std::cout << std::endl << "File was loaded unsuccessfully (" << filePath << ")." << std::endl;
-		return;
-	}
-
-	int i = 0;
-	while (std::getline(file, buffer))
-	{
-		char* tmp;
-		StrLib::str_copy((char*)buffer.c_str(), tmp);
-		lines.push_back(tmp);
-
-		i++;
-		if (StrLib::str_contains(tmp, "level"))
-			levelIndices.push_back(i);
-	}
+	FileLib::LoadFromFile(filePath, lines, "level", levelIndices);
 
 	LoadScenes(game, lines, levelIndices);
 	if (scenes.size() > 0)
@@ -39,11 +32,6 @@ SceneManager::SceneManager(Game* game, char* filePath)
 		currentScene = 0;
 		std::cout << "\n";
 	}
-}
-
-SceneManager::~SceneManager()
-{
-
 }
 
 void SceneManager::Update()
@@ -75,7 +63,6 @@ void SceneManager::NextScene()
 	{
 		currentScene++;
 		instance->SetRenderScale(GetScalar().x, GetScalar().y);
-		audioMngr->PauseMusic();
 	}
 }
 
@@ -85,24 +72,31 @@ void SceneManager::PreviousScene()
 	{
 		currentScene--;
 		instance->SetRenderScale(GetScalar().x, GetScalar().y);
-		audioMngr->PauseMusic();
 	}
 }
 
 void SceneManager::UpdateSceneObject(char* serialized)
 {
-	std::vector<char*> elements = StrLib::str_split(serialized, ";");
-	FunctionalObject* target = scenes[currentScene]->FindObjectWithID(atoi(StrLib::str_split(elements[0], ":")[1]));
+	if (StrLib::str_contains(serialized, "uniqueID:"))
+	{
+		std::vector<char*> elements = StrLib::str_split(serialized, ";");
+		FunctionalObject* target = scenes[currentScene]->FindObjectWithID(atoi(StrLib::str_split(elements[0], ":")[1]));
 
-	target->Deserialize(elements);
+		Player* playerTmp = dynamic_cast<Player*>(target);
+		if (playerTmp && !playerTmp->CheckAuthorization())
+			target->Deserialize(elements);
+		else if (!playerTmp)
+			target->Deserialize(elements);
+	}
 }
 
 void SceneManager::LoadScenes(Game* game, std::vector<char*> &lines, std::vector<int> &indices)
 {
 	constructor = new ObjectConstructor(lines);
+	scenes.clear();
 
 	for (unsigned int i = 0; i < indices.size(); i++)
-		scenes.push_back(new Scene(game, lines, indices[i], constructor));
+		scenes.push_back(new Scene(game, lines, indices[i] + 1, constructor));
 }
 
 Scene* &SceneManager::GetScene(int index) { return scenes[index]; }

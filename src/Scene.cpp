@@ -4,6 +4,7 @@
 #include "Pickup.h"
 #include "Client.h"
 #include "Server.h"
+#include "Player.h"
 
 Scene::Scene()
 {

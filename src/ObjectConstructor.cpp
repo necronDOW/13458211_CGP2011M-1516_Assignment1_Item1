@@ -45,7 +45,10 @@ void ObjectConstructor::CreateObject(std::vector<FunctionalObject*> &objects, Ga
 		if (StrLib::str_contains(validObjects[i], type))
 		{
 			if (StrLib::str_contains(type, "player"))
-				objects.push_back(new Player(game, scene, position.x, position.y));
+			{
+				scene->playerCount++;
+				objects.push_back(new Player(game, scene, position.x, position.y, scene->playerCount));
+			}
 			else if (StrLib::str_contains(type, "chick"))
 				objects.push_back(new Enemy(game, scene, position.x, position.y));
 			else objects.push_back(new FunctionalObject(game, scene, position.x, position.y));
@@ -56,6 +59,9 @@ void ObjectConstructor::CreateObject(std::vector<FunctionalObject*> &objects, Ga
 
 			tmp->GetSprite()->SetOffset(0.0, (float)(-tmp->GetSprite()->GetRect().h / 2));
 			tmp->SetUniqueID(objects.size() - 1);
+
+			if (StrLib::str_contains(type, "chuckie") || StrLib::str_contains(type, "cage"))
+				tmp->usesGravity = false;
 			return;
 		}
 	}

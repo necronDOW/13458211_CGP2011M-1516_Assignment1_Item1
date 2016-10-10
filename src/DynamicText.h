@@ -54,7 +54,7 @@ class DynamicText : Text
 			h : Desired height. */
 		SDL_Rect CreateSDL_Rect(int x, int y, int w, int h);
 
-		char* textBuffer = "0123456789";	// The allowed values for dynamic text, limited to numbers.
+		char* textBuffer = "0123456789-";	// The allowed values for dynamic text, limited to numbers.
 		SDL_Rect fontDimensions;			// Font dimensions for this text component.
 		std::vector<SDL_Rect> srcRects;		// The calculated source rectangles.
 		std::vector<SDL_Rect> destRects;	// The calculatd destination rectangles.

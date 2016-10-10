@@ -81,21 +81,28 @@ void AnimatedSprite::ChangeAnimation(char* newID)
 char* AnimatedSprite::Serialize()
 {
 	// Return the serialized animation id, frame and slip information.
-	return StrLib::str_concat(std::vector<char*> {
-		"anim:", currentAnim->id,
-			",", StrLib::to_char((int)currentFrame),
-			",", RendererFlip_to_char(flipFlags)
-	});
+	if (currentAnim == nullptr)
+		return "anim:NULL";
+	else
+	{
+		return StrLib::str_concat(std::vector<char*> {
+			"anim:", currentAnim->id,
+				",", RendererFlip_to_char(flipFlags)
+		});
+	}
 }
 
 void AnimatedSprite::Deserialize(char* serialized)
 {
 	// Deserialize all information back into their appropriate variables.
-	std::vector<char*> elements = StrLib::str_split(serialized, ",");
+	if (!StrLib::str_contains(serialized, "NULL"))
+	{
+		std::vector<char*> elements = StrLib::str_split(serialized, ",");
 
-	currentAnim->id = elements[0];
-	currentFrame = atoi(elements[1]);
-	flipFlags = char_to_RendererFlip(elements[2]);
+		ChangeAnimation(elements[0]);
+		flipFlags = char_to_RendererFlip(elements[1]);
+	}
+	else SetToStaticAnimation();
 }
 
 void AnimatedSprite::GenerateAnimations(char* staticID, std::vector<char*> ids)

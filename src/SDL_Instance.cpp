@@ -17,7 +17,7 @@ SDL_Instance::SDL_Instance(Game* game, int width, int height)
 	}
 	std::cout << "SDL initialized successfully." << std::endl;
 
-	window = SDL_CreateWindow(game->GetName(), 100, 100, width, height, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow(game->GetName(), 100, 100, width, height, SDL_WINDOW_RESIZABLE);
 	if (window == nullptr)
 	{
 		game->CleanExit("Error when creating SDL window (SDL_CreateWindow).\n");
@@ -49,6 +49,12 @@ void SDL_Instance::SetRenderScale(float modX, float modY)
 	float sY = (float)height / modY;
 
 	SDL_RenderSetScale(renderer, sX, sY);
+}
+
+void SDL_Instance::ToggleFullscreen()
+{
+	fullScreenFlag = fullScreenFlag == 0 ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0;
+	SDL_SetWindowFullscreen(window, fullScreenFlag);
 }
 
 void SDL_Instance::CleanUp()

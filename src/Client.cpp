@@ -52,7 +52,7 @@ void Client::SendMessage(char* flag, char* msg)
 	// If the client is online, concat (flag + msg) and send to the server.
 	if (online)
 	{
-		char* fullMsg = StrLib::str_concat(std::vector<char*> { flag, "*", msg });
+		char* fullMsg = StrLib::str_concat(std::vector<char*> { flag, "*", msg, "\n" });
 		SDLNet_TCP_Send(connection, fullMsg, strlen(fullMsg + 1));
 	}
 }
@@ -79,6 +79,7 @@ void Client::CheckIncoming(Game* game)
 					// Connection successful.
 					std::cout << "Connected to server (" << ip.host << ") successfully." << std::endl;
 					game->GetMenuManager()->SetActiveMenu(game->GetMenuManager()->FindMenuByTag("load"));
+					clientID = atoi(StrLib::str_split(temp, "*")[1]);
 					break;
 
 				case 1:
@@ -106,8 +107,8 @@ void Client::CheckIncoming(Game* game)
 				case 4:
 					// Timed out.
 					std::cout << "Timed out, disconnected from server (" << ip.host << ")." << std::endl;
-					game->SetGameState("play");
 					Quit();
+					game->SetGameState("play");
 					break;
 
 				case 5:

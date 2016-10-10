@@ -57,6 +57,14 @@ class Menu
 			sprite->SetOrigin(&origin);
 		}
 	};
+	struct menuList
+	{
+		glm::vec2 origin;
+		std::vector<Text*> labels;
+
+		menuList(glm::vec2 o, std::vector<Text*> tA)
+			: origin(o), labels(tA) { }
+	};
 	struct menuTimer
 	{
 		Timer* timer;
@@ -81,16 +89,18 @@ class Menu
 
 	private:
 		void Reset();
-		int CreateLabel(std::vector<char*> data, int startIndex);
-		int CreateSprite(std::vector<char*> data, int startIndex);
-		int CreateTimer(std::vector<char*> data, int startIndex);
+		menuComponent CreateLabel(std::vector<char*> data, size_t &startIndex);
+		menuSprite* CreateSprite(std::vector<char*> data, size_t &startIndex);
+		menuList CreateList(std::vector<char*> data, size_t &startIndex);
+		menuTimer* CreateTimer(std::vector<char*> data, size_t &startIndex);
 		char* acquireValue(char* data);
 		void DoAction(menuAction* a);
 
 		Game* game;
 		MenuManager* manager;
-		std::vector<menuComponent> components;
+		std::vector<menuComponent> labels;
 		std::vector<menuSprite*> sprites;
+		std::vector<menuList> lists;
 		menuTimer* timer = nullptr;
 		char* tag;
 		char* action = "";

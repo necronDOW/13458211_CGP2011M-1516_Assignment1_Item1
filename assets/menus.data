@@ -4,15 +4,31 @@
 	{
 		text:CHUCKIE EGG
 		font-size:70
-		position:250,125
+		position:250,50
 		color:255,255,0
+	}
+	
+	list
+	{
+		src:./assets/saves/offline_scores.data
+		font-size:20
+		position:125,175
+		color:0,255,0
+	}
+	
+	list
+	{
+		src:./assets/saves/online_scores.data
+		font-size:20
+		position:375,175
+		color:0,255,0
 	}
 	
 	label
 	{
 		text:PLAY OFFLINE
 		font-size:30
-		position:250,225
+		position:250,300
 		color:255,0,255
 		action:1,menu_load
 	}
@@ -21,7 +37,7 @@
 	{
 		text:PLAY ONLINE
 		font-size:30
-		position:250,275
+		position:250,350
 		color:255,0,255
 		action:2,menu_play-online
 	}
@@ -30,7 +46,7 @@
 	{
 		text:QUIT
 		font-size:30
-		position:250,325
+		position:250,400
 		color:255,0,255
 		action:Q,state_quit
 	}
@@ -210,5 +226,25 @@
 	{
 		delay:10.0
 		action:state_play
+	}
+};
+
+*menu_gameover
+{
+	label
+	{
+		text:GAMEOVER
+		font-size:70
+		position:250,125
+		color:255,255,0
+	}
+	
+	label
+	{
+		text:QUIT
+		font-size:30
+		position:250,325
+		color:255,0,255
+		action:Q,menu_main
 	}
 };
